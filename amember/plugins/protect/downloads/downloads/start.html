@@ -1,0 +1,14 @@
+<!-- <meta HTTP-EQUIV="refresh" content="0; URL=http://{$smarty.server.SERVER_NAME}{$smarty.server.PHP_SELF}?download={$file}"> -->
+{assign var="title" value="File Download"}
+{include file="header.html"}
+<center>
+<div class=hdr>{$title}</div>
+<hr>
+<center>Your download will start shortly. If not, please click on <a href="{$smarty.server.PHP_SELF}?download={$file}">this link</a><br />
+If your download fails, you will be able to download it for free within next 24 hours.
+</center>
+
+<p align=center><small>Powered by <a href="http://membership.cgi-central.net/scripts/amember/">aMember Pro</a> subscription script</small></p>
+
+</center>
+{include file="footer.html"}

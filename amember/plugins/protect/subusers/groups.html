@@ -1,0 +1,29 @@
+{assign var="title" value="Groups managment"}
+{include file="admin/header.inc.html"}
+<center>
+<br /><h3>{$title}</h3>
+<br /><br />
+{include file="error.inc.html"}
+<form method="post" name="product">
+<table class=hedit border=1 bordercolor=#909090>
+<tr>
+<th>Title</th>
+<th>Product</th>
+<th>Actions</th>
+</tr>
+{foreach from=$groups item=group}
+<tr>
+    <td>
+     {$group.title}
+    </td>
+    <td>
+    {$products[$group.product_id]}
+    </td>
+    <td><a href="./groups.php?action=editform&group_id={$group.group_id}">Edit</a></td>
+</tr>
+{/foreach}
+</table>
+<br><br>
+<a href="./groups.php?action=addform">Add new group</a>
+
+{include file="admin/footer.inc.html"}

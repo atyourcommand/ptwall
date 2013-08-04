@@ -1,0 +1,27 @@
+
++  don't allow second registration for the same event - show it in the list page 
+   and in the event view page, dont' show the link
+
++  copy subscribe code from member.php to register.php, 
++  make paysystem choose page 
++  implement limited count of subscribers "Sold Out"
++  implement "immediate payment" option for signup
+
++  Multiple days for an event.  We need an option that a conference can have a start and end date, so multi-day events work properly.
++  In our define special prices, we don't have enough options there to define prices for all membership categories.
++  implement "different price" for different subscribers
+
+-  implement editing of registration e-mail
++  implement special list of attendees
++  implement cvs export of attendees
+   
+-  ask for additional fields on member signup - configurable list of fields,
+   displayed on er/signup.html and choose_paysys.html
+-  "early bird" prices (tracehold date set as special field)
+
+LATER
+
+- lessons
+
+
+

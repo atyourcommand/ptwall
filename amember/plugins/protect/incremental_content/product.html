@@ -1,0 +1,289 @@
+{if not $add}
+<br>
+<script type="text/javascript" src="{$config.root_url}/includes/jquery/jquery.js?smarty"></script>
+<script type="text/javascript" src="{$config.root_url}/includes/jquery/jquery.select.js?smarty"></script>
+<style>
+.clinks {
+    background-color: #909090;
+    font-size: 14px;
+    border-collapse: collapse;
+    border: #a0a0a0 1px solid;
+}
+.clinks th {
+   padding: 7px;
+   padding-right: 10px;
+   text-align: center;
+   background-color: #E9E9C9;
+   font-weight: bold;
+   border: #a0a0a0 1px solid;
+}
+.clinks td {
+   text-align: center;
+   padding: 7px;
+   padding-left:  10px;
+   background-color: #F9F9E9;
+   border: #a0a0a0 1px solid;
+}
+</style>
+<script language="javascript">
+
+var clean;
+
+function delete_link(link_id)
+{
+	var x = new Boolean(true);
+	ok=x.valueOf();
+	a=confirm('Are you sure you want to Delete?');
+
+	if (a==ok){
+		clean = 0;
+	    var v = { 'do' : 'delete_link', 'link_id' : link_id};
+	    $.ajax({
+	        'type' : 'POST',
+	        'url'  : "../plugins/protect/incremental_content/ajax_pl.php",
+	        'data' : v,
+	        'dataType' : 'json',
+	        'success' : delete_link_result});
+	}
+}
+
+function delete_link_result(res)
+{
+	if (res.errorCode == '0')
+	{
+		alert(res.msg);
+		refresh_links();
+	} else {
+		alert(res.msg);
+	}
+}
+
+function edit_link(link_id)
+{
+	clean = 0;
+    var v = { 'do' : 'edit_link', 'link_id' : link_id};
+    $.ajax({
+        'type' : 'POST',
+        'url'  : "../plugins/protect/incremental_content/ajax_pl.php",
+        'data' : v,
+        'dataType' : 'json',
+        'success' : load_edit_link});
+}
+
+function new_link()
+{
+	clean = 1;
+	load_edit_link();
+}
+
+function load_edit_link(res)
+{
+
+	$("#link_id")[0].value = clean ? '' : res.link_id;
+	$("#link_path")[0].value = clean ? '' : res.link_path;
+	$("#link_title")[0].value = clean ? '' : res.link_title;
+	$("#link_start_delay")[0].value = clean ? '' : res.link_start_delay;
+	$("#link_duration")[0].value = clean ? '' : res.link_duration;
+	$("#link_comment")[0].value = clean ? '' : res.link_comment;
+	$("#link_files_path")[0].value = clean ? '' : res.link_files_path;
+	$("#link_submit")[0].value = clean ? '    Add    ' : '    Save    ';
+
+	clean ? $("#link_group_id").selectOptions() : $("#link_group_id").selectOptions(res.link_group_id);
+  clean ? $("#link_start_delay_d").selectOptions('d') : $("#link_start_delay_d").selectOptions(res.link_start_delay_d);
+	clean ? $("#link_duration_d").selectOptions('d') : $("#link_duration_d").selectOptions(res.link_duration_d);
+}
+
+function submit_link()
+{
+    var v = { 'do' : 'save_link',
+			'link_product_id' : {/literal}'{$p.product_id}'{literal},
+			'link_id' : $("#link_id")[0].value,
+			'link_group_id' : $("#link_group_id")[0].value,
+			'link_path' : $("#link_path")[0].value,
+			'link_title' : $("#link_title")[0].value,
+			'link_start_delay' : $("#link_start_delay")[0].value,
+			'link_duration' : $("#link_duration")[0].value,
+			'link_comment'  : $("#link_comment")[0].value,
+			'link_files_path'  : $("#link_files_path")[0].value,
+			'link_start_delay_d' : $("#link_start_delay_d")[0].options[$("#link_start_delay_d")[0].selectedIndex].value,
+			'link_duration_d' : $("#link_duration_d")[0].options[$("#link_duration_d")[0].selectedIndex].value
+			};
+    $.ajax({
+        'type' : 'POST',
+        'url'  : "../plugins/protect/incremental_content/ajax_pl.php",
+        'data' : v,
+        'dataType' : 'json',
+        'success' : submit_link_result});
+}
+
+function submit_link_result(res)
+{
+	if (res.errorCode == '0')
+	{
+		alert(res.msg);
+		refresh_links();
+	} else {
+		alert(res.msg);
+	}
+}
+
+function refresh_links()
+{
+	new_link();
+	load_links();
+	load_groups();
+}
+
+function load_links()
+{
+    var v = { 'do' : 'load_links', 'link_product_id' : {/literal}'{$p.product_id}'{literal} };
+    $.ajax({
+        'type' : 'POST',
+        'url'  : "../plugins/protect/incremental_content/ajax_pl.php",
+        'data' : v,
+        'dataType' : 'json',
+        'success' : load_links_div});
+}
+
+function load_links_div(res)
+{
+	$("#links").show().empty().append(res.msg);
+}
+
+function load_groups()
+{
+    var v = { 'do' : 'load_groups' };
+    $.ajax({
+        'type' : 'POST',
+        'url'  : "../plugins/protect/incremental_content/ajax_pl.php",
+        'data' : v,
+        'dataType' : 'json',
+        'success' : load_groups_sel});
+}
+
+function load_groups_sel(res)
+{
+	$("#link_group_cont").show().empty().append(res.msg);
+}
+
+// browse dir functions
+function browseForFolder(val){
+    wnd = window.open('protect.php?action=browse_dir&init_dir=1&dir='+val,
+            '', 'resizable=yes,scrollbars=yes,status=yes,height=550,width=450,location=no');
+    wnd.focus();
+}
+function browse_dir_clicked(dir){
+    var frm = document.forms[1];
+    var elem = frm.elements['link_path'];
+    elem.value = dir;
+}
+
+
+$(document).ready(function(){
+    refresh_links();
+    });
+
+
+</script>
+<form method="post" action="product_links.php">
+<table class="vedit" width="80%">
+<tr class="odd">
+<td colspan=2 style="text-align: left; font-weight: bold">Incremental Content Memberships</td>
+</tr>
+<tr>
+<th>
+<b>Folder Path:</b>
+</th>
+<td>
+<input type="text" name="link_path" id="link_path" size="40" value=""> <input type=button name=browse value="Browse..." onclick='browseForFolder(this.form.elements["link_path"].value)'>
+</td>
+</tr>
+<tr>
+<th>
+<b>Link Name:</b>
+</th>
+<td>
+<input type="text" name="link_title" id="link_title" size="40" value="">
+</td>
+</tr>
+<tr>
+<th>
+<b>Link available after:</b>
+</th>
+<td>
+<input type="text" name="link_start_delay" id="link_start_delay" value="" size="10" maxlength="10" />
+<select name="link_start_delay_d" id="link_start_delay_d" size="1" >
+<option label="Days" value="d">Days</option>
+<option label="Days" value="w">Weeks</option>
+<option label="Months" value="m">Months</option>
+<option label="Years" value="y">Years</option>
+<option label="Exact date (yyyy-mm-dd)" value="fixed">Exact date (yyyy-mm-dd)</option>
+</select>
+</td>
+</tr>
+<tr>
+<th>
+<b>Link duration:</b>
+</th>
+<td>
+<input type="text" name="link_duration" id="link_duration" value="" size="10" maxlength="10" />
+<select name="link_duration_d" id="link_duration_d" size="1" >
+<option label="Days" value="d">Days</option>
+<option label="Days" value="w">Weeks</option>
+<option label="Months" value="m">Months</option>
+<option label="Years" value="y">Years</option>
+<option label="Lifetime" value="lifetime">Lifetime</option>
+<option label="Exact date (yyyy-mm-dd)" value="fixed">Exact date (yyyy-mm-dd)</option>
+</select>
+</td>
+</tr>
+<tr>
+<th>
+<b>Link group:</b>
+</th>
+<td>
+<div id="link_group_cont"></div>
+</td>
+</tr>
+<tr>
+<th>
+<b>Comment:</b>
+</th>
+<td>
+<textarea name="link_comment" id="link_comment" cols="36"></textarea>
+</td>
+</tr>
+<tr>
+<th>
+<b>Unix File Path / Title:</b><br />
+URLs using this format:<br />
+/some_url|URL title to display on downloads page|Maximum download count (0 for unlimited)<br /><br />
+path to file, if starts with "/" then it is absolute path,<br />
+else relative to configured root folder for downloads
+</th>
+<td>
+<textarea name="link_files_path" id="link_files_path" cols="36"></textarea>
+</td>
+</tr>
+<tr>
+<td colspan=2 style="text-align: center; background-color: #E9E9C9">
+<input type=hidden name="link_product_id" id="link_product_id" value="{$p.product_id}">
+<input type=hidden name="link_id" id="link_id" value="">
+<input type="button" name="link_submit" id="link_submit" value="&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;" onclick="submit_link();">
+&nbsp;&nbsp;&nbsp;
+<input type="button" name="link_new" id="link_new" value="&nbsp;&nbsp;&nbsp;&nbsp;New&nbsp;&nbsp;&nbsp;&nbsp;" onclick="new_link();">
+</td>
+</tr>
+<tr class="odd">
+<td colspan=2 style="text-align: center; font-weight: bold;">Current Links: (<a href="" onClick="refresh_links(); return false;">refresh</a>)</td>
+</tr>
+<tr>
+<td colspan=2 style="text-align: center; background-color: #F9F9E9; margin: 0; padding: 0">
+<div width="100%" height="100%" id="links" name="links" border=0>
+</div>
+</td>
+</tr>
+<table>
+</form>
+<br>
+{/if}

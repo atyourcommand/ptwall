@@ -1,0 +1,24 @@
+RewriteEngine on
+RewriteRule ^trainers/(.*)$ /index.php/trainers/$1 [L]
+RewriteRule ^personal-trainer/(.*)$ /index.php/trainers/$1 [L]
+RewriteRule ^guests/(.*)$ /index.php/guests/index/$1 [L]
+RewriteRule ^about/(.*)$ /index.php/about/$1 [L]
+RewriteRule ^retweets/(.*)$ /index.php/retweets/$1 [L]
+RewriteRule ^join/(.*)$ /index.php/join/$1 [L]
+RewriteRule ^sitemap\.xml$ /index.php?c=sitemap [L]
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+
+
+# Set Expires headers
+ExpiresActive On
+ExpiresDefault "access plus 1 year"
+ExpiresByType text/html "access plus 1 second"
+ExpiresByType image/gif "access plus 2592000 seconds"
+ExpiresByType image/jpeg "access plus 2592000 seconds"
+ExpiresByType image/png "access plus 2592000 seconds"
+ExpiresByType image/x-icon "access plus 2592000 seconds"
+ExpiresByType text/css "access plus 604800 seconds"
+ExpiresByType text/javascript "access plus 604800 seconds"
+ExpiresByType application/x-javascript "access plus 604800 seconds"

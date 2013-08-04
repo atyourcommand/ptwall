@@ -1,0 +1,60 @@
+{assign var="title" value="File Downloads"}
+{include file="header.html"}
+<center>
+<div class=hdr>{$title}</div>
+<hr>
+
+<table width=100%><tr>
+<td align=center valign=top>
+<!-- Display Files  -->
+<table bgcolor=#E0E0E0><tr><td>
+&nbsp;&nbsp;
+{if $smarty.request.letter eq ''}
+<span style='background-color: #F0F0F0;'><b>&nbsp;ALL&nbsp;</b></span>
+{else}
+<a href="{$smarty.server.PHP_SELF}">ALL</a>&nbsp;
+{/if}
+{foreach from=$letters key=l item=ct}
+    {if $l eq $smarty.request.letter}
+    <span style='background-color: #F0F0F0;'><b>&nbsp;{$l}&nbsp;</b></span>
+    {else}
+    <a href="{$smarty.server.PHP_SELF}?letter={$l}">{$l}</a>&nbsp;
+    {/if}
+{/foreach}
+{if $smarty.request.letter eq ''}
+<span style='background-color: #F0F0F0;'><b>&nbsp;ALL&nbsp;</b></span>
+{else}
+<a href="{$smarty.server.PHP_SELF}">ALL</a>&nbsp;
+{/if}
+&nbsp;&nbsp;
+</td></tr></table>
+<br />
+
+<table class=hedit style='border-collapse: collapse;'
+border=1 bordercolor=#A0A0A0>
+<tr>    
+    <th>File name</th>
+    <th>Description</th>
+    <th>Size</th>
+    <th>Cost</th>
+</tr>
+{foreach from=$files item=f}
+<tr>
+    <td>
+    <a href="{$smarty.server.PHP_SELF}?file={$f.name}">{$f.name}</a>
+    </td>
+    <td nowrap>{$f.desc}</td>
+    <td>
+    {$f.size}
+    </td>
+    <td align=right>{$f.cost}&nbsp;</td>
+</tr>
+{/foreach}
+</table>
+<!-- Display Files -->
+</td></tr></table>
+{span count=$count}
+<p align=center><small>Powered by <a href="http://membership.cgi-central.net/scripts/amember/">aMember Pro</a> subscription script</small></p>
+
+</center>
+{include file="footer.html"}

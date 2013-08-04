@@ -1,0 +1,20 @@
+{assign var="title" value="Please provide additional information"}
+{include file="header.html"}
+{include file="error.inc.html"}
+
+
+<form method=post action="{$smarty.server.PHP_SELF|escape}">
+<table align=center class=vedit>
+
+{$additional_fields_html}
+
+</table>
+<br />
+<input type="submit" value="Continue" />
+<input type="hidden" name="id" value="{$smarty.request.id|escape}" />
+<input type="hidden" name="paysys_id" value="{$smarty.request.paysys_id|escape}" />
+<input type="hidden" name="_fl" value="_fl" />
+</form>
+
+</center>
+{include file="footer.html"}

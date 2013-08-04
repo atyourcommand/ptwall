@@ -1,0 +1,117 @@
+{assign var="title" value=$smarty.const._TPL_SUBUSERS_TITLE}
+{include file="header.html"}
+
+{include file="error.inc.html"}
+
+<script type="text/javascript" src="{$config.root_url}/includes/jquery/jquery.js?smarty"></script>
+<script type="text/javascript" src="{$config.root_url}/includes/jquery/jquery.select.js?smarty"></script>
+<script language="javascript">
+<!--
+
+function clear_form() {
+    $("#name_f, #name_l, #login, #pass0, #pass1, #email").attr('value', '')
+}
+
+function swap(ID) {
+    if ($("#"+ID).css('display')=='none') {
+        $("#"+ID).show();
+    } else {
+        $("#"+ID).hide();
+    }
+}
+
+-->
+</script>
+<table width="100%"><tr><td style="width: 50%; vertical-align: top;">
+<h3>#_TPL_SUBUSERS_USERS#</h3>
+{if count($subusers)}
+<table class="vedit">
+<tr><th>#_TPL_SUBUSERS_ID#</th><th>#_TPL_SUBUSERS_NAME#</th><th>#_TPL_SUBUSERS_LOGIN#</th><th>#_TPL_SUBUSERS_EMAIL#</th><th>#_TPL_SUBUSERS_GROUPS#</th><th>#_TPL_SUBUSERS_ACTION#</th></tr>
+{foreach from=$subusers item=su}
+<tr><td>{$su.member_id}</td><td>{$su.name_f} {$su.name_l}</td><td>{$su.login}</td><td>{$su.email}</td>
+<td>
+{foreach from=$su.data.subusers_groups_id item=group_id}
+{$groups_title[$group_id]}<br>
+{/foreach}
+</td>
+<td><a href="?action=delete&member_id={$su.member_id}" onclick="return confirm('Do you realy want to delete this user?');">Delete</a> <a href="profile.php?member_id={$su.member_id}">Edit</a></td></tr>
+<tr><th colspan="6"><a href="javascript:;" onclick="swap({$su.member_id})">Manage groups</a></th></tr>
+<tr id="{$su.member_id}" style="display:none">
+<td colspan="6">
+<form method="post">
+<select name="groups[]" multiple style="width:98%">
+{foreach from=$su.data.subusers_groups_id item=group_id}
+<option value="{$group_id}" selected>{$groups_title[$group_id]}</option>
+{/foreach}
+{foreach from=$groups item=title key=group_id}
+{if !in_array($group_id, (array)$su.data.subusers_groups_id)}
+<option value="{$group_id}">{$title}</option>
+{/if}
+{/foreach}
+</select>
+<input type="hidden" name="member_id" value="{$su.member_id}">
+<input type="hidden" name="action" value="updategroups">
+<br><br>
+<input type="submit" value="&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;">
+</form>
+</td>
+</tr>
+
+{/foreach}
+</table>
+{else}
+<div align="center"><p>#_TPL_SUBUSERS_NO_USERS#</p></div>
+{/if}
+
+
+
+</td>
+
+<td>
+<h3>#_TPL_SUBUSERS_NEW_EMPLOYEE#</h3>
+<form id="addchild" name="addchild" method="post">
+<table class="vedit">
+
+<tr><th>#_TPL_SUBUSERS_NAME_F#: </th><td><input type="text" id="name_f" name="name_f" value="{$smarty.request.name_f|escape}" /></td></tr>
+ <tr><th>#_TPL_SUBUSERS_NAME_L#: </th><td><input type="text" id="name_l" name="name_l" value="{$smarty.request.name_l|escape}" /></td></tr>
+ <tr><th>#_TPL_SUBUSERS_LOGIN#: </th><td><input type="text" id="login" name="login" value="{$smarty.request.login|escape}" /></td></tr>
+ <tr><th>#_TPL_SUBUSERS_PASS0#: </th><td><input type="password" id="pass0" name="pass0" value="{$smarty.request.pass0|escape}" /></td></tr>
+ <tr><th>#_TPL_SUBUSERS_PASS1#: </th><td><input type="password" id="pass1" name="pass1" value="{$smarty.request.pass1|escape}" /></td></tr>
+<tr><th>#_TPL_SUBUSERS_EMAIL#: </th><td><input type="text" id="email" name="email" value="{$smarty.request.email|escape}" /></td></tr>
+<tr>
+<th>#_TPL_SUBUSERS_GROUPS#</th>
+<td><select name="groups[]" multiple>
+{foreach from=$groups item=title key=group_id}
+<option value="{$group_id}" {if in_array($group_id, (array)$smarty.request.groups)} selected{/if}>{$title}</option>
+{/foreach}
+</select></td>
+</tr>
+<input type="hidden" name="action" value="add" />
+</table>
+<div style="text-align: center; padding-top:1em"><input type="submit" value="&nbsp;&nbsp;&nbsp;#_TPL_SUBUSERS_ADD_BUT#&nbsp;&nbsp;&nbsp;" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value="&nbsp;&nbsp;&nbsp;&nbsp;#_TPL_SUBUSERS_RESET_BUT#&nbsp;&nbsp;&nbsp;&nbsp;""  onclick="clear_form();"/>
+
+</div>
+</form>
+
+
+
+</td></tr></table>
+<p>#_TPL_SUBUSERS_REMAINING#:<br>
+{foreach from=$stat item=group}
+{$group.title} : <span title="Added" style="border-bottom:1px black dashed">{$group.added|default:"0"}</span> /
+<span title="Allocated" style="border-bottom:1px black dashed">{$group.allocated|default:"0"}</span>
+{if $group.expired}/ <span title="Expired" style="color:red; border-bottom:1px red dashed">{$group.expired}</span>{/if}<br>
+{/foreach}
+</p>
+<p><br /><a href='{$config.root_url}/member.php'>Back to member page</a></p>
+
+
+<br /><br />
+<p class="powered">#_TPL_POWEREDBY|<a href="http://www.amember.com/">|</a>#</p>
+
+
+
+{include file="footer.html"}

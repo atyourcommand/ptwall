@@ -1,0 +1,58 @@
+{assign var="title" value="Incremental content"}
+
+{include file="$dirname/templates/header.html"}
+
+<style type="text/css">
+<!--
+table.padd td {padding:0 1.6em}
+-->
+</style>
+
+<center>
+<h2>{$product.title}</h2>
+<p>{$product.description}</p>
+<table class="padd">
+{foreach from=$groups key=id item=group}
+{if count($group.links)}
+{if $id ne 0}{* without grouping *}<tr><td colspan="2">
+<h3>{$group.title}</h3>
+<p>{$group.description}</p>
+</td>
+</tr>
+{/if}
+  {cycle name="top" values="<tr><td>,<td>" reset="true"}
+  {cycle name="top" assign="first" values="<tr><td>,<td>"}
+  {cycle name="bottom" values="</td>,</td></tr>" reset="true"}
+  {cycle name="bottom" assign="first" values="</td>,</td></tr>"}
+  {foreach from=$group.links item=link}
+    {cycle name="top" values="<tr><td>,<td>"}
+    {if $link.active}
+    <a href="{$link.link_url}">{$link.link_title}</a><br />(active)
+    {if $link.lag eq 'lifetime'}lifetime{else}
+     expires in {$link.lag} days{/if}
+     
+        {if count($link.files)}
+        <ul>
+        {foreach from=$link.files item=title key=url}
+        <li><a href="{$url}">{$title}</a></li>
+        {/foreach}
+        </ul>
+        {/if}
+     
+     
+    {else}{$link.link_title}<br />
+    {if $link.lag gt 0}
+    available in {$link.lag} days
+    {else}
+    (expired)
+    {/if}
+    {/if}
+    {cycle name="bottom" values="</td>,</td></tr>"}
+  {/foreach}
+  {cycle name="bottom" assign="last" values="</td>,</td></tr>"}
+  {if $last eq '</td></tr>'}<td></td></tr>{/if}
+{/if}
+{/foreach}
+</table>
+</center>
+{include file="$dirname/templates/footer.html"}

@@ -1,0 +1,31 @@
+<urlset xmlns="http://www.google.com/schemas/sitemap/0.84">
+			    <url>
+                <loc>http://personaltrainerwall.com</loc>
+                <lastmod>2010-07-22</lastmod>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+                </url>
+				
+				<url>
+                <loc>http://personaltrainerwall.com/retweets/</loc>
+                <lastmod>2010-07-22</lastmod>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+                </url>
+				
+				<url>
+                <loc>http://personaltrainerwall.com/retweets/</loc>
+                <lastmod>2010-07-22</lastmod>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+                </url>
+		
+				<url>
+                <loc>http://personaltrainerwall.com/about/</loc>
+                <lastmod>2010-07-22</lastmod>
+                <changefreq>daily</changefreq>
+                <priority>0.8</priority>
+                </url>
+
+             
+            </urlset>

@@ -1,0 +1,35 @@
+{assign var=title value="Groups List"}
+{include file="admin/header.inc.html"}
+<center>
+<br /><h3>{$title}</h3>
+
+{include file="admin/users_az.inc.html"}
+
+{span}
+<br /><br />
+
+<table width=80% class=hedit border=1 bordercolor=#909090>
+<tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Priority</th>
+    <th width=5%><font color=606060>Actions</font></th>
+</tr>
+{foreach from=$groups item=group}
+<tr class={cycle values="xx,odd"}>
+    <td>{$group.id}</td>
+    <td><b>{$group.title}</b></td>
+    <td>{$group.description}</td>
+    <td>{$group.priority}</td>
+    <td nowrap>
+            <a href="{$config.root_url}/plugins/protect/incremental_content/groups.php?action=showgroup&group_id={$group.id}">Edit</a>
+            <a href="{$config.root_url}/plugins/protect/incremental_content/groups.php?action=delete&group_id={$group.id}" onclick="return confirm('You want to delete user {$group.title}?')">Delete</a>
+     </td>
+</tr>
+{/foreach}
+</table>
+<br />
+{span}
+<p><a href="{$config.root_url}/plugins/protect/incremental_content/groups.php?action=shownew">Add New Group</a></p>
+{include file="admin/footer.inc.html"}

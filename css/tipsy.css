@@ -1,0 +1,17 @@
+/*there are 2 tipsy css and one needs deleting*/
+
+.tipsy { padding: 5px; font-size: 12px; opacity: 0.8; filter: alpha(opacity=80); background-repeat: no-repeat;  background-image: url(../images/tipsy.gif); }
+.tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 200px; text-align: left; }
+.tipsy-inner { -moz-border-radius:3px; -webkit-border-radius:3px; }
+.tipsy-north { background-position: top center; }
+.tipsy-south { background-position: bottom center; }
+.tipsy-east { background-position: right center; }
+.tipsy-west { background-position: left center; }
+
+/*added*/
+.tipsy {z-index:1000;}
+.tipsy-inner {width:120px;}
+.tipsy-inner span {font-size:10px;color:#CCCCCC;} 
+.tipsy {text-align:left;}
+.tipsy img {float:left;margin:0 10px 5px 0;}
+span.location {color:#ff5e34;}

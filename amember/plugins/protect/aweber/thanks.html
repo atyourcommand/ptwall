@@ -1,0 +1,22 @@
+{assign var="title" value="Thanks for verifying subscription"}
+{include file="header.html"}
+
+<table cellpadding="5" align="center" width="60%">
+  <tr>
+    <td align="left">
+      <div><b>Hello {$vars.name} and thanks for verifying your member details.</b> </div>
+      <p>An email has been sent to your registered email address at {$vars.from}. </p>
+      <p>Please check your email for an email from <b>{$config.site_title}</b> with 
+        a subject that begins with &quot;<b>RESPONSE REQUIRED</b>&quot; and click the confirmation link in 
+        that email to confirm your permission to be added to the <b>{$config.site_title}</b> membership email list.</p>
+      <p>Once you confirm, you will receive an email with your membership login and 
+        password details.</p>
+      <br><br>        
+      <p>Click <b><a href="{$config.root_url}/login.php">HERE</a></b> to be taken 
+        to the <a href="{$config.root_url}/login.php">{$config.site_title}</a> 
+        login page where you can login.</p>
+      </td>
+  </tr>
+</table>
+
+{include file="footer.html"}
