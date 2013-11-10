@@ -163,10 +163,10 @@ class Add extends Controller {
 																
 			$validate = $this->form_validation->run();
 
-			if (form_error('first_name')) $first_name_class = 'span12 error'; else $first_name_class = 'span12';
-			if (form_error('last_name')) $last_name_class = 'span12 error'; else $last_name_class = 'span12';
-			if (form_error('email')) $email_class = 'span12 error'; else $email_class = 'span12';
-			if (form_error('email_conf')) $email_class = 'span12 error'; else $email_conf_class = 'span12';//	
+			if (form_error('first_name')) $first_name_class = 'form-control error'; else $first_name_class = 'form-control';
+			if (form_error('last_name')) $last_name_class = 'form-control error'; else $last_name_class = 'form-control';
+			if (form_error('email')) $email_class = 'form-control error'; else $email_class = 'form-control';
+			if (form_error('email_conf')) $email_class = 'form-control error'; else $email_conf_class = 'form-control';//	
 			
             $temp_user_data = $this->User_model->get_user($user_id);
             $email_exist = $this->User_model->user_email_exist($_REQUEST['email']);
@@ -486,23 +486,23 @@ class Add extends Controller {
 					
 					$data['first_name'] = array('name' => 'first_name', 'id' => 'first_name', 'value' => $user_data->first_name, 'class' => $first_name_class);
 					$data['last_name'] = array('name' => 'last_name', 'id' => 'last_name', 'value' => $user_data->last_name, 'class' => $last_name_class);
-					$data['business_name'] = array('name' => 'business_name', 'id' => 'business_name', 'value' => $user_data->business_name, 'class' => 'span12');
+					$data['business_name'] = array('name' => 'business_name', 'id' => 'business_name', 'value' => $user_data->business_name, 'class' => 'form-control');
 				  //$data['email'] = array('name' => 'email', 'id' => 'e', 'value' => $user_data->email, 'class' => 'input_med');
-					$data['insurance_reg_no'] = array('name' => 'insurance_reg_no', 'id' => 'insurance_reg_no', 'value' => $user_data->		insurance_reg_no, 'class' => 'span12');
-				  //$data['insurance_expiry'] = array('name' => 'insurance_expiry', 'id' => 'insurance_expiry', 'value' => $user_data->insurance_expiry, 'class' => 'span12');
-					$data['cert_reg_no'] = array('name' => 'cert_reg_no', 'id' => 'cert_reg_no', 'value' => $user_data->cert_reg_no, 'class' => 'span12');
-					$data['cert_expiry'] = array('name' => 'cert_expiry', 'id' => 'cert_expiry', 'value' => $cert_expiry, 'class' => 'span12');	
+					$data['insurance_reg_no'] = array('name' => 'insurance_reg_no', 'id' => 'insurance_reg_no', 'value' => $user_data->		insurance_reg_no, 'class' => 'form-control');
+				  //$data['insurance_expiry'] = array('name' => 'insurance_expiry', 'id' => 'insurance_expiry', 'value' => $user_data->insurance_expiry, 'class' => 'form-control');
+					$data['cert_reg_no'] = array('name' => 'cert_reg_no', 'id' => 'cert_reg_no', 'value' => $user_data->cert_reg_no, 'class' => 'form-control');
+					$data['cert_expiry'] = array('name' => 'cert_expiry', 'id' => 'cert_expiry', 'value' => $cert_expiry, 'class' => 'form-control');	
 					
 					if ($user_exist && $user_data->active==1) 		
 						
 						$data['email'] = array('name' => 'email', 'id' => 'email', 'value' => $user_data->email, 'class' => $email_class, 'disabled' => 'disabled');
 					else
 						$data['email'] = array('name' => 'email', 'id' => 'email', 'value' => $user_data->email, 'class' => $email_class);	
-					$data['phone_no'] = array('name' => 'phone_no', 'id' => 'phone_no', 'value' => $user_data->phone_no, 'class' => 'span12');
-					$data['facebook_url'] = array('name' => 'facebook_url', 'id' => 'facebook_url', 'value' => $user_data->facebook_url, 'class' => 'span12');
-					$data['linkedin_url'] = array('name' => 'linkedin_url', 'id' => 'linkedin_url', 'value' => $user_data->linkedin_url, 'class' => 'span12');
-					$data['workplace_url'] = array('name' => 'workplace_url', 'id' => 'workplace_url', 'value' => $user_data->workplace_url, 'class' => 'span12');
-					$data['street_address'] = array('name' => 'street_address', 'id' => 'street_address', 'value' => $user_data->street_address, 'class' => 'span12');
+					$data['phone_no'] = array('name' => 'phone_no', 'id' => 'phone_no', 'value' => $user_data->phone_no, 'class' => 'form-control');
+					$data['facebook_url'] = array('name' => 'facebook_url', 'id' => 'facebook_url', 'value' => $user_data->facebook_url, 'class' => 'form-control');
+					$data['linkedin_url'] = array('name' => 'linkedin_url', 'id' => 'linkedin_url', 'value' => $user_data->linkedin_url, 'class' => 'form-control');
+					$data['workplace_url'] = array('name' => 'workplace_url', 'id' => 'workplace_url', 'value' => $user_data->workplace_url, 'class' => 'form-control');
+					$data['street_address'] = array('name' => 'street_address', 'id' => 'street_address', 'value' => $user_data->street_address, 'class' => 'form-control');
 				
 					$data['tag_1'] = array('name' => 'tag_1', 'id' => 'tag_1');
 					$data['tag_2'] = array('name' => 'tag_2', 'id' => 'tag_2');

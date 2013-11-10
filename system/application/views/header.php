@@ -8,16 +8,19 @@
 <?php if ($title) { ?>
 <title><?php echo $title; ?></title>
 <?php } else {  ?>
-<title>Personal Trainer Directory - Personal Trainer Wall</title>
+<title>Personal Trainer Directory - United States, Canada, Australia and the United Kingdom</title>
+<?php } ?>
+
+<?php if ($description) { ?>
+<meta name="description" content="<?php echo $description; ?>" />
+<?php } else {  ?>
+<meta name="description" content="Find a Personal Trainer in your city and hundreds of local certified Personal Training Professionals " />
 <?php } ?>
 <meta name="resource-type" content="document" />
 <meta http-equiv="content-language" content="en-us" />
 <meta http-equiv="author" content="John Brunskill" />
 <meta http-equiv="contact" content="admin@atyourcommand.com.au" />
 <meta name="copyright" content="Copyright (c)2013 John Brunskill. All Rights Reserved." />
-<meta name="description" content="Find a Personal Trainer in your city. Search by city, name, sports, speciality and style tags" />
-<meta name="google-site-verification" content="fcwsX3aygglRvnBc-iFc0KcGB-PhD0Ya9iXzOTi-bcc" />
-
 <!--Facebook Open Graph Protocol Tags-->
 <meta property="og:title" content="Find a Personal Trainer"/>
 <meta property="og:type" content="website"/>
@@ -27,11 +30,6 @@
 <meta property="og:description" content="Personal Trainers from USA, Canada, Australia and UK"/>
 <meta property="og:email" content="admin@personaltrainerwall.com"/>
 <meta property="fb:app_id" content="272124099469128"/>
-<!-- Google +1 meta -->
-<meta itemprop="name" content="Personal Trainer Wall">
-<meta itemprop="description" content="Personal Trainers from USA, Canada, Australia and UK">
-<meta itemprop="image" content="http://personaltrainerwall.com/images/logo-facebook-2.jpg">
-<!--end-->
 <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 <!--for mobile devices-->
@@ -39,8 +37,8 @@
 <!--Google Font-->
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>blog/wp-content/themes/ptwall/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>blog/wp-content/themes/ptwall/css/responsive.css">
+<!--<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>blog/wp-content/themes/ptwall/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>blog/wp-content/themes/ptwall/css/responsive.css">-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/style.css"/>
 <!--[if gte IE 9]>
   <style type="text/css">
@@ -49,13 +47,16 @@
     }
   </style>
 <![endif]-->
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/style-ie6.css"/>  
+<![endif]-->
 <?php // Loads HTML5 JavaScript file to add support for HTML5 elements in older IE versions. ?>
 <!--[if lt IE 9]>
 <script src="<?php echo base_url(); ?>blog/wp-content/themes/ptwall/js/html5.js" type="text/javascript"></script>
 <![endif]-->
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+
  <!--image fadein -->
 <script src="<?php echo base_url(); ?>scripts/jquery.imagesloaded.min.js"></script>
 <script type="text/javascript">
@@ -67,11 +68,23 @@ $(document).ready(function (){
 $('#records img').not('header img').each(function() {
 		$(this).css('opacity', 0).imagesLoaded(function() {$(this).animate({'opacity': 1}, 1000)});
 });
+
+// Calculate Margin to adjust #main for header changing height
+function marginForMain(){
+	var header = $("#header-wrapper");
+	var main = $("#main");
+	var height = $(header).outerHeight(true);
+	$(main).css("margin-top",height+"px");
+}
+marginForMain();
+$(window).resize(function(){
+  marginForMain();
+});
+
 });
 </script>
 <?php if(isset($show_update_modal) &&  $show_update_modal) { ?>
 <? } ?>
-<meta name="google-site-verification" content="ZvEIbmcX4N5cRoBeN_b97-eFNThRxpg1Fak1aMwZtKQ" />
 </head>
 <?php 
 	if (isset($controller) && $controller=="trainers"){ ?>
@@ -81,30 +94,20 @@ $('#records img').not('header img').each(function() {
 <body class="wall">
 <? } ?>
 <!-- start header content -->
-<div id="header-wrapper" class="navbar navbar-fixed-top">
-  <header id="masthead" class="site-header container" role="banner">
-    <div class="row-fluid"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
-      <nav id="site-navigation" class="nav-collapse clearfix" role="navigation">
-        <div class="skip-link assistive-text"><a title="Skip to content" href="#main">Skip to content</a></div>
-        <div class="menu">
+<div id="header-wrapper" class="navbar-fixed-top">
 
-            <ul id="main-menu" class="the-main-menu">
-             <!-- <li class=""> <a href="/">Home</a> </li>
-              <li class=""> <a href="http://personaltrainerwall.com/index.php?c=welcome&show_guests=true">Guest Wall</a> </li>
-              <li class=""> <a href="/blog/">Blog</a> </li>
-              <li class=""> <a href="http://www.facebook.com/pages/Personal-Trainer-Wall/185142201591117">Facebook Page</a> </li>-->
-              <li class="pull-right">
-                <ul id="navAccount">
-                  <?php if ($user_logged_in && $auth_mode!=-1) { ?>
+ <?php if ($user_logged_in && $auth_mode!=-1) { ?>
+ <div class="member-links-panel center">
+                <ul class="no-style">
                   <!--<span class="loggedIn">Hi <?php echo $user->first_name ?></span>-->
-                  <li>
+                  <li class="dropdown">
                     <?php if (strlen($user->first_name)>0 && $user->guest==0 ) { ?>
                     <span class="myPageLink"><a title="Check your page" id="" href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><span>My Page</span></a> | </span>
                     <?php } else if (strlen($user->first_name)>0 && ($user->guest==1 && $user->sponsor==1)  ) { ?>
                     <span class="myPageLink"><a title="Check your page" id="" href="<?php echo base_url(); ?>guests/<?php echo $user->user_id; ?>"><span>My Sponsors Page</span></a> | </span>
                     <?php } ?>
-                    <a title="My Account" id="dd2" class="myAccountTrigger dropdown" href="#" rel="dropdown2">My Account</a>
-                    <ul class="dropdown-menu" id="dropdown2">
+                    <a title="My Account" data-toggle="dropdown"role="button" href="#">My Account</a> You are logged in  <strong><?php echo $user->first_name ?></strong>
+                    <ul id="menu-1" class="dropdown-menu" aria-labelledby="drop1" role="menu">
                       <li><img src="<?php echo get_user_thumb($user->user_id); ?>" alt="Personal Trainer - <?php echo $user->first_name." ".$user->last_name ?> " width="48" border="0"/>
                         <p style="font-weight: bold;">Hi <?php echo $user->first_name." ".$user->last_name ?></p>
                         <hr class="divider"/>
@@ -124,16 +127,36 @@ $('#records img').not('header img').each(function() {
                       <li class="clearfix" id="subscriptionInfo"><a title="Subscription Stuff" rel="facebox" class="" href="<?php echo base_url(); ?>info/upgrade.php"><span></span>Subscription Stuff </a></li>
                     </ul>
                   </li>
-                  <?php } else { ?>
-                  <li> Join or login: <span class="twitterLink"><a class="" original-title="Join or login with Facebook" href="<?php echo base_url(); ?>index.php?c=auth&m=fb_login" >Facebook</a></span> 
-                    
-                    <!-- <span class="twitterLink"> | <a href="<?php echo $header_data['twitter_request_url']; ?>" class="" original-title="Join or login with Twitter " >Twitter</a></span>--> 
-                  </li>
-                </ul>
-                <?php } ?>
-              </li>
-              
-              <!-- <li id="guests">
+                                
+                 
+                </ul></div>
+
+ <?php } else { ?>
+<!--nothing-->
+<?php } ?>
+  <header id="masthead" class="site-header container" role="banner">
+    <div class="row"> <a style="display:none;" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+      <nav id="site-navigation" class="nav-collapse clearfix" role="navigation">
+        <div class="skip-link assistive-text"><a title="Skip to content" href="#main">Skip to content</a></div>
+        
+      </nav>
+    </div>
+    <div class="row">
+    	<div class="col-sm-4 hidden-xs">
+         <div class="strapline hidden-xs">Free Personal Trainer Directory</div>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+         <div id="logo"><a href="/" title="Home"> </a> </div>
+        </div> 
+        <div class="col-xs-6 col-sm-4"> 
+         <div class="social-connect">
+         <?php if ($user_logged_in && $auth_mode!=-1) { ?>
+         <!--No Login button--> 
+         <?php } else { ?>
+         <span class="connect-with">Connect with &nbsp;&nbsp;</span>
+               <a class="btnFacebook" original-title="Join or login with Facebook" href="<?php echo base_url(); ?>index.php?c=auth&m=fb_login" >&nbsp;</a>
+         <!-- <span class="twitterLink"> | <a href="<?php echo $header_data['twitter_request_url']; ?>" class="" original-title="Join or login with Twitter " >Twitter</a></span>--> 
+            <!-- <li id="guests">
               <?=menu_anchor(base_url()."index.php?c=welcome&amp;country=$country&amp;show_guests=true", "Guests")?>
             </li>
             <li id="retweets">
@@ -145,20 +168,13 @@ $('#records img').not('header img').each(function() {
             <li id="join">
               <?=menu_anchor(base_url()."join/", "Join")?>
             </li>-->
-              
-            </ul>
-         
-        </div>
-      </nav>
-    </div>
-    <div class="row-fluid">
-     <span class="strapline">Free Personal Trainer Directory</span>
-      <div id="logo"><a href="/" title="Home"> </a> </div><span class="strapline">USA, Canada, Australia and UK</span>
-    </div>
+             
+       <?php } ?>
+        </div></div>
+        </div> 
+
   </header>
   <!-- end header --> 
-  
- 
 </div>
 <!-- end header container -->
 <div id="main" class="wrapper">
@@ -189,7 +205,6 @@ if (isset($controller) && $controller=="trainers"){ ?>
 <? } ?>
 <!-- user alert--> 
 <script type="text/javascript"> 
-		<!-- we run in the footer so no need to use onload -->
 		<?php if ($header_data['alert_show']) { ?>
 			$(document).ready(function() {
 				$("#message").fadeIn("slow")

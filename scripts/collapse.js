@@ -1,18 +1,13 @@
 // JavaScript Document
-
 //Collapse containers for UI
-
 $(document).ready(function(){
-						   
-   
 /* Collapse Widgets */
-
-/* Toggle Search Containers */
+/* toggler Search Containers */
 
  var c = 0;
  var panel = $("li.widget ul");
- var l = $('li.widget a.toggle').length - 1;
- $("li.widget a.toggle").addClass("active");
+ var l = $('li.widget a.toggler').length - 1;
+ $("li.widget a.toggler").addClass("active");
 
  for (c=0;c<=l;c++){
 
@@ -24,9 +19,9 @@ $(document).ready(function(){
  };
 };
 
-$("li.widget a.toggle.inactive").toggle(
+$("li.widget a.toggler.inactive").toggle(
  function () {
- var num = $("li.widget a.toggle").index(this);
+ var num = $("li.widget a.toggler").index(this);
  var cooky = 'panel' + num;
  var value = 'open' + num;
  $(this).next("ul").slideDown(500);
@@ -39,7 +34,7 @@ $("li.widget a.toggle.inactive").toggle(
  },
  
  function () {
- var num = $("li.widget a.toggle").index(this);
+ var num = $("li.widget a.toggler").index(this);
  var cooky = 'panel' + num;
  $(this).next("ul").slideUp(500);
  $(this).addClass("inactive");
@@ -50,9 +45,9 @@ $("li.widget a.toggle.inactive").toggle(
  }
  );
 
-$("li.widget a.toggle.active").toggle(
+$("li.widget a.toggler.active").toggle(
  function () {
- var num = $("li.widget a.toggle").index(this);
+ var num = $("li.widget a.toggler").index(this);
  var cooky = 'panel' + num;
  $(this).next("ul").slideUp(500);
  $(this).addClass("inactive");
@@ -61,7 +56,7 @@ $("li.widget a.toggle.active").toggle(
 
  },
 function () {
-var num = $("li.widget a.toggle").index(this);
+var num = $("li.widget a.toggler").index(this);
 var cooky = 'panel' + num;
 var value = 'open' + num;
 $(this).next("ul").slideDown(500);
@@ -72,31 +67,29 @@ $.cookie(cooky, value, { path: '/', expires: 10 });
 
 );
 
-
-
-/* Toggle Form Containers */
+/* toggler Form Containers */
 
  var c = 0;
- var box = $("li.expanders ul");
- var l = $('li.expanders a.toggle').length - 1;
- $("li.expanders a.toggle").addClass("active");
+ var box = $("li.expanders .expander-container");
+ var l = $('li.expanders h3 a.toggler').length - 1;
+ $("h3 a.toggler").addClass("active");
 
  for (c=0;c<=l;c++){
 
  var cvalue = $.cookie('box' + c);
 
  if ( cvalue != 'open' + c ) {
- $(box).eq(c).slideUp(500);
+ //$(box).eq(c).slideUp(500);
  $(box).eq(c).prev().removeClass('active').addClass('inactive');
  };
 };
 
-$("li.expanders a.toggle.inactive").toggle(
+$("li.expanders a.toggler.inactive").toggle(
  function () {
- var num = $("li.expanders a.toggle").index(this);
+ var num = $("li.expanders h3 a.toggler").index(this);
  var cooky = 'box' + num;
  var value = 'open' + num;
- $(this).next("ul").slideDown(500);
+ $(this).closest("h3").next("ul").slideDown(500);
  $(this).removeClass('inactive');
  //added this
  $(this).addClass("active");
@@ -106,9 +99,9 @@ $("li.expanders a.toggle.inactive").toggle(
  },
  
  function () {
- var num = $("li.expanders a.toggle").index(this);
+ var num = $("li.expanders h3 a.toggler").index(this);
  var cooky = 'box' + num;
- $(this).next("ul").slideUp(500);
+ $(this).closest("h3").next("ul").slideUp(500);
  $(this).addClass("inactive");
  //added this
  $(this).removeClass("active");
@@ -117,23 +110,22 @@ $("li.expanders a.toggle.inactive").toggle(
  }
  );
 
-$("li.expanders a.toggle.active").toggle(
+$("li.expanders a.toggler.active").toggle(
  function () {
- var num = $("li.expanders a.toggle").index(this);
+ var num = $("li.expanders h3 a.toggler").index(this);
  var cooky = 'box' + num;
- $(this).next("ul").slideUp(500);
+ $(this).closest("h3").next("ul").slideUp(500);
  $(this).removeClass('active');
  //added this
  $(this).addClass("inactive");
-
  $.cookie(cooky, null, { path: '/', expires: 10 });
 
  },
 function () {
-var num = $("li.expanders a.toggle").index(this);
+var num = $("li.expanders h3 a.toggler").index(this);
 var cooky = 'box' + num;
 var value = 'open' + num;
-$(this).next("ul").slideDown(500);
+$(this).closest("h3").next("ul").slideDown(500);
 $(this).removeClass('inactive');
 //added this
 $(this).addClass("active");

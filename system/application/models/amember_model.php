@@ -1,12 +1,12 @@
 <?php
-class Amember_model extends Model
+class Amember_model extends CI_Model
 {
   
   var $db;
   
   function Amember_model()
   {
-    parent::Model();
+    parent::__construct();
 	
   }
 

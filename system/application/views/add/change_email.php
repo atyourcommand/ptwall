@@ -1,7 +1,9 @@
-<div id="pageWrapper">
   <div id="wrapper">
-    <div id="page">
-	<h3>Change your email address</h3>
+  <section class="theme theme-three">
+<div class="container">
+<div class="row-fluid">
+
+	  <h1 class="center"><small>Change your email address</small></h1>
         <?php if (!$validate) { ?>
         <div class="ui-state-error ui-corner-all" style="padding: 0 .7em; vertical-align:middle;">
           <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> Oops! <?php echo $error_message ?>.</p>
@@ -21,9 +23,9 @@
                 <ul>
                   <li>
                     <?php if (!$verify && !$email_sent) { ?>
-                    <div class="row clearfix">
-                      <fieldset class="narrow" style="width:300px;">
-                      <legend><span><b>1</b> Email </span></legend>
+                    <div class="row-fluid clearfix">
+                      <fieldset class="narrow">
+                      <legend><span> Email </span></legend>
                       <p class="inputs clearfix">
                         <label for="emailAddress" class="lbl_med">Enter New Email Address <?php echo form_input($email); ?> </label>
                       </p>
@@ -51,7 +53,6 @@
           </ul>
         </div>
       </form>
-    </div>
+
   </div>
-</div>
-<!-- end pageWrapper -->
+  </div></section></div>

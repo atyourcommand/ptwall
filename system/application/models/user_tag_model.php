@@ -1,12 +1,12 @@
 <?php
-class User_Tag_model extends Model
+class User_Tag_model extends CI_Model
 {
   
   var $db;
   
   function User_Tag_model()
   {
-    parent::Model();
+    parent::__construct();
   }
 	
   function get($user_id) {  

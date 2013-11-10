@@ -1,13 +1,13 @@
 <?php
-class Config_model extends Model
+class Config_model extends CI_Model
 {
   
   var $db;
-  
-  function Config_model()
-  {
-    parent::Model();
-  }
+	  
+  function __construct() {
+        parent::__construct();
+		$this->load->database();
+    }
 
   function get($id)
   {

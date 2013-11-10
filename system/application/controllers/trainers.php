@@ -89,14 +89,11 @@ class Trainers extends Controller {
 		
 		$city = $this->City_model->get_name_by_id($user->city_id);
 		$header_data['controller'] = $this->router->fetch_class();
-		
 		$header_data['geo'] = $this->County_model->get_name_by_id($user->county_id).", ".$this->State_model->get_name_by_id($user->state_id).", ".$this->Country_model->get_name_by_id($user->country_id);
 		if ($city) $header_data['geo'] = $city.", ".$header_data['geo'];
-
 		$header_data['title'] = "Personal Trainer ".$header_data['geo']." | ".$user->first_name." ".$user->last_name." | Personal Trainer Wall";
 		$header_data['keywords'] = ",".$user->first_name." ".$user->last_name.",".$header_data['geo'];
-		
-
+		$header_data['description'] = $user->first_name." ".$user->last_name." is a Personal Trainer in ".$header_data['geo']. " offering certified Personal Training.";
 		
 		$show_street_address= $user->hide_google_map;
 		$street_address	= $user->street_address;

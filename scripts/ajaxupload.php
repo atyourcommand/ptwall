@@ -39,9 +39,7 @@
 						if(file_exists($folder.$userId."."."png")) {
 							unlink($folder.$userId."."."png");
 						}*/
-					
-						
-
+									
 						foreach (glob("../uploads/".$userId."_*.*") as $filename) {
 							unlink($filename);
 						}						

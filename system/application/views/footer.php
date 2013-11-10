@@ -2,8 +2,8 @@
 <div id="footer">
 <section class="theme theme-two">
 <div class="container">
-  <div class="row-fluid">
-    <div class="span3 filler">
+  <div class="row">
+    <div class="col-sm-3 filler">
       <div class="table">
         <div class="section-header">
           <h1 class="large no-caps">Jump on</h1>
@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <div class="span6"> 
+    <div class="col-sm-6"> 
       
       <!--Do not show buttons for facebook or twitter-->
       
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="span3 filler">
+    <div class="col-sm-3 filler">
       <div class="table">
         <div class="section-header">
           <h1 class="large no-caps">Who?</h1>
@@ -36,8 +36,8 @@
       </div>
     </div>
   </div>
-  <div class="row-fluid">
-    <div class="span12">
+  <div class="row">
+    <div class="col-xs-12">
       <p class="copy center">
         <?php 
 if ($controller=="trainers"){ ?>
@@ -52,39 +52,22 @@ if ($controller=="trainers"){ ?>
   </div>
 
 </body>
+<!--All minified scripts here-->
+<script type="text/javascript" src="<?php echo base_url(); ?>main.min.js"></script>
+<!--//All minified scripts here-->
+
 <!--Bootstrap--> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/bootstrap.js"></script> 
 <!--This is used on the auto complete search menu options--> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/bootstrap-tabs.js"></script> 
-<script>
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/bootstrap.js"></script> -->
+<!--<script>
 	window.onload = function () {
 		//initiate tabs
 		tabbedContent('tabs');
 	}
-</script> 
+</script>--> 
 <!-- Auto complete--> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/autosuggest/js/bsn.AutoSuggest_c_2.0.js"></script> 
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/bsn.AutoSuggest_c_2.0.js"></script> -->
 
-<!--Ad Rotator--> 
-<!--http://jquery.malsup.com/cycle/--> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/jquery.cycle.all.js"></script> 
-<script>$('#fade').cycle();</script> 
-<script type="text/javascript">
-		$(function () {
-			var $alert = $('#alert');
-			if($alert.length)
-			{
-				var alerttimer = window.setTimeout(function () {
-					$alert.trigger('click');
-				}, 3000);
-				$alert.animate({height: $alert.css('line-height') || '50px'}, 200)
-				.click(function () {
-					window.clearTimeout(alerttimer);
-					$alert.animate({height: '0'}, 200);
-				});
-			}
-		});
-		</script> 
 <script language="javascript" type="text/javascript">
 <!--
 // Get the HTTP Object
@@ -128,11 +111,8 @@ function getCounties(){
 var httpObject = null;
 /*
 window.addEvent('domready',function(){
-									
-
-	
-	 var x=document.getElementById("sort_menu");
-	  var y = document.getElementById("id");	
+ var x=document.getElementById("sort_menu");
+var y = document.getElementById("id");	
 	
 	if (x.selectedIndex==4)
 		y.style.display = "block";
@@ -143,107 +123,43 @@ window.addEvent('domready',function(){
 <!--ajax calls--> 
 <script type="text/javascript">
 function checkSort(){   
-	 var x=document.getElementById("sort_menu");
-	  var y = document.getElementById("sort_criteria");	
-	
-	 if (x.selectedIndex > 3)
-	 	y.style.display = "block";	
-	else
-	    var z=document.getElementById("function_search_form");
-		z.submit();
-	 	y.style.display = "none";
-    }
- 
+ var x=document.getElementById("sort_menu");
+ var y = document.getElementById("sort_criteria");	
+ if (x.selectedIndex > 3)
+	y.style.display = "block";	
+ else
+    var z=document.getElementById("function_search_form");
+	z.submit();
+	y.style.display = "none";
+}
 </script> 
-<!--if the window is less than 768px wide then add a class--> 
-<script type="text/javascript">
-$(document).ready( function() {
-    /* Check width on page load*/
-    if ( $(window).width() < 768) {
-     $('html').addClass('mobile');
-    }
-    else {}
- });
 
- $(window).resize(function() {
-    /*If browser resized, check width again */
-    if ($(window).width() < 768) {
-     $('html').addClass('mobile');
-    }
-    else {$('html').removeClass('mobile');}
- });
-</script> 
 <!--Tweets on Re-Tweet Page--> 
 <!--Search bar--> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/general_functions.js"></script> 
-<!--Tweets on Re-Tweet Page--> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/jquery.tweet.js"></script> 
-<script type="text/javascript">
-	jQuery(function($){
-        $(".tweets").tweet({
-          username: "ptjessie",
-          page: 1,
-          avatar_size: 32,
-          count: 20,
-          loading_text: "loading ..."
-        }).bind("loaded", function() {
-          var ul = $(this).find(".tweet_list");
-          var ticker = function() {
-            setTimeout(function() {
-              ul.find('li:first').fadeOut( 1000, function() {
-                $(this).detach().appendTo(ul).removeAttr('style');
-              });
-              ticker();
-            }, 5000);
-          };
-          ticker();
-        });
-      });
- </script> 
-
-<!--delays images loading when not in the viewport --> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/lazyload.js"></script> 
-<script charset="utf-8" type="text/javascript">
-      $(function() {          
-          $(".guests img").lazyload({
-             placeholder : "http://personaltrainerwall.com/images/grey.gif",
-             effect      : "fadeIn"
-          });
-      });
-</script> 
-<!--slider--> 
-<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/easySlider1.7.js"></script>--> 
-<!--<script type="text/javascript">
-		$(document).ready(function(){	
-			$("#slider").easySlider({
-				auto: true, 
-				continuous: true,
-				numeric: true
-			});
-		});	
-	</script>--> 
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/general_functions.js"></script> -->
 <!--BreadCrumb--> 
-<script src="<?php echo base_url(); ?>scripts/breadcrumbs/jquery.easing.1.3.js" type="text/javascript" language="JavaScript"></script> 
-<script src="<?php echo base_url(); ?>scripts/breadcrumbs/jquery.jBreadCrumb.1.1.js" type="text/javascript" language="JavaScript"></script> 
-<script src="<?php echo base_url(); ?>scripts/facebox.js" type="text/javascript"></script> 
-<script charset="utf-8" type="text/javascript">
+<!--<script src="<?php echo base_url(); ?>scripts/jquery.easing.1.3.js" type="text/javascript" language="JavaScript"></script>--> 
+<!--<script src="<?php echo base_url(); ?>scripts/jquery.jBreadCrumb.1.1.js" type="text/javascript" language="JavaScript"></script>--> 
+<!--<script src="<?php echo base_url(); ?>scripts/facebox.js" type="text/javascript"></script> -->
+<script>
 jQuery(document).ready(function($) {
   $('a[rel*=facebox]').facebox();
-}) 
+})
 </script> 
-<!--Container Collapse for search options --> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/jquery.cookie.js"></script> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/collapse.js"></script> 
-<!--menu switcher--> 
-<script src="<?php echo base_url(); ?>scripts/switcher.js" type="text/javascript"></script> 
+<!--Expander sections --> 
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/jquery.cookie.js"></script> -->
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/collapse.js"></script>--> 
+<!--drop down menu--> 
+<!--<script src="<?php echo base_url(); ?>scripts/switcher.js" type="text/javascript"></script>--> 
 <!--Tooltips--> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts/tipsy.js"></script> 
-<script type='text/javascript'>
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/tipsy.js"></script> -->
+<!--Cannot read the main script?-->
+<!--<script type='text/javascript'>
 $(function() {
     $('.tips').tipsy({fade: true});  
     $('.format').tipsy({html: true });
 });
-</script>
+</script>-->
 <?php if($show_update_modal) { ?>
 <? } ?>
 <script type="text/javascript">
@@ -252,7 +168,7 @@ $(document).ready(function() {
 	(function() {
 		//settings
 		var fadeSpeed = 200, fadeTo = 0.5, topDistance = 30;
-		var topbarME = function() { $('#headerContainer').fadeTo(fadeSpeed,1); }, topbarML = function() { $('#headerContainer').fadeTo(fadeSpeed,fadeTo); };
+		var topbarME = function() { $('#header-wrapper').fadeTo(fadeSpeed,1); }, topbarML = function() { $('#header-wrapper').fadeTo(fadeSpeed,fadeTo); };
 		var inside = false;
 		//do
 		$(window).scroll(function() {
@@ -260,14 +176,14 @@ $(document).ready(function() {
 			if(position > topDistance && !inside) {
 				//add events
 				topbarML();
-				$('#headerContainer').bind('mouseenter',topbarME);
-				$('#headerContainer').bind('mouseleave',topbarML);
+				$('#header-wrapper').bind('mouseenter',topbarME);
+				$('#header-wrapper').bind('mouseleave',topbarML);
 				inside = true;
 			}
 			else if (position < topDistance){
 				topbarME();
-				$('#headerContainer').unbind('mouseenter',topbarME);
-				$('#headerContainer').unbind('mouseleave',topbarML);
+				$('#header-wrapper').unbind('mouseenter',topbarME);
+				$('#header-wrapper').unbind('mouseleave',topbarML);
 				inside = false;
 			}
 		});

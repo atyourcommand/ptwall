@@ -6,18 +6,24 @@ require_once(APPPATH."/helpers/epitwitter/EpiTwitter.php");
 require_once(APPPATH."/helpers/facebook/facebook_auth.php");	
 
 
-class Welcome extends Controller {
-
+class Welcome extends CI_Controller {
+	
+	
 	var $session_id;
 	var $ptAuth;
 	//var $consumer_key = 'PWL8ezHZPbtED2rhpXPWQ'; /* Consumer key from twitter */
 	//var $consumer_secret = 'DJrz72RUai9fo2ARYj1RLkxnZFv4bnbb7lRrrSB3Zzg'; /* Consumer Secret from twitter */
 	// var $consumer_key = 'rNcmIthsaDLwZGCdMIalg'; /* Consumer key from twitter */
     // var $consumer_secret = '7C9cQRqQyg2tbliG2v3X0uvHatZgfSSUShJpmJPkA'; /* Consumer Secret */
-
+	
 	function __construct()
-	 {
-			parent::Controller();
+	 {	
+			parent::__construct();
+			//$this->load->library(array('database','form_validation'));
+			//$this->load->database();
+			//$this->load->library('database');
+			//echo 'Currently loaded libs: '.implode(', ', $this->loader->_ci_classes()); 
+			$this->output->enable_profiler(TRUE);
 			$this->load->model('State_model');
 			$this->load->model('User_model');	
 			$this->load->model('City_model');			
@@ -33,9 +39,11 @@ class Welcome extends Controller {
 			$this->consumer_secret =  $this->Config_model->get_value('CONSUMER_SECRET')->value;		
 			
 	 }
-		 
+ 
 	function index()
 	{		
+		//$time = microtime(true); // time in Microseconds
+
 		$show_search = $_REQUEST['show_search'];
 		$show_guests = $_REQUEST['show_guests'];
 		$show_sponsors = $_REQUEST['show_sponsors'];
@@ -50,7 +58,14 @@ class Welcome extends Controller {
 			print_r($user);
 		}
 		
-		$data=$this->_get_form_data();	
+		$time = microtime(true); // time in Microseconds
+		
+		$data=$this->_get_form_data();
+		
+		//echo (microtime(true) - $time) . ' index function elapsed';
+	    $microtime = (microtime(true) - $time) . ' _get_form_data function elapsed';
+	    echo "<script language='javascript'>console.log('$microtime');</script>";	
+			
 		$user_logged_in = false;
 		//echo $_COOKIE['user_id'];
 		if (isset($_COOKIE['user_id'])) {
@@ -78,21 +93,26 @@ class Welcome extends Controller {
 		$header_data['user'] =  $user_data;
 		// todo - replace header
 		
-		// GET LOCATION FOR TITLE .JB
-		$ip_data = $this->_locate_ip($_SERVER['REMOTE_ADDR']);
-		$meta_city_name = $ip_data['city'];
-		$meta_state_name = $ip_data['region_name'];
-		$meta_country_name = $ip_data['country_name'];
+		// GET LOCATION META FOR TITLE .JB
+		//$ip_data = $this->_locate_ip($_SERVER['REMOTE_ADDR']);
+		//$meta_city_name = $ip_data['city'];
+		//$meta_state_name = $ip_data['region_name'];
+		//$meta_country_name = $ip_data['country_name'];
 		
 		//echo $meta_city_name;
 		//echo $meta_state_name;
 		//echo $meta_country_name;
 		
-		//Stopped using above variables for now
+		// GET *NEW METHOD * LOCATION META FOR TITLE .JB
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}"));
+		//echo $details->city; // -> "Mountain View"
+		$new_meta_city_name = $details->city;
+		$new_meta_state_name = $details->region;
 		
-		//$header_data['title'] = "Personal Trainer ".$meta_state_name. " | Find Personal Training in ".$meta_state_name." | Personal Trainer Wall";
 		
-		$header_data['title'] = "Personal Trainer Directory | Personal Trainer Wall";
+		$header_data['title'] = "Personal Trainer ".$new_meta_state_name." | Personal Trainer Directory | PT Wall";
+		$header_data['description'] = "At PT Wall find a certified Personal Trainer in " .$new_meta_state_name. "  or in your city" ;
 		// END GET LOCATION FOR TITLE 
 		
 		$res=$this->Country_model->get();			
@@ -104,7 +124,6 @@ class Welcome extends Controller {
 		$header_data['country_list'] = $country_list;
 		$header_data['country'] = $data['country'];
 		
-		
 		if ($this->input->get('e')=='update')
 			$header_data['show_update_modal'] = true;
 			
@@ -112,13 +131,12 @@ class Welcome extends Controller {
 		
 		if ($show_search == 'true') {
 			$this->load->view('index_search', $data);
-						}
+					}
 		
 		elseif ($show_guests == 'true')  {
 			$this->load->view('index_guests', $data);
 			//print_r($data);
-                
-                        }
+                                }
 		elseif ($show_sponsors == 'true')  {
 			$this->load->view('index_sponsors', $data);
 			//print_r($data);
@@ -127,84 +145,19 @@ class Welcome extends Controller {
 		elseif ($show_twitter_data == 'true')  {
 			$this->load->view('index_twitter', $data);
                         }					
-			else{
-				//// condition for testing
-				/*if($_COOKIE['user_id']=="1243412679" ){
-					$this->load->view('index_dev', $data);
-				}else{
-					$this->load->view('index_ajax', $data);
-				}*/
+		else{
+			//// condition for testing
+			/*if($_COOKIE['user_id']=="1243412679" ){
+				$this->load->view('index_dev', $data);
+			}else{
 				$this->load->view('index_ajax', $data);
-			}
-			$this->load->view('footer');
+			}*/
+			$this->load->view('index_ajax', $data);
+		}
+		$this->load->view('footer');
 		
 	}
-	
-	function index2()
-	{		
 		
-		$show_guests = $_REQUEST['show_guests'];
-		
-		if ($this->input->post('search_by_name_id')) {
-			$user = $this->User_model->get_user($this->input->post('search_by_name_id'));
-			$name_url = trim($user->first_name)."_".trim($user->last_name);
-			$name_url = str_replace(" ","_",$name_url);
-			redirect("/personal-trainer/".$name_url, 'location', 301);
-			print_r($user);
-		}
-		
-		$data=$this->_get_form_data2();	
-		$user_logged_in = false;
-		
-		if (isset($_COOKIE['user_id'])) {
-			$user_data = $this->User_model->get_user($_COOKIE['user_id']);	
-			$user_logged_in = true;
-			$image_path = $dir = $this->Config_model->get_value('UPLOAD_PHOTO_PATH')->value;	
-			$data['email_verified'] = $user_data ->email_verified;
-			$data['active'] = $user_data ->active;
-			$data['email_verified_msg'] = $this->Config_model->get_value('EMAIL_NOT_VERIFIED_MSG')->value;
-			$data['incomplete_profile_msg'] = $this->Config_model->get_value('INCOMPLETE_PROFILE_MSG')->value;
-		}
-		
-				// todo - replace header
-		$fb_data = _fb_login();
-
-		$header_data['session'] = $fb_data['session'];
-		$header_data['logoutUrl'] = $fb_data['logoutUrl'];
-		$header_data['loginUrl'] = $fb_data['loginUrl'];
-		$header_data['me'] = $fb_data['me'];
-		
-		$header_data['user_logged_in'] = $user_logged_in;
-		$header_data['active'] =  $user_data ->active;
-		$header_data['user'] =  $user_data;
-		// todo - replace header 
-		
-		$res=$this->Country_model->get();			
-		$country_menu = array();
-		foreach ($res as $tablerow) {
-			$result = get_object_vars($tablerow);
-			$country_list[$result['country_id']] = $result['name'];
-		}
-		$header_data['country_list'] = $country_list;
-		$header_data['country'] = $data['country'];
-		
-		
-		if ($this->input->get('e')=='update')
-			$header_data['show_update_modal'] = true;
-				
-		$this->load->view('header', $header_data);
-		
-		if ($show_guests == 'true')  {
-			$this->load->view('index_guests', $data);
-			//print_r($data);
-                        
-                        }
-		else
-			$this->load->view('index', $data);
-			$this->load->view('footer');
-		
-	}
-	
 	function ajax_paging_record()
 	{
 		$data=$this->_get_form_ajax_data();
@@ -227,6 +180,7 @@ class Welcome extends Controller {
 				echo $this->load->view('index_ajax', $data,true);
 		}*/
 		echo $this->load->view('index_ajax', $data,true);
+		
 		exit();
 	}
 	
@@ -262,7 +216,6 @@ class Welcome extends Controller {
           	);
 		
 		// form data
-		
 
 		// handle country radios 
 
@@ -272,14 +225,10 @@ class Welcome extends Controller {
 			$ip_data = $this->_locate_ip($_SERVER['REMOTE_ADDR']);
 			//$ip_data = $this->_locate_ip('192.189.54.255');
 			//$ip_data = $this->_locate_ip('85.234.144.145');
-			
-
 			$country_from_ip=$this->Country_model->get_id_by_name($ip_data['country_name']);
-			
 			$country_list = array(223,13,38,240,241,242,243);
 			if (in_array($country_from_ip, $country_list )) {
 				$country = $country_from_ip; // default united states :)
-				
 				$state_from_ip = $res=$this->State_model->get_id_by_name($country, $ip_data['region_name']);	
 				$state = $state_from_ip;
 													
@@ -288,8 +237,6 @@ class Welcome extends Controller {
 				$country = 223;
 					
 		}
-		
-			
 				
 		// end country radios
 	
@@ -320,7 +267,6 @@ class Welcome extends Controller {
    				$county_menu[$result['county_id']] = $result['name'].'('.$res_count.")";
 		}	
 		
-	
 		$sort_menu['joined'] = 'Most Recent';
 		$sort_menu['statuses_count'] = 'Most Tweets';		
 		$sort_menu['followers_count'] = 'Most Followers';		
@@ -336,7 +282,6 @@ class Welcome extends Controller {
 			$tag_count[$row->tag_id] = $row->tag_count;
 		}	
 				
-		
 		$sort_options = array();
 		$sort_options[0] = "#All Tags";
 		foreach ($query->result() as $row)
@@ -346,8 +291,6 @@ class Welcome extends Controller {
 				//$sort_options[$row->tag_id] = $row->name.' - #'.$row->tag."(".$tag_count[$row->tag_id].")";
 				$sort_options[$row->tag_id] = $row->name.' - #'.$row->tag;
 		}	
-		
-
 		
 		if ($state) 
 			$show_all_results = false;
@@ -383,12 +326,13 @@ class Welcome extends Controller {
 					//echo "here2";
 					//echo $this->db->last_query();
 				}
-			  else {
-					
+			  else { 
+				
 				$latest_users = $this->User_model->get_latest_users($country,$state,$county,$show_all_results,$offset,$recs_per_page,'');
 				$count_latest_users = $this->User_model->count_latest_users($country,$state,$county,$show_all_results);
 				//echo "here3";
 				//echo $this->db->last_query();
+				
 				}
 		}
 		
@@ -494,15 +438,10 @@ class Welcome extends Controller {
 		$config['prev_tag_open'] = '<span class="prev_link">';
 		$config['prev_link'] = '&lt;';		
 		$config['prev_tag_close'] = '</span>';	
-		
-
 		$config['next_tag_open'] = '<span class="next_link">';
 		$config['next_link'] = '&gt;';		
 		$config['next_tag_close'] = '</span>';	
-		
 		$config['first_link'] = '&laquo;';
-
-		
 		//$config['first_link'] = "<span class=\"prev_link\">previous</span>";
 		$config['last_link'] = '&raquo;';
 		//$config['last_link'] = "<span class=\"next_link\">next</span>";
@@ -511,8 +450,6 @@ class Welcome extends Controller {
 		$config['num_links'] = $total_pages;
 		$this->pagination->initialize($config); 		
 		$pagination = $this->pagination->create_links();	
-		
-		
 		$res=$this->Country_model->get();			
 		$country_menu = array();
 		foreach ($res as $tablerow) {
@@ -552,10 +489,11 @@ class Welcome extends Controller {
 		$data['search_by_location_id'] = $this->input->post('search_by_location_id');
 		$data['search_by_tag_id'] = $this->input->post('search_by_tag_id');
 		return $data;
+		echo "<script language='javascript'>console.log('function _get_ajax_form_data');</script>";
 	}
 
 	function _get_form_data() {
-
+			
 		$recs_per_page = 6;
 				
 		$country=$_REQUEST['country']; //$this->input->post("country");	
@@ -586,7 +524,6 @@ class Welcome extends Controller {
           	);
 		
 		// form data
-		
 
 		// handle country radios 
 
@@ -597,20 +534,23 @@ class Welcome extends Controller {
 			//$ip_data = $this->_locate_ip('192.189.54.255');
 			//$ip_data = $this->_locate_ip('85.234.144.145');
 			
-
 			$country_from_ip=$this->Country_model->get_id_by_name($ip_data['country_name']);
+			
+			//$country_from_ip = 'rome';
+			//echo "<p>$country_from_ip</p>";
 			
 			$country_list = array(223,13,38,240,241,242,243);
 			if (in_array($country_from_ip, $country_list )) {
 				$country = $country_from_ip; // default united states :)
-				
+				//echo 'found a country';				
 				$state_from_ip = $res=$this->State_model->get_id_by_name($country, $ip_data['region_name']);	
 				$state = $state_from_ip;
-													
+				//echo $country;					
 				}	
-			else
+			else {
 				$country = 223;
-					
+				//echo $country;
+			}
 		}
 		
 			
@@ -644,13 +584,13 @@ class Welcome extends Controller {
    				$county_menu[$result['county_id']] = $result['name'].'('.$res_count.")";
 		}	
 		
-	
 		$sort_menu['joined'] = 'Most Recent';
 		$sort_menu['statuses_count'] = 'Most Tweets';		
 		$sort_menu['followers_count'] = 'Most Followers';		
 		$sort_menu['friends_count'] = 'Most Following';		
 		$sort_menu['tags'] = 'Tags';				
 		
+	
 		$query = $this->db->query('SELECT t.tag_id,t.tag,tg.name FROM tags as t, tag_group as tg where t.tag_group_id = tg.tag_group_id order by tg.name asc');
 		$query2 = $this->db->query("SELECT tag_id, COUNT(tag_id) as tag_count FROM user_tags where user_id IN (select user_id from users where country_id='$country' and approved=1)  GROUP BY tag_id ");
 		$tag_count = array();
@@ -671,15 +611,13 @@ class Welcome extends Controller {
 				$sort_options[$row->tag_id] = $row->name.' - #'.$row->tag;
 		}	
 		
-
-		
 		if ($state) 
 			$show_all_results = false;
 		else
 			$show_all_results = true;
 			
 		$offset = $this->input->get('per_page');
-	
+		
 		$sort_by = 'tags';
 		
 		if ($sort_by!='tags')
@@ -749,8 +687,6 @@ class Welcome extends Controller {
 			}
 
 			// images
-			
-			
 
 			foreach (glob($upload_path.$user->user_id."*.*") as $filename) {
 				$user_image[$user->user_id]['exist'] = true;	
@@ -778,7 +714,7 @@ class Welcome extends Controller {
 		  'tag_list' => $tag_list
 		); 
 		
-		/*********************************** Bread Crumb **********************************************/
+		/****************** Bread Crumb ***************/
 		
 		if ($country) {
 			$breadcrumb[] = anchor('?c=welcome&m=index&country='.$country, $this->Country_model->get_name_by_id($country));
@@ -796,32 +732,24 @@ class Welcome extends Controller {
 		//$breadcrumb = array('red','blue','green','yellow');
 
 		
-		/***********************************  Pagination **********************************************/
+		/*************  Pagination ******************/
 		if (!$state) $state = $_REQUEST['state']; //$this->input->post('state');	
 		$county = $_REQUEST['county']; //$this->input->post('county');	
 		$sort_by = $_REQUEST['sort_menu']; //$this->input->post('sort_menu');	
 		$tag_id = $_REQUEST['sort_options']; //$this->input->post('sort_options');	
-
-		
 		$total_pages = ceil($count_latest_users / $recs_per_page);
 		$current_page = ceil($offset / $recs_per_page)+1;			
 		$config['base_url'] = "index.php?c=welcome&country=$country&state=$state&sort_menu=$sort_by&sort_options=$tag_id";
 		$config['total_rows'] = $count_latest_users;
 		$config['per_page'] = $recs_per_page; 
 		$config['page_query_string'] = TRUE;
-		
 		$config['prev_tag_open'] = '<span class="prev_link">';
 		$config['prev_link'] = '&lt;';		
 		$config['prev_tag_close'] = '</span>';	
-		
-
 		$config['next_tag_open'] = '<span class="next_link">';
 		$config['next_link'] = '&gt;';		
 		$config['next_tag_close'] = '</span>';	
-		
 		$config['first_link'] = '&laquo;';
-
-		
 		//$config['first_link'] = "<span class=\"prev_link\">previous</span>";
 		$config['last_link'] = '&raquo;';
 		//$config['last_link'] = "<span class=\"next_link\">next</span>";
@@ -832,8 +760,7 @@ class Welcome extends Controller {
 		$pagination = $this->pagination->create_links();	
 		
 		
-		/***********************************  Form Objects *******************************************/	
-		
+		/******************  Form Objects *************/	
 		
 		$data['hidden_data'] = $hidden_data;	
 		$data['state_list'] = $state_ddmenu;
@@ -864,6 +791,7 @@ class Welcome extends Controller {
 		$data['breadcrumb'] = $breadcrumb;
 		$data['error'] = $error;
 		return $data;
+	
 	}
 
 
@@ -922,7 +850,6 @@ class Welcome extends Controller {
    				$county_menu[$result['county_id']] = $result['name'].'('.$res_count.")";
 		}	
 		
-	
 		$sort_menu['joined'] = 'Most Recent';
 		$sort_menu['statuses_count'] = 'Most Tweets';		
 		$sort_menu['followers_count'] = 'Most Followers';		
@@ -948,8 +875,6 @@ class Welcome extends Controller {
 				$sort_options[$row->tag_id] = $row->name.' - #'.$row->tag."(".$tag_count[$row->tag_id].")";
 				
 		}	
-		
-
 		
 		if ($state) 
 			$show_all_results = false;
@@ -1031,6 +956,7 @@ class Welcome extends Controller {
 		$data['upload_image_path'] = $dir = $this->Config_model->get_value('UPLOAD_PHOTO_PATH')->value;			
 		//print_r($user_tags);
 		print_r($data);
+		echo "<script language='javascript'>console.log('function get_map_data ');</script>";
 		return $data;
 	}
 
@@ -1179,31 +1105,40 @@ class Welcome extends Controller {
 	}	
 	
 	function _locate_ip($ip){
-	
+	  $time = microtime(true); // time in Microseconds
 	  //$d = file_get_contents("http://www.ipinfodb.com/ip_query.php?ip=$ip&output=xml&timezone=false");
-	  $d = file_get_contents("http://api.ipinfodb.com/v2/ip_query.php?key=89ae5eb408ea4d70c6c92dbe4d949a60f1de36772231945ccd1ac814123d7362&ip=$ip&timezone=false&output=xml");
-	 
+	  $d = file_get_contents("http://api.ipinfodb.com/v3/ip-city?key=89ae5eb408ea4d70c6c92dbe4d949a60f1de36772231945ccd1ac814123d7362&ip=$ip&timezone=false&format=xml");
 	 
 	  //Use backup server if cannot make a connection
 	  if (!$d){
 		$backup = file_get_contents("http://backup.ipinfodb.com/ip_query.php?ip=$ip&output=xml&timezone=false");
 		$answer = new SimpleXMLElement($backup);
-		if (!$backup) return false; // Failed to open connection
-	  }else{
+		if (!$backup) 
+		return false; // Failed to open connection
+	
+	  } else {
+		//echo "<p>$d</p>";
 		$answer = new SimpleXMLElement($d);
+		
+		echo "<script language='javascript'>console.log('successfully getting data from IP');</script>";
+		//echo (microtime(true) - $time) . ' index function elapsed';
+	    $microtime = (microtime(true) - $time) . ' _locate_ip function elapsed';
+	    echo "<script language='javascript'>console.log('$microtime');</script>";	
 	  }
-	 
-	  $ip = $answer->Ip;
-	  $country_code = $answer->CountryCode;
-	  $country_name = $answer->CountryName;
-	  $region_name = $answer->RegionName;
-	  $city = $answer->City;
-	  $zippostalcode = $answer->ZipPostalCode;
-	  $latitude = $answer->Latitude;
-	  $longitude = $answer->Longitude;
+	  	 
+	  $ip = $answer->ipAddress;
+	  $country_code = $answer->countryCode;
+	  $country_name = $answer->countryName;
+	  $region_name = $answer->regionName;
+	  $city = $answer->cityName;
+	  $zippostalcode = $answer->zipCode;
+	  $latitude = $answer->latitude;
+	  $longitude = $answer->longitude;
 	 
 	  //Return the data as an array
 	  return array('ip' => $ip, 'country_code' => $country_code, 'country_name' => $country_name, 'region_name' => $region_name, 'city' => $city, 'zippostalcode' => $zippostalcode, 'latitude' => $latitude, 'longitude' => $longitude);
+  
+	 
 	}	
 	
 	
@@ -1229,305 +1164,8 @@ class Welcome extends Controller {
 		print_r($_SESSION);
 	}
 	
-	function _get_form_data2() {
-
-		$recs_per_page = 8;
-				
-		$country=$_REQUEST['country']; //$this->input->post("country");	
-		$state = $_REQUEST['state']; //$this->input->post('state');	
-		$county = $_REQUEST['county']; //$this->input->post('county');	
-		$sort_by = $_REQUEST['sort_menu']; //$this->input->post('sort_menu');	
-		$tag_id = $_REQUEST['sort_options']; //$this->input->post('sort_options');						
-		$search = $_REQUEST['search'];
-		$tag_list = $_REQUEST['tag_list'];
-		$error = $_REQUEST['error'];
-		$show_guests = $_REQUEST['show_guests'];
-		
-		if ($this->input->post('search_by_location_id')) {
-			$loc_array = split(",", $this->input->post('search_by_location_id'), 4);
-			if ($loc_array[0]!=0) $city = $loc_array[0];
-			if ($loc_array[1]!=0) $county = $loc_array[1];
-			if ($loc_array[2]!=0) $state = $loc_array[2];
-			if ($loc_array[3]!=0) $country = $loc_array[3];
-		}		
-
-		if ($this->input->post('search_by_tag_id')) {
-			$tag_id = $this->input->post('search_by_tag_id');
-		}			
-		
-		$this->load->helper('form');
-		$data = array('title' => 'My Title',
-               'heading' => 'My Heading'
-          	);
-		
-		// form data
-		
-
-		// handle country radios 
-
-		if (!$country)  {
-		
-			//$ip_data = $this->_locate_ip('67.195.111.158');
-			$ip_data = $this->_locate_ip($_SERVER['REMOTE_ADDR']);
-			//$ip_data = $this->_locate_ip('192.189.54.255');
-			//$ip_data = $this->_locate_ip('85.234.144.145');
-			
-			$country_from_ip=$this->Country_model->get_id_by_name($ip_data['country_name']);
-			
-			$country_list = array(223,13,38,240,241,242,243);
-			
-			if (in_array($country_from_ip, $country_list )) {
-				$country = $country_from_ip; // default united states :)
-				$state_from_ip = $res=$this->State_model->get_id_by_name($country, $ip_data['region_name']);	
-				
-				$state = $state_from_ip;
-				
-				}	
-			else
-				$country = 223;
-					
-		}
-		
-		
-		//echo  $ip_data['city'];
-		
-		
-		
-		// end country radios
+	//Memory usage script
 	
-		$res=$this->State_model->get($country);		
-		$state_ddmenu = array();
-		$state_ddmenu[0] = 'All States';		
-		foreach ($res as $tablerow) {
-  			$result = get_object_vars($tablerow);
-			$res_count=$this->User_model->get_users_per_state($result['id']);
-			if ($res_count>0)	
-   				$state_ddmenu[$result['id']] = $result['name'].'('.$res_count.")";
-		}	
-
-
-
-		$res=$this->County_model->get($country,$state);		
-
-		
-		$county_menu = array();
-				
-		$res_count=$this->User_model->get_users_per_state($state);		
-		
-		$state_name = $this->State_model->get_name_by_id($state);
-		
-		//$county_menu[0] = "All $state_name Counties";
-		$county_menu[0] = "All $state_name Regions";		
-		foreach ($res as $tablerow) {
-  			$result = get_object_vars($tablerow);
-			$res_count=$this->User_model->get_users_per_county($result['county_id']);
-			if ($res_count>0)					
-   				$county_menu[$result['county_id']] = $result['name'].'('.$res_count.")";
-		}	
-		
 	
-		$sort_menu['joined'] = 'Most Recent';
-		$sort_menu['statuses_count'] = 'Most Tweets';		
-		$sort_menu['followers_count'] = 'Most Followers';		
-		$sort_menu['friends_count'] = 'Most Following';		
-		$sort_menu['tags'] = 'Tags';				
-		
-		$query = $this->db->query('SELECT t.tag_id,t.tag,tg.name FROM tags as t, tag_group as tg where t.tag_group_id = tg.tag_group_id order by tg.name asc');
-		$query2 = $this->db->query("SELECT tag_id, COUNT(tag_id) as tag_count FROM user_tags where user_id IN (select user_id from users where country_id='$country' and approved=1)  GROUP BY tag_id ");
-		$tag_count = array();
-		
-		foreach ($query2->result() as $row)
-		{
-			$tag_count[$row->tag_id] = $row->tag_count;
-		}	
-				
-		
-		$sort_options = array();
-		$sort_options[0] = "#All Tags";
-		foreach ($query->result() as $row)
-		{
-			
-			if (isset($tag_count[$row->tag_id]))
-				//$sort_options[$row->tag_id] = $row->name.' - #'.$row->tag."(".$tag_count[$row->tag_id].")";
-				$sort_options[$row->tag_id] = $row->name.' - #'.$row->tag;
-		}	
-		
-
-		
-		if ($state) 
-			$show_all_results = false;
-		else
-			$show_all_results = true;
-			
-		$offset = $this->input->get('per_page');
-	
-		$sort_by = 'tags';
-		
-		if ($sort_by!='tags')
-			 
-			if ($search && $search!="type anything ...") {
-				list($first_name, $last_name) =  split(",", $search);
-				$latest_users = $this->User_model->search_users($country,$first_name,$last_name,$show_all_results,$offset,$recs_per_page,$sort_by);
-				$count_latest_users = $this->User_model->count_search_users($country,$first_name,$last_name,$show_all_results);
-
-			}
-			else
-				{
-				
-				$latest_users = $this->User_model->get_latest_users($country,$state,$county,$show_all_results,$offset,$recs_per_page,$sort_by);
-				$count_latest_users = $this->User_model->count_latest_users($country,$state,$county,$show_all_results);
-
-				}
-		else {
-			  if ($tag_id !=0) {
-				$tag_list = $tag_list.$tag_id.",";
-				$latest_users = $this->User_model->get_latest_users_by_tag($country,$state,$county,$show_all_results,$offset,$recs_per_page,$tag_id);
-				//$count_latest_users = $this->User_model->count_latest_users_by_tag($country,$state,$county,$show_all_results,$tag_id);
-
-				}
-			  else {
-				$latest_users = $this->User_model->get_latest_users($country,$state,$county,$show_all_results,$offset,$recs_per_page,'');
-				$count_latest_users = $this->User_model->count_latest_users($country,$state,$county,$show_all_results);
-
-				}
-		}
-		
-		if ($show_guests == 'true') {
-			
-			$guest_users = $this->User_model->get_latest_users($country,$state,$county,$show_all_results,$offset,$recs_per_page,'', true);
-			$count_guest_users = $this->User_model->count_latest_users($country,$state,$county,$show_all_results, true);
-		}
-		
-		$tag_list_temp = trim($tag_list,",");
-		$tag_array = split(",", $tag_list_temp);
-		for($i=0;$i<count($tag_array);$i++)
-			$tag_array_name[] = $this->Tag_model->get_tag_by_id($tag_array[$i]);		
-		//print_r($tag_array_name);
-
-		
-		if ($sort_by=='')
-			$sort_by = 'tags';
-		
-		$upload_path = $this->Config_model->get_value('UPLOADED_PROFILE_IMAGES')->value;	
-		 
-		//$user_tags = array();
-		foreach ($latest_users as $user) {
-			
-			$query = $this->db->query('SELECT name FROM training_org where id='.$user->training_org_id);
-			$row = $query->row();
-			$user_training_org[$user->user_id] = $row->name;	
-
-			$query = $this->db->query('SELECT name FROM certificate where certificate_id='.$user->certificate_id);
-			$row = $query->row();
-			$user_certificate[$user->user_id] = $row->name;			
-			
-			for($i=1;$i<=3;$i++) {
-				$tag_result = $this->User_Tag_model->get_by_group($user->user_id,$i);
-				foreach ($tag_result as $tag) {
-					$user_tags[$user->user_id][$i][] = $this->Tag_model->get_tag_by_id($tag);
-						
-				}
-			}
-
-			// images
-			
-			
-
-			foreach (glob($upload_path.$user->user_id."*.*") as $filename) {
-				$user_image[$user->user_id]['exist'] = true;	
-				$user_image[$user->user_id]['image_file']= $filename;			
-			}	
-			
-		}
-		
-		
-		
-		/*********************************** Bread Crumb **********************************************/
-		
-		if ($country) {
-			$breadcrumb[] = anchor('?c=welcome&m=index&country='.$country, $this->Country_model->get_name_by_id($country));
-			if ($state) {
-				$breadcrumb[] = anchor('?c=welcome&m=index&country='.$country."&state=".$state, $this->State_model->get_name_by_id($state));
-				if ($county) {
-					$breadcrumb[] = anchor('?c=welcome&m=index&country='.$country."&state=".$state."&county=".$county, $this->County_model->get_name_by_id($county));
-					if ($city) {
-						$breadcrumb[] = $this->City_model->get_name_by_id($city);
-					}
-				}
-			}		
-		}
-		
-		//$breadcrumb = array('red','blue','green','yellow');
-
-		
-		/***********************************  Pagination **********************************************/
-		if (!$state) $state = $_REQUEST['state']; //$this->input->post('state');	
-		$county = $_REQUEST['county']; //$this->input->post('county');	
-		$sort_by = $_REQUEST['sort_menu']; //$this->input->post('sort_menu');	
-		$tag_id = $_REQUEST['sort_options']; //$this->input->post('sort_options');	
-
-		
-		$total_pages = ceil($count_latest_users / $recs_per_page);
-		$current_page = ceil($offset / $recs_per_page)+1;			
-		$config['base_url'] = "index.php?c=welcome&country=$country&state=$state&sort_menu=$sort_by&sort_options=$tag_id";
-		$config['total_rows'] = $count_latest_users;
-		$config['per_page'] = $recs_per_page; 
-		$config['page_query_string'] = TRUE;
-		
-		$config['prev_tag_open'] = '<span class="prev_link">';
-		$config['prev_link'] = '&lt;';		
-		$config['prev_tag_close'] = '</span>';	
-		
-
-		$config['next_tag_open'] = '<span class="next_link">';
-		$config['next_link'] = '&gt;';		
-		$config['next_tag_close'] = '</span>';	
-		
-		$config['first_link'] = '&laquo;';
-
-		
-		//$config['first_link'] = "<span class=\"prev_link\">previous</span>";
-		$config['last_link'] = '&raquo;';
-		//$config['last_link'] = "<span class=\"next_link\">next</span>";
-		$config['cur_tag_open'] = "<span class=\"current\">";
-		$config['cur_tag_close'] = '</span>';
-		$config['num_links'] = $total_pages;
-		$this->pagination->initialize($config); 		
-		$pagination = $this->pagination->create_links();	
-		
-		
-		/***********************************  Form Objects *******************************************/	
-		
-		
-		$data['hidden_data'] = $hidden_data;	
-		$data['state_list'] = $state_ddmenu;
-		$data['country'] = $country;
-		$data['county_list'] = $county_menu;
-		$data['sort_menu'] = $sort_menu;	
-		$data['sort_options'] = $sort_options;				
-		$data['sort_options_selected'] = $tag_id;
-		$data['sort_selected'] = $sort_by;					
-		$data['state_selected'] = $state;				
-		$data['county_selected'] = $county;			
-		$data['latest_users'] = $latest_users;
-		$data['latest_guests'] = $latest_guests;
-		$data['most_followers_users'] = $most_followers_users;
-		$data['most_recent_users'] = $most_recent_users;
-		$data['random_users'] = $random_users;
-        $data['new_guests'] = $new_guests;
-		$data['all_guests'] = $all_guests;
-		$data['pagination'] = $pagination;
-		$data['total_pages'] = $total_pages;
-		$data['current_page'] = $current_page;
-		$data['user_tags'] = $user_tags;
-		$data['user_training_org'] = $user_training_org;
-		$data['user_certificate'] = $user_certificate;
-		$data['profile_image_path'] = $dir = $this->Config_model->get_value('CACHED_PROFILE_IMAGES')->value;
-		//$data['upload_image_path'] = $dir = $this->Config_model->get_value('UPLOAD_PHOTO_PATH')->value;	
-		$data['user_image'] = $user_image;
-		$data['breadcrumb'] = $breadcrumb;
-		$data['error'] = $error;
-		return $data;
-	}
 	
 } 

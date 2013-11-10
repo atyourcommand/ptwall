@@ -1,9 +1,9 @@
 <?php
-class User_model extends Model
+class User_model extends CI_Model
 {
   function User_model()
   {
-    parent::Model();
+    parent::__construct();
     $this->load->library('log');
     //$this->log->ptwall_log("Testing");
   }
@@ -112,9 +112,7 @@ class User_model extends Model
    $this->log->ptwall_log("Deleted User : ".$log);
   
   }
-   
-  
-  
+ 
   function update_user($user_id)
   {
 
@@ -234,8 +232,10 @@ class User_model extends Model
 
 
   //active & approved - good to be used for members
-  function get_latest_users($country_id, $state_id, $county_id, $all=TRUE, $offset, $num_recs, $order_by, $show_guests) {
   
+  
+  function get_latest_users($country_id, $state_id, $county_id, $all=TRUE, $offset, $num_recs, $order_by, $show_guests) {
+  	
 	$this->db->where('country_id', $country_id);
 	$this->db->where('active', 1);
 	$this->db->where('approved', 1);
@@ -261,7 +261,10 @@ class User_model extends Model
 		
 	 $query = $this->db->get('users',$num_recs,$offset);
 	 return $query->result();
+	 
   }
+  
+  
   
   //just active - good to be used for all verified users
   function get_latest_users_for_stats($country_id, $state_id, $county_id, $all=TRUE, $offset, $num_recs, $order_by) {
@@ -399,7 +402,7 @@ class User_model extends Model
   
   function count_latest_users($country_id, $state_id, $county_id, $all=TRUE, $show_guests) {
   
-  	$this->db->where('active', 1);	
+  $this->db->where('active', 1);	
 	$this->db->where('approved', 1);
 
         
@@ -410,8 +413,12 @@ class User_model extends Model
 	
 	if (!$all) {
 
-		if ($county_id!=0)
+		if ($county_id!=0){
 			$this->db->where('county_id', $county_id);
+		}
+		if ($state_id!=0){
+			$this->db->where('state_id', $state_id);
+		}
 	}		
 	 $this->db->where('country_id', $country_id);			 
 	 $result = $this->db->count_all_results('users');

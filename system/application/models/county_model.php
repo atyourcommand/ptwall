@@ -1,12 +1,12 @@
 <?php
-class County_model extends Model
+class County_model extends CI_Model
 {
   
   var $db;
   
   function County_model()
   {
-    parent::Model();
+    parent::__construct();
   }
 
   function get($country_id, $state_id)

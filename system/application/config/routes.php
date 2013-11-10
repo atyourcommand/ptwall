@@ -43,6 +43,7 @@
 $route['default_controller'] = "welcome";
 $route['scaffolding_trigger'] = "";
 $route['trainers/(:any)'] = "trainers/index/$1";
+$route['404_override'] = '';
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

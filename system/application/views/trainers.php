@@ -1,55 +1,11 @@
 <?php
 	$profile_image = $profile_image_path.md5($user->profile_image_url).".".substr(strrchr($user->profile_image_url, '.'), 1);
-	
 ?>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7mqEJzNb06x41VPkO08VqBQAcbgRolCsYOGbJiP6rHcEKxVvLhTK0A_xZUulycRnnNzTTojWzv0oWA"
-      type="text/javascript"></script>
-<script type="text/javascript">
- 
-    var map = null;
-    var geocoder = null;
- 
-    function initialize() {
-      if (GBrowserIsCompatible()) {
-        map = new GMap2(document.getElementById("map_canvas"));
-        //map.setCenter(new GLatLng(37.4419, -122.1419), 13);
-		map.setUIToDefault();
-        geocoder = new GClientGeocoder();
-      }
-    }
- 
-    function showAddress(address) {
-      if (geocoder) {
-        geocoder.getLatLng(
-          address,
-          function(point) {
-            if (!point) {
-              alert(address + " not found");
-            } else {
-              map.setCenter(point, 13);
-              var marker = new GMarker(point);
-              map.addOverlay(marker);
-              //marker.openInfoWindowHtml(address);
-            }
-          }
-        );
-      }
-    }
-	
-	jQuery(document).ready(function() {
 
-	  initialize();
-	  showAddress('<?php echo $geo; ?>');
-		  initialize2();
-		  showAddress2('<?php echo $geo; ?>');	  
-	  
-	}) 	
-    </script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyBNyazdnCgKZOXH30nrbXPJKH7_MNUZrTg&sensor=true"></script>
 <script type="text/javascript">
- 
     var map2 = null;
     var geocoder2 = null;
- 
     function initialize2() {
       if (GBrowserIsCompatible()) {
         map2 = new GMap2(document.getElementById("large_map_canvas"),{size:new GSize(700,500)});
@@ -78,25 +34,18 @@
       }
     }
 	
-
-	
-    jQuery(document).ready(function($) {
-      
-      $(document).bind('afterReveal.facebox', function() {
-
-		  map2.checkResize();
-		  initialize2();
-		  showAddress2('<?php echo $geo; ?>');	
-      })
-	  
-      $(document).bind('reveal.facebox', function() {
-
-		  map2.checkResize();
-		  initialize2();
-		  showAddress2('<?php echo $geo; ?>');	
-      })	  
-      
-    })
+    //jQuery(document).ready(function($) {
+//      $(document).bind('afterReveal.facebox', function() {
+//		  map2.checkResize();
+//		  initialize2();
+//		  showAddress2('<?php echo $geo; ?>');	
+//      })
+//      $(document).bind('reveal.facebox', function() {
+//		  map2.checkResize();
+//		  initialize2();
+//		  showAddress2('<?php echo $geo; ?>');	
+//      })	  
+//    })
 	
 	function openMap() {
 		window.open( "<?php echo base_url() ?>index.php?c=welcome&m=view_map&&user_id=<?php echo $user->user_id; ?>", "zoomMap","status = 1, height = 500, width = 700, resizable = 0" )
@@ -109,12 +58,11 @@
 </script>
 
 <div id="large_map_canvas" class="" style="width: 700px; height: 500px; display:none"> </div>
-
 <section class="theme theme-three">
   <div class="container">
     <section style="display:none;">
-      <div class="row-fluid">
-        <div class="span12"> <!--v card data -->
+      <div class="row">
+        <div class="col-xs-12"> <!--v card data -->
           <div id="vcardWrap">
             <div id="hcard" class="vcard"> <a class="url fn" href="<?php echo base_url() ?>index.php/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><?php echo $user->first_name." ".$user->last_name ?></a>
               <? if($user->hide_email ==0) { ?>
@@ -128,11 +76,11 @@
           <!--v card data --></div>
       </div>
     </section>
-    <div class="row-fluid"> 
+    <div class="row"> 
       
       <!--<div class="smallHeading"><a href="/">Home</a> ~100's of Personal Trainer Profiles - With certifications grab a free page & reach our large network~</div>-->
       
-      <div class="span4 recordWrap">
+      <div class="col-xs-4 recordWrap">
         <div class="imageWrapper">
           <p>
             <?php if ($image_exist) { ?>
@@ -153,7 +101,7 @@
           joined ?> --></div>
         <!--counter--> 
       </div>
-      <div class="span8">
+      <div class="col-xs-8">
         <div class="tweetmeme_button">
           <g:plusone></g:plusone>
           <script type="text/javascript">
@@ -312,32 +260,18 @@
         </ul>
       </div>
       
-      <!--start code for overlay--> 
-      <!--add below back later-->
-      <?php if($user->approved==0) { ?>
-      <div class="generic_dialog default">
-        <div class="alertTop">
-          <?php if($user->approved==0) { ?>
-          This Profile is either incomplete or being reviewed. <a href="/">Go back</a> to the Wall
-          <?php } ?>
-          <!--<div class="button clearfix"><span class="btn-std">
-          <input type="button" ONCLICK="history.go(-1)" value="Go back to the wall" name="close" class="btn-std fb-close closer" />
-          </span> </div>--> 
-        </div>
-      </div>
-      <?php } ?>
-      <!--end code for the overlay--> 
+
     </div>
-    <div class="row-fluid">
-      <div class="span-12"> 
+    <div class="row">
+      <div class="col-xs-12"> 
         <!--<div class="ad-rotator hidden-phone">
             <div class="pics" id="fade" style="position: relative;"> <a href="http://www.atyourcommand.com.au/personal-trainer-websites/?media=web&campaign=ptwall&page=trainers" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 3; opacity: 1; width: 724px; height: 100px;"><img width="724" height="100" src="<?php echo base_url(); ?>images/ads/ayc-2-a.jpg"></a> <a href="http://www.atyourcommand.com.au/personal-trainer-websites/?media=web&campaign=ptwall&page=trainers" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 3; opacity: 0; width: 724px; height: 100px;"><img width="724" height="100" src="<?php echo base_url(); ?>images/ads/ayc-2-b.jpg"></a> <a href="http://www.atyourcommand.com.au/personal-trainer-websites/?media=web&campaign=ptwall&page=trainers" style="position: absolute; top: 0px; left: 0px; display: block; z-index: 4; opacity: 0; width: 724px; height: 100px;"><img width="724" height="100" src="<?php echo base_url(); ?>images/ads/ayc-2-c.jpg"></a> </div>
             <div class="ad-banner-message" style="text-align:center; font-size:11px; color:#cccccc; ">Advertise to our Fitness network here - </div>
           </div>-->
         
-        <div class="google-banner hidden-phone hide">
-          <div class="pics" style="position: relative;"> 
-            <script type="text/javascript"><!--
+<div class="google-banner hidden-phone hide">
+<div class="pics" style="position: relative;"> 
+<script type="text/javascript"><!--
 google_ad_client = "ca-pub-9333805017415789";
 /* PT Wall Profile page */
 google_ad_slot = "1283302737";
@@ -345,13 +279,29 @@ google_ad_width = 728;
 google_ad_height = 90;
 //-->
 </script> 
-            <script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script> 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
+</div>
+        
+</div>
+</div>
+</div>
 </section>
 <div class="section-divider"></div>
+
+<!--start code for overlay--> 
+<!--add below back later-->
+<?php if($user->approved==0) { ?>
+<div class="generic_dialog default">
+<div class="alertTop">
+<?php if($user->approved==0) { ?>
+This Profile is either incomplete or being reviewed. <a href="/">Go back</a> to the Wall
+<?php } ?>
+<!--<div class="button clearfix"><span class="btn-std">
+<input type="button" ONCLICK="history.go(-1)" value="Go back to the wall" name="close" class="btn-std fb-close closer" />
+</span> </div>--> 
+</div>
+</div>
+<?php } ?>
+<!--end code for the overlay--> 

@@ -36,7 +36,7 @@
 
 $active_group = "default";
 $active_record = TRUE;
-
+//mysql51-052.wc1.ord1.stabletransit.com
 $db['default']['hostname'] = "mysql50-29.wc1";
 $db['default']['username'] = "424389_ptwall3";
 $db['default']['password'] = "Samsung123$%^";
