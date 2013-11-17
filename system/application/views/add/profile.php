@@ -1,197 +1,4 @@
-<!-- Calendar -->
-<script src="<?php echo base_url(); ?>scripts/calendar_eu.js" type="text/javascript"></script>
-<script type="text/javascript">
-function updateTweet(){   
-	base = "Added myself to http://www.personaltrainerwall.com a Personal Trainer directory under: ";
-	//FieldName[0]="text1"
-	for(i=0;i<=8;i++) {
-		j = i+1
-		temp = "tag["+j+"]";
-		tag = document.getElementById(temp);
-	if (tag.selectedIndex !=0) {
-		base = base + "#" + tag.options(tag.selectedIndex).text + " ";
-		}
-	}
-	document.getElementById("tweet").value = base;
-}
-</script>
-<script language="javascript" type="text/javascript">
-<!--
-// Get the HTTP Object
-function getHTTPObject(){
-   if (window.ActiveXObject) return new ActiveXObject("Microsoft.XMLHTTP");
-   else if (window.XMLHttpRequest) return new XMLHttpRequest();
-   else {
-      alert("Your browser does not support AJAX.");
-      return null;
-   }
-}   
- 
-// Change the value of the outputText field
-function setOutput(){
-    if(httpObject.readyState == 4){
-        var combo = document.getElementById('d_county');
-        combo.options.length = 0;
- 
-        var response = httpObject.responseText;
-        var items = response.split(";");
-        var count = items.length;
-        for (var i=0;i<count;i++){
-            var options = items[i].split("-");
-            combo.options[i] = 
-			    new Option(options[0],options[1]);
-        }
-    }
-}
-
-function setOutputForState(){
-    if(httpObject.readyState == 4){
-        var combo = document.getElementById('d_state');
-        combo.options.length = 0;
- 
-        var response = httpObject.responseText;
-        var items = response.split(";");
-        var count = items.length;
-        for (var i=0;i<count;i++){
-            var options = items[i].split("-");
-            combo.options[i] = 
-			    new Option(options[0],options[1]);
-        }
-    }
-}
-
-function setOutputForCity(){
-    if(httpObject.readyState == 4){
-        var combo = document.getElementById('d_city');
-        combo.options.length = 0;
- 
-        var response = httpObject.responseText;
-        var items = response.split(";");
-        var count = items.length;
-        for (var i=0;i<count;i++){
-            var options = items[i].split("-");
-            combo.options[i] = 
-			    new Option(options[0],options[1]);
-        }
-    }
-}
-// Implement business logic    
-function getCities(){    
-    httpObject = getHTTPObject();
-    if (httpObject != null) {
-		httpObject.open("GET", "index.php?c=ajaxcalls&m=get_cities&state_id="+document.getElementById('d_state').value+"&country_id="+document.getElementById('d_country').value+"&county_id="+document.getElementById('d_county').value, true);
-        httpObject.onreadystatechange = setOutputForCity;
-        httpObject.send(null);
-    }
-}
-// Implement business logic    
-function getCounties(){    
-    httpObject = getHTTPObject();
-    if (httpObject != null) {
-		httpObject.open("GET", "index.php?c=ajaxcalls&m=get_counties&state_id="+document.getElementById('d_state').value+"&country_id="+document.getElementById('d_country').value, true);
-        httpObject.onreadystatechange = setOutput;
-        httpObject.send(null);
-    }
-}
- 
-// Implement business logic    
-function getStates(){    
-    httpObject = getHTTPObject();
-    if (httpObject != null) {
-		httpObject.open("GET", "index.php?c=ajaxcalls&m=get_states&country_id="+document.getElementById('d_country').value, true);
-        httpObject.onreadystatechange = setOutputForState;
-        httpObject.send(null);
-    }
-}
-
-function setDisabled(id, disabled)
-{
-	if ( !document.getElementById || !document.getElementsByTagName) return;
-	
-		var nodesToDisable = {button :'', input :'', optgroup :'',
-		option :'', select :'', textarea :''};
-		
-		var node, nodes;
-		var div = document.getElementById(id);
-		if (!div) return;
-		
-		nodes = div.getElementsByTagName('*');
-		if (!nodes) return;
-		
-		var i = nodes.length;
-		while (i--){
-			node = nodes[i];
-			if ( node.nodeName
-			&& node.nodeName.toLowerCase() in nodesToDisable ){
-			node.disabled = disabled;
-			}
-		}
-}
-
-function set_guest_value(v) {
-
-    var guest_field = document.getElementById('guest_field');
-    document.getElementById("guest").value = v;
-
-}
-
-function set_sponsor_value(v) {
-
-  //  var sponsor_field = document.getElementById('sponsor_field');
-    document.getElementById("sponsor").value = v;
-    document.getElementById("guest").value = v;
-}
-
-function showHideDiv()
-    {
-        var divstyle = new String();
-        divstyle = document.getElementById("services1").style.display;
-            document.getElementById("services1").style.display = "none";
-           document.getElementById("more1").style.display = "block";
-            document.getElementById("message1").style.display = "block";
-			document.getElementById("retweets1").style.display = "none";
-			document.getElementById("apps1").style.display = "none";
-    }
-    
-function showHideDivGuests()
-    {
-        var divstyle = new String();
-        divstyle = document.getElementById("services1").style.display;
-
-            document.getElementById("services1").style.display = "none";
-            document.getElementById("more1").style.display = "none";
-            document.getElementById("message1").style.display = "none";
-			document.getElementById("retweets1").style.display = "none";
-			document.getElementById("apps1").style.display = "none";
-			
-    }
-function showHideDivTrainer()
-    {
-        var divstyle = new String();
-        divstyle = document.getElementById("services1").style.display;
-			
-            document.getElementById("services1").style.display = "block";
-            document.getElementById("more1").style.display = "block";
-            document.getElementById("message1").style.display = "block";
-			document.getElementById("retweets1").style.display = "block";
-			document.getElementById("apps1").style.display = "block";
-			 
-    }
-
-var httpObject = null;
- 
-//-->
-</script>
-<!--limit textarea to 140 characters-->
-<script language="javascript" type="text/javascript">
-function limitText(limitField, limitCount, limitNum) {
-	if (limitField.value.length > limitNum) {
-		limitField.value = limitField.value.substring(0, limitNum);
-	} else {
-		limitCount.value = limitNum - limitField.value.length;
-	}
-}
-</script>
+<script type="text/javascript" src="<?php echo base_url(); ?>scripts-extra/calendar_eu.js"></script>
 <body <?php if ($email_verified==0 && $user_exist) { ?> onLoad="setDisabled('extended_info', true)" <?php } ?>>
 <div id="wrapper" class="<?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == TRUE) { ?>handheld<? } else {	?>screen<? } ?>">
 <section class="theme theme-three">
@@ -219,20 +26,20 @@ function limitText(limitField, limitCount, limitNum) {
           <br>
           <strong>Solution:</strong> Go back to the <a style="color:#0066CC;" href="http://personaltrainerwall.com/index.php?c=welcome&m=logoff">home page&gt;</a> and try the other join button. </div>
         <? } ?>
-        <div class="panel panel-warning">
+        <div class="panel panel-warning filter-guest filter-sponsor filter-trainer selected">
           <div class="panel-heading">
             <h3 class="panel-title">Choose or change your free account type</h3>
           </div>
           <div class="panel-body">
             <p>
               <label class="inline checkbox">
-                <input name="guestOption" type="radio" class="check" value="guest" <?php if ($user->guest==1 && $user->sponsor==0) { ?>checked<? } ?> onClick=set_guest_value('1');showHideDivGuests();>
+                <input name="guestOption" type="radio" id="guestSelection" class="check" value="guest" <?php if (!$user_exist || $user->guest==1 ) { ?>checked<? } else { ?><? } ?> />
                 <span>Guest</span> </label>
               <label class="inline checkbox">
-                <input name="guestOption" type="radio"  class="check" value="trainer" <?php if ($user->guest!=1) { ?>checked<? } ?> onClick=set_guest_value('0');set_sponsor_value('0');showHideDivTrainer();>
+                <input name="guestOption" type="radio"  id="trainerSelection" class="check" value="trainer"  <?php if ($user_exist) { ?><?php if ($user->sponsor==0 && $user->guest==0) { ?>checked<? } ?><? } ?> />
                 <span>Personal Trainer</span> </label>
               <label class="inline checkbox">
-                <input name="guestOption" type="radio" class="check" value="sponsor" <?php if ($user->sponsor==1 && $user->guest==1) { ?>checked<? } ?> onClick=set_sponsor_value('1');showHideDiv();>
+                <input name="guestOption" type="radio" id="sponsorSelection" class="check" value="sponsor" <?php if ($user_exist) { ?><?php if ($user->sponsor==1 && $user->guest==1) { ?>checked<? } ?><? } ?> />
                 <span>Sponsor</span> </label>
             </p>
             <p><?php echo form_checkbox($show_retweets_chkbox); ?> <span>Yes add my data to the next Auto Tweets weekly list.</span> <!--<a href="/retweets/" target="_blank">More info.</a>--></p>
@@ -261,12 +68,10 @@ function limitText(limitField, limitCount, limitNum) {
       </div>
     </div>
   </div>-->
-        
         <?php } ?>
         <div id="accordion" class="userDetails panel-group"> 
-          
           <!----name location--->
-          <div class="panel panel-default noPad">
+          <div class="panel panel-default noPad filter-guest filter-sponsor filter-trainer selected">
             <div class="panel-heading">
               <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">A bit about you </a></h3>
             </div>
@@ -305,8 +110,7 @@ function limitText(limitField, limitCount, limitNum) {
                     <div class="input"> <?php echo form_dropdown('state', $state_list, $state_id_selected,'onChange="getCounties()" id=d_state class="'.$state_class.'"'); ?> </div>
                     <label for="tag3" class="">County </label>
                     <div class="input clearfix"><?php echo form_dropdown('county', $county_list,$county_id_selected,'onChange="getCities()" id=d_county class="'.$county_class.'"'); ?> </div>
-                    <input type="hidden" name="guest" id="guest" size="25" value="<?php echo $guest ?>">
-                    <input type="hidden" name="sponsor" id="sponsor" size="25" value="<?php echo $sponsor ?>">
+                   
                     <div class="error"><?php echo form_error('country'); ?></div>
                     <div class="error"><?php echo form_error('state'); ?></div>
                     <div class="error"><?php echo form_error('county'); ?></div>
@@ -319,14 +123,13 @@ function limitText(limitField, limitCount, limitNum) {
               </div>
             </div>
           </div>
-          <!----end name location--->
-          <?php if ($user->guest!=1) { ?>
+          <!----end name location---> 
           <!----services--->
-          <div class="panel panel-default noPad" id="services1">
+          <div class="panel panel-default noPad filter-trainer" id="services1">
             <div class="panel-heading">
               <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Services</a></h3>
             </div>
-            <div id="collapseTwo" class="panel-collapse collapse in">
+            <div id="collapseTwo" class="panel-collapse collapse">
               <div class="panel-body">
                 <div class="clearfix row">
                   <fieldset class="col-sm-3">
@@ -377,13 +180,11 @@ function limitText(limitField, limitCount, limitNum) {
               </div>
             </div>
           </div>
-          <?php } ?>
-          <?php if (($user->guest!=1) || ($user->guest==1 && $user->sponsor==1 )) { ?>
-          <div class="panel panel-default noPad" id="more1" >
+          <div class="panel panel-default noPad filter-sponsor filter-trainer" id="more1" >
             <div class="panel-heading">
               <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">More</a></h3>
             </div>
-            <div id="collapseThree" class="panel-collapse collapse in">
+            <div id="collapseThree" class="panel-collapse collapse">
               <div class="panel-body">
                 <div class="clearfix row">
                   <fieldset class="col-sm-3">
@@ -430,11 +231,11 @@ function limitText(limitField, limitCount, limitNum) {
               </div>
             </div>
           </div>
-          <div class="panel panel-default noPad" id="message1">
+          <div class="panel panel-default noPad filter-sponsor filter-trainer" id="message1">
             <div class="panel-heading">
               <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Message</a></h3>
             </div>
-            <div id="collapseFour" class="panel-collapse collapse in">
+            <div id="collapseFour" class="panel-collapse collapse">
               <div class="panel-body">
                 <div class="clearfix">
                   <fieldset>
@@ -449,13 +250,12 @@ function limitText(limitField, limitCount, limitNum) {
               </div>
             </div>
           </div>
-          <?php } ?>
           <?php if ($auth_mode == 'twitter0' && 1==0): ?>
           <div class="panel panel-default noPad">
             <div class="panel-heading">
               <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">Tweet</a></h3>
             </div>
-            <div id="collapseFive" class="panel-collapse collapse in">
+            <div id="collapseFive" class="panel-collapse collapse">
               <div class="panel-body">
                 <fieldset>
                   <textarea name="tweet" id="tweet" cols="4" rows="4">Added myself to http://www.personaltrainerwall.com a Personal Trainer directory under: #Fitness</textarea>
@@ -468,6 +268,9 @@ function limitText(limitField, limitCount, limitNum) {
           <!-- end error in fields -->
           <div class="well clearfix"><span class="btn-std alt"> 
             <!--<input type="submit" name="submit" value="Update Profile!" class="btn-std" />-->
+            <input type="hidden" name="guest" id="guest" size="25" value="<?php echo $guest ?>">
+            <input type="hidden" name="sponsor" id="sponsor" size="25" value="<?php echo $sponsor ?>">
+            
             <input type="submit" name="submit" value="Update Profile" class="btn-std" />
             <?php echo form_hidden($hidden_data); ?> </span>
             <?php if($user->active==0) { ?>

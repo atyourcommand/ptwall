@@ -54,112 +54,15 @@ if ($controller=="trainers"){ ?>
 </body>
 <!--All minified scripts here-->
 <script type="text/javascript" src="<?php echo base_url(); ?>main.min.js"></script>
-<!--//All minified scripts here-->
-
-<!--Bootstrap--> 
-<!--This is used on the auto complete search menu options--> 
-<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/bootstrap.js"></script> -->
-<!--<script>
-	window.onload = function () {
-		//initiate tabs
-		tabbedContent('tabs');
-	}
-</script>--> 
-<!-- Auto complete--> 
-<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/bsn.AutoSuggest_c_2.0.js"></script> -->
-
-<script language="javascript" type="text/javascript">
-<!--
-// Get the HTTP Object
-function getHTTPObject(){
-   if (window.ActiveXObject) return new ActiveXObject("Microsoft.XMLHTTP");
-   else if (window.XMLHttpRequest) return new XMLHttpRequest();
-   else {
-      alert("Your browser does not support AJAX.");
-      return null;
-   }
-}   
- 
-// Change the value of the outputText field
-function setOutput(){
-    if(httpObject.readyState == 4){
-        var combo = document.getElementById('county');
-        combo.options.length = 0;
- 
-        var response = httpObject.responseText;
-        var items = response.split(";");
-        var count = items.length;
-        for (var i=0;i<count;i++){
-            var options = items[i].split("-");
-            combo.options[i] = 
-			    new Option(options[0],options[1]);
-        }
-    }
-}
- 
-// Implement business logic    
-function getCounties(){    
-    httpObject = getHTTPObject();
-    if (httpObject != null) {
-		httpObject.open("GET", "index.php?c=ajaxcalls&m=get_users_per_county&state_id="+document.getElementById('state').value, true);
-        httpObject.onreadystatechange = setOutput;
-        httpObject.send(null);
-    }
-}
+<!--//All extra scripts here-->
 
 
-var httpObject = null;
-/*
-window.addEvent('domready',function(){
- var x=document.getElementById("sort_menu");
-var y = document.getElementById("id");	
-	
-	if (x.selectedIndex==4)
-		y.style.display = "block";
-
-});*/
-//-->
-</script> 
-<!--ajax calls--> 
-<script type="text/javascript">
-function checkSort(){   
- var x=document.getElementById("sort_menu");
- var y = document.getElementById("sort_criteria");	
- if (x.selectedIndex > 3)
-	y.style.display = "block";	
- else
-    var z=document.getElementById("function_search_form");
-	z.submit();
-	y.style.display = "none";
-}
-</script> 
-
-<!--Tweets on Re-Tweet Page--> 
-<!--Search bar--> 
-<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/general_functions.js"></script> -->
-<!--BreadCrumb--> 
-<!--<script src="<?php echo base_url(); ?>scripts/jquery.easing.1.3.js" type="text/javascript" language="JavaScript"></script>--> 
-<!--<script src="<?php echo base_url(); ?>scripts/jquery.jBreadCrumb.1.1.js" type="text/javascript" language="JavaScript"></script>--> 
-<!--<script src="<?php echo base_url(); ?>scripts/facebox.js" type="text/javascript"></script> -->
 <script>
 jQuery(document).ready(function($) {
   $('a[rel*=facebox]').facebox();
 })
 </script> 
-<!--Expander sections --> 
-<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/jquery.cookie.js"></script> -->
-<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/collapse.js"></script>--> 
-<!--drop down menu--> 
-<!--<script src="<?php echo base_url(); ?>scripts/switcher.js" type="text/javascript"></script>--> 
-<!--Tooltips--> 
-<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/tipsy.js"></script> -->
-<!--Cannot read the main script?-->
-<!--<script type='text/javascript'>
-$(function() {
-    $('.tips').tipsy({fade: true});  
-    $('.format').tipsy({html: true });
-});
-</script>-->
+
 <?php if($show_update_modal) { ?>
 <? } ?>
 <script type="text/javascript">

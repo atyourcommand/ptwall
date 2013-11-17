@@ -1,9 +1,9 @@
 <?php
-class User_model extends CI_Model
+class User_model extends Model
 {
   function User_model()
   {
-    parent::__construct();
+    parent::Model();
     $this->load->library('log');
     //$this->log->ptwall_log("Testing");
   }
@@ -402,7 +402,7 @@ class User_model extends CI_Model
   
   function count_latest_users($country_id, $state_id, $county_id, $all=TRUE, $show_guests) {
   
-  $this->db->where('active', 1);	
+  	$this->db->where('active', 1);	
 	$this->db->where('approved', 1);
 
         
@@ -426,13 +426,12 @@ class User_model extends CI_Model
   }  
   
   function get_users_per_county($county_id) {
-  $this->db->where('active', 1);
-    $this->db->where('approved', 1);
+  	$this->db->where('active', 1);
+  	$this->db->where('approved', 1);
 	if ($county_id!=0)
-			$this->db->where('county_id', $county_id);  
-	$this->db->from('users');
-	return $this->db->count_all_results();			
-  	
+		$this->db->where('county_id', $county_id);  
+		$this->db->from('users');
+		return $this->db->count_all_results();			
   }
   
   function get_users_per_state($state_id) {
@@ -457,7 +456,6 @@ class User_model extends CI_Model
 
   }
     
-  
   function set_user_active($user_id, $active) {
   
   	$this->db->query("update users set active = $active where user_id = '$user_id'");

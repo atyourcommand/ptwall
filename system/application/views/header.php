@@ -10,7 +10,6 @@
 <?php } else {  ?>
 <title>Personal Trainer Directory - United States, Canada, Australia and the United Kingdom</title>
 <?php } ?>
-
 <?php if ($description) { ?>
 <meta name="description" content="<?php echo $description; ?>" />
 <?php } else {  ?>
@@ -36,9 +35,6 @@
 <meta name = "viewport" content = "width=device-width,initial-scale=1.0">
 <!--Google Font-->
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-
-<!--<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>blog/wp-content/themes/ptwall/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>blog/wp-content/themes/ptwall/css/responsive.css">-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/style.css"/>
 <!--[if gte IE 9]>
   <style type="text/css">
@@ -50,39 +46,19 @@
 <!--[if lte IE 6]>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/style-ie6.css"/>  
 <![endif]-->
+<style>
+.panel-group .panel{
+  display:none;
+}
+.selected_{
+  display:block;
+}
+</style>
 <?php // Loads HTML5 JavaScript file to add support for HTML5 elements in older IE versions. ?>
 <!--[if lt IE 9]>
 <script src="<?php echo base_url(); ?>blog/wp-content/themes/ptwall/js/html5.js" type="text/javascript"></script>
 <![endif]-->
-
 <script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
-
- <!--image fadein -->
-<script src="<?php echo base_url(); ?>scripts/jquery.imagesloaded.min.js"></script>
-<script type="text/javascript">
-// remap jQuery to $
-(function($){})(window.jQuery);
-/* trigger when page is ready */
-$(document).ready(function (){
-// Hide all images on page and once loaded fade them in
-$('#records img').not('header img').each(function() {
-		$(this).css('opacity', 0).imagesLoaded(function() {$(this).animate({'opacity': 1}, 1000)});
-});
-
-// Calculate Margin to adjust #main for header changing height
-function marginForMain(){
-	var header = $("#header-wrapper");
-	var main = $("#main");
-	var height = $(header).outerHeight(true);
-	$(main).css("margin-top",height+"px");
-}
-marginForMain();
-$(window).resize(function(){
-  marginForMain();
-});
-
-});
-</script>
 <?php if(isset($show_update_modal) &&  $show_update_modal) { ?>
 <? } ?>
 </head>
