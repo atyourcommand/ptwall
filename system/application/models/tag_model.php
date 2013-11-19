@@ -1,12 +1,12 @@
 <?php
-class Tag_model extends CI_Model
+class Tag_model extends Model
 {
   
   var $db;
   
   function Tag_model()
   {
-    parent::__construct();
+    parent::Model();
   }
 
   function get($group_id)

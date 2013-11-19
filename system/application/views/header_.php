@@ -1,14 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml itemscope itemtype="http://schema.org/Organization"">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head profile="http://gmpg.org/xfn/11">
 <?php
 	$header_data = get_header_data();
 	$auth_mode = header_get_auth_mode();
 ?>
 <?php if ($title) { ?>
-<title><?php echo $title; ?></title>
+<title>Personal Trainer<?php echo $title; ?></title>
 <?php } else {  ?>
-<title>Find a Personal Trainer - Find Personal Training</title>
+<title>Personal Trainer Directory - Personal Trainer Wall - Personal Training in your city</title>
 <?php } ?>
 <!--<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <META HTTP-EQUIV="EXPIRES" CONTENT="Sat, 11 Sep 2010 2:54:01 GM>-->
@@ -16,23 +16,20 @@
 <meta http-equiv="content-language" content="en-us" />
 <meta http-equiv="author" content="John Brunskill" />
 <meta http-equiv="contact" content="atyourcommand@mac.com" />
-<meta name="copyright" content="Copyright (c)2011 John Brunskill. All Rights Reserved." />
-<meta name="keywords" content="find a personal trainer, personal trainer directory, certified personal trainers, personal trainer profiles, <?php echo $keywords; ?>"/>
-<meta name="description" content="Personal Trainer <?php echo $keywords; ?>. Find a Personal Trainer on our Personal Trainer Directory search city, name, sports, speciality and style tags" />
+<meta name="copyright" content="Copyright (c)2010 John Brunskill. All Rights Reserved." />
+<meta name="keywords" content="personal trainer directory, certified personal trainers, personal trainer profiles, <?php echo $keywords; ?>"/>
+<meta name="description" content="Personal Trainer <?php echo $keywords; ?>. Find a Personal Trainer on our Personal Trainer Directory search city, name, sports, specialty and style tags" />
 <meta name="google-site-verification" content="fcwsX3aygglRvnBc-iFc0KcGB-PhD0Ya9iXzOTi-bcc" />
 <!--Facebook Open Graph Protocol Tags-->
-<meta property="og:title" content="Find a Personal Trainer"/>
+<meta property="og:title" content="Personal Trainer Directory "/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="http://personaltrainerwall.com/"/>
-<meta property="og:image" content="http://personaltrainerwall.com/images/logo-ptwall-fb.jpg"/>
+<meta property="og:image" content="http://personaltrainerwall.com/images/logo-alt-2.png"/>
 <meta property="og:site_name" content="Personal Trainer Wall"/>
-<meta property="og:description" content="Find a Personal Trainer"/>
+<meta property="og:description" content="100's of profiles of Independent Certified Personal Trainers"/>
 <meta property="og:email" content="admin@personaltrainerwall.com"/>
-<meta property="fb:app_id" content="272124099469128"/>
-<!-- Google +1 meta -->
-<meta itemprop="name" content="Personal Trainer Wall">
-<meta itemprop="description" content="A National Directory of Personal Trainers from USA, Canada, Australia and UK">
-<meta itemprop="image" content="http://personaltrainerwall.com/images/logo-ptwall-fb.jpg">
+<meta property="fb:app_id" content="130355453666011"/>
+
 <!---->
 <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
@@ -42,20 +39,17 @@
 <?php if(strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == TRUE){ ?>
 <meta name="viewport" content="width=device-width; height=device-height; minimum-scale=1.0, maximum-scale=1.0" />
 <?php } ?>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/bootstrap-responsive.css">
 <?php
 if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == TRUE)
 {
 
-	echo("<link rel=\"stylesheet\" type=\"text/css\" href=\"".base_url()."css/style.css?v=20111214\">");
-	echo("<link rel=\"stylesheet\" type=\"text/css\" href=\"".base_url()."css/iphone.css?v=20111214\">");
+	echo("<link rel=\"stylesheet\" type=\"text/css\" href=\"".base_url()."css/style.css\">");
+	echo("<link rel=\"stylesheet\" type=\"text/css\" href=\"".base_url()."css/iphone.css\">");
 	echo("<style link rel=\"stylesheet\" type=\"text/css\"></style>");
 }
 else
 {
-	
-	echo("<link rel=\"stylesheet\" type=\"text/css\" href=\"".base_url()."css/style.css?v=20120401\"/>");
+	echo("<link rel=\"stylesheet\" type=\"text/css\" href=\"".base_url()."css/style.css\"/>");
 }
 ?>
 <!--[if IE]>
@@ -72,18 +66,7 @@ else
 <!-- Auto complete-->
 <script type="text/javascript" src="<?php echo base_url(); ?>scripts/autosuggest/js/bsn.AutoSuggest_c_2.0.js"></script>
 <!--Flip-->
-<!--Fade search section in header-->
-<script type="text/javascript">
-$(document).ready(function(){
-$(".mainSearch").fadeTo("slow", 0.2); // This sets the opacity of the thumbs to fade down to 60% when the page loads
 
-$(".mainSearch").hover(function(){
-$(this).fadeTo("slow", 1.0); // This should set the opacity to 100% on hover
-},function(){
-$(this).fadeTo("slow", 0.2); // This should set the opacity back to 60% on mouseout
-});
-});
-</script>
 <!--slider-->
 <script type="text/javascript" src="<?php echo base_url(); ?>scripts/easySlider1.7.js"></script>
 <script type="text/javascript">
@@ -185,18 +168,89 @@ $(document).ready(function() {
   })();
 
 </script>
+<script type = "text/javascript">
 
+/***********************************************
+* Display time of last visit script- by JavaScriptKit.com
+* This notice MUST stay intact for use
+* Visit JavaScript Kit at http://www.javascriptkit.com/ for this script and more
+***********************************************/
+//added facebox function line 241
+var days = 730; // days until cookie expires = 2 years.
+var lastvisit=new Object();
+//var firstvisitmsg="This is your first visit to this page. Welcome!"; 
+var firstvisitmsg="<div id='messageWelcome' class='clearfix' style='display:none'><h3>Get on this directory free and fast</h3><img src='images/promo-iphone-2.jpg' style='float:left;margin:0 20px 0 0'/><p style='font-size:17px;'>As a Personal Trainer, guest or sponsor, network right away and add yourself with the <strong>Twitter or Facebook buttons</strong>.</p><p style='font-size:17px;'>Find an <strong>Independent</strong> Personal Trainer in your city fast.<br />We have every city covered and this website has some cool <strong>smarts</strong> so it serves up local content first </p><p style='font-size:11px;'>Sorry for the popup, we won't do it again</p></div>"; 
+lastvisit.subsequentvisitmsg="<div id='messageLastVisit' style='display:none'>Your last visit was on [displaydate]</div>";
+lastvisit.getCookie=function(Name){ 
+var re=new RegExp(Name+"=[^;]+", "i"); 
+if (document.cookie.match(re)) 
+return document.cookie.match(re)[0].split("=")[1]; 			
+return''; 
+}
+
+lastvisit.setCookie=function(name, value, days){ 
+var expireDate = new Date();
+
+var expstring=expireDate.setDate(expireDate.getDate()+parseInt(days));
+document.cookie = name+"="+value+"; expires="+expireDate.toGMTString()+"; path=/";
+}
+
+lastvisit.showmessage = function() {
+var wh = new Date();
+if (lastvisit.getCookie("visitc") == "") { 
+lastvisit.setCookie("visitc", wh, days); 
+document.write(firstvisitmsg);
+//added this
+$.facebox("#messageWelcome","facebox",true);
+}
+
+else {
+var lv = lastvisit.getCookie("visitc");
+var lvp = Date.parse(lv);
+var now = new Date();
+now.setTime(lvp);
+var day = new Array("Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat");
+var month = new Array ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+var dd = now.getDate();
+var dy = now.getDay();
+dy = day[dy];
+var mn = now.getMonth();
+mn = month[mn];
+yy = now.getFullYear();
+var hh = now.getHours();
+var ampm = "AM";
+if (hh >= 12) {ampm = "PM"}
+if (hh >12){hh = hh - 12};
+if (hh == 0) {hh = 12}
+if (hh < 10) {hh = "0" + hh};
+var mins = now.getMinutes();
+if (mins < 10) {mins = "0"+ mins}
+var secs = now.getSeconds();
+if (secs < 10) {secs = "0" + secs}
+var dispDate = dy + ", " + mn + " " + dd + ", " + yy + " " + hh + ":" + mins + ":" + secs + " " + ampm
+document.write(lastvisit.subsequentvisitmsg.replace("\[displaydate\]", dispDate))
+}
+
+lastvisit.setCookie("visitc", wh, days);
+
+}
+
+lastvisit.showmessage();
+
+</script>
 <meta name="google-site-verification" content="UIg_SUpTjlC9SFiNRmUvTnMQk9zi1FnLK1l1EB6G2ds" />
 </head>
 <?php 
 	if ($controller=="trainers"){ ?>
 <!--<body onload="initialize();showAddress('<?php echo $geo; ?>');" onunload="GUnload()">-->
-<body class="wall profilePage">
+<body class="wall">
 <? } else { ?>
 <body class="wall">
 <? } ?>
 <!--This is where the message on load goes removed temporarily-->
+
 <!--start new country dropdown-->
+
 <script type="text/javascript">
 		$(function () {
 			var $alert = $('#alert');
@@ -213,23 +267,15 @@ $(document).ready(function() {
 			}
 		});
 		</script>
-<!--New message-->
-<?php if (isset($_COOKIE['user_id'])): ?>
-<?php if($user->approved==0 && $user->guest==0) { ?>
-<div class="generic_dialog fb-modal default noBg">
-  <div class="alertTop"><strong><?php echo $user->first_name ?></strong> if your profile is 100% completed <a href="/info/approve-trainers-page.php" rel="facebox">read this</a> then <a href="mailto:admin@personaltrainerwall.com?subject=My Profile is 100% completed & good to go">email</a> to get published</div>
-</div>
-<?php } else if($user->subscribed==0 && $user->guest==1 && $user->sponsor==1)  { ?>
-<div class="generic_dialog fb-modal default noBg">
-  <div class="alertTop"><strong><?php echo $user->first_name ?></strong> complete your <a title="Check out my page here" id="" href="<?php echo base_url(); ?>guests/<?php echo $user->user_id; ?>">advert</a>, grab a <a href="<?php echo base_url(); ?>index.php?c=welcome&m=amember">advertisement subscription</a> then <a href="mailto:admin@personaltrainerwall.com?subject=My advertisement is 100% completed & good to go">email</a> to get published</div>
-</div>
-<?php } else if($user->subscribed==0 && $user->guest==1 && $user->sponsor==0)  { ?>
-<div class="generic_dialog fb-modal default noBg">
-  <div class="alertTop"><strong><?php echo $user->first_name ?></strong> grab a <a href="<?php echo base_url(); ?>index.php?c=welcome&m=amember">free guest subscription</a> to access Personal Trainer details. </div>
-</div>
-<? } ?>
-<?php endif ?>
-<!--End message-->
+		<!--New message-->
+  <?php if (isset($_COOKIE['user_id'])): ?>
+  <?php if($user->approved==0) { ?>
+  <div class="generic_dialog fb-modal default noBg">
+    <div class="alertTop"> Hello <strong><?php echo $user->first_name ?></strong> if <strong>all</strong> profile details are 100% and your NEW image is good <a href="mailto:admin@personaltrainerwall.com?subject=My Profile is 100% completed & good to go">email</a> to get your approval. </div>
+  </div>
+  <?php } ?>
+  <?php endif ?>
+  <!--End message-->
 <script language="javascript" type="text/javascript">
 <!--
 // Get the HTTP Object
@@ -288,50 +334,76 @@ window.addEvent('domready',function(){
 </script>
 <!-- start header content -->
 <div id="headerContainer">
-  <div id="header" class="container">
+  <div id="header" class="clearfix">
+
     <!--Search-->
     <!--Message-->
-    <div class="row mainSearch">
-	
-      <form name="test_form" id="additional_search_form" action="<?php echo base_url(); ?>index.php?c=welcome&m=index" method="post">
-        <!--start smartSearchWrap-->
-        <div class="clearfix smartSearchWrap" style="display:block;">
-          <div class="clearfix column smartSearch" id="theLocation">
-            <label for="search_for_anything" class="lbl_lg">
-            <input  id="location" type="text"  onblur="if (this.value == '') {this.value = 'city ...';}" onfocus="if (this.value == 'city ...') {this.value = '';}" value="city ..." name="search_by_city" class="input_lg" />
-            </label>
-            <span class="extraLabel">or</span> </div>
-          <div class="clearfix column smartSearch" id="theName">
-            <label for="search_for_anything" class="lbl_lg">
-            <input  id="name" type="text"  onblur="if (this.value == '') {this.value = ' last name ...';}" onfocus="if (this.value == 'last name ...') {this.value = '';}" value="last name ..." name="search_by_name" class="input_lg" />
-            </label>
-            <span class="extraLabel">or</span> </div>
-          <div class="clearfix column smartSearch" id="theTags">
-            <label for="search_for_anything" class="lbl_lg">
-            <input  id="tag" type="text"  onblur="if (this.value == '') {this.value = 'tag ...';}" onfocus="if (this.value == 'tag ...') {this.value = '';}" value="tag ..." name="search_by_tag" class="input_lg" />
-            </label>
-          </div>
+  
+      <div class="mainSearch">
+	  <form name="test_form" id="function_search_form" action="<?php echo base_url(); ?>index.php?c=welcome&m=index" method="post">
+      <!--start smartSearchWrap-->
+      <div class="clearfix smartSearchWrap" style="display:block;">
+        <div class="clearfix column smartSearch" id="theLocation">
+          <label for="search_for_anything" class="lbl_lg">
+          <input  id="location" type="text"  onblur="if (this.value == '') {this.value = 'city ...';}" onfocus="if (this.value == 'city ...') {this.value = '';}" value="city ..." name="search_by_city" class="input_lg" />
+          </label>
+          <span class="extraLabel">or</span> </div>
+        <div class="clearfix column smartSearch" id="theName">
+          <label for="search_for_anything" class="lbl_lg">
+          <input  id="name" type="text"  onblur="if (this.value == '') {this.value = 'name ...';}" onfocus="if (this.value == 'name ...') {this.value = '';}" value="name ..." name="search_by_name" class="input_lg" />
+          </label>
+          <span class="extraLabel">or</span> </div>
+        <div class="clearfix column smartSearch" id="theTags">
+          <label for="search_for_anything" class="lbl_lg">
+          <input  id="tag" type="text"  onblur="if (this.value == '') {this.value = 'tag ...';}" onfocus="if (this.value == 'tag ...') {this.value = '';}" value="tag ..." name="search_by_tag" class="input_lg" />
+          </label>
         </div>
-		 
-      </form>
-	  <form name="extra_test_form" id="function_search_form" action="<?php echo base_url(); ?>index.php?c=welcome&m=index" method="post">
-          <?php 
+      </div>
+      <!--end smartSearchWrap-->
+      <!--start drill down-->
+     <!--collapse container-->
+      <div class="options" style="display:none;">
+        <ul>
+          <li class="widget"> <a href="#" class="toggle">&nbsp;</a>
+            <ul>
+              <li>
+                <p class="inputs clearfix">
+                  <?php 
 			$data = get_location_drops();
 			$state_list = $data['state_list'];			
 			$county_list = $data['county_list'];
 			$sort_options = $data['sort_options'];
+			
 			$county_selected = $data['county_selected'];
 			$state_selected = $data['state_selected'];
 			$hidden_data = $data['hidden_data'];
-		  ?>
-		          
-          <input type="hidden" name="search_by_name_id" id="search_by_name_id" value="" />
-          <input type="hidden" name="search_by_location_id" id="search_by_location_id" value="" />
-          <input type="hidden" name="search_by_tag_id" id="search_by_tag_id" value="" />
-          <input type="hidden" name="country" id="country" value="<?php echo $hidden_data['country'] ?>" />
-
-        </form>
-	      <script type="text/javascript">
+		
+		?>
+                  <label for="state" class="lbl_sm" style="margin:0 10px 0 0;"><span style="display:none;">Choose state</span> <?php echo form_dropdown('state', $state_list,$state_selected,'id=state onChange="this.form.submit();" class=slt_sm'); ?> </label>
+                  <label for="region" class="lbl_sm" style="margin:0 10px 0 0;"><span style="display:none;">Choose County</span> <?php echo form_dropdown('county', $county_list, $county_selected,'id=county class=slt_sm onChange=this.form.submit()'); ?> </label>
+                  <!-- <label for="sort_by" class="lbl_sm" style="text-indent:-2000px;"><span style="display:none;">Sort by </span><?php echo form_dropdown('sort_menu', $sort_menu, $sort_selected,'id=sort_menu class=slt_sm onChange=checkSort()'); ?> </label>
+            
+			<?php if ($sort_selected=="joined" || $sort_selected=="statuses_count" || $sort_selected=="followers_count" || $sort_selected=="friends_count") { ?>
+            <label for="specialities" class="lbl_sm" id="sort_criteria" style="text-indent:-2000px;display: none;"><span style="display:none;">Choose </span><?php echo form_dropdown('sort_options', $sort_options, $sort_options_selected,'class=slt_sm onChange=this.form.submit()'); ?> </label>
+            <?} else { ?>
+            <label for="specialities" class="lbl_sm" id="sort_criteria" style="text-indent:-2000px;"><span style="display:none;">Choose </span><?php echo form_dropdown('sort_options', $sort_options, $sort_options_selected,'class=slt_sm onChange=this.form.submit()'); ?> </label>
+            <? } ?> -->
+                  <label for="specialities" class="lbl_sm" id="sort_criteria" style="margin:0 10px 0 0;"><span style="display:none;">Choose </span><?php echo form_dropdown('sort_options', $sort_options, $sort_options_selected,'class=slt_sm onChange=this.form.submit()'); ?> </label>
+                  <input type="hidden" name="search_by_name_id" id="search_by_name_id" value="" />
+                  <input type="hidden" name="search_by_location_id" id="search_by_location_id" value="" />
+                  <input type="hidden" name="search_by_tag_id" id="search_by_tag_id" value="" />
+                  <input type="hidden" name="country" id="country" value="<?php echo $hidden_data['country'] ?>" />
+                </p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!--end collapse container-->
+    </form>
+  </div>
+<!--End Search-->
+<script type="text/javascript">
 		var options = {
 			script:"index.php?c=ajaxcalls&m=get_search&json=true&",
 			varname:"input",
@@ -341,6 +413,8 @@ window.addEvent('domready',function(){
 			}
 		};
 		//var as_json = new AutoSuggest('search_input', options);
+		
+		
 		var options_search_name_xml = {
 			script:"index.php?c=ajaxcalls&m=get_search_by_name&",
 			minchars: 2,
@@ -368,34 +442,30 @@ window.addEvent('domready',function(){
 		var as_xml_tag = new AutoSuggest('tag', options_search_tag_xml);
 		
 	</script>
-	 
-    </div>
-    <!--End Search-->
-	<?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == TRUE) { ?>
-	<!--nothin-->
-	<? } else { ?>
-	 <!--start social networking tools-->
-	  <div class="socialNetworkingTools" style="float:right;margin-top:10px;">
-	 
-        <!--Facebook Widget-->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=130355453666011";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>   <div class="fb-like" data-href="http://personaltrainerwall.com" data-send="true" data-layout="button_count" data-width="200" data-show-faces="false"></div>
-	   </div>
-	  <!--end social networking tools-->
-	  <?php } ?>
-	
-	
-	
+
+
+</div>
+<!-- end header -->
+</div>
+<!-- end header container -->
+
+    <!--login start-->
     <div id="loginArea" class="clearfix">
+     
       <?php if ($user_logged_in && $auth_mode!=-1) { ?>
       <span class="loggedIn corners">Hello:<strong><?php echo $user->first_name ?></strong></span>
       <ul id="navAccount">
+        <!-- <li> <a href="<?php echo base_url(); ?>newsletters/2010/october/newsletter-1.html">Newsletter</a> </li>-->
+        <!--<li> <a href="<?php echo base_url(); ?>index.php">Home</a> </li>-->
+        <li><a title="About Personal Trainer Wall" href="<?php echo base_url(); ?>about.html">About</a>
+          <!--<ul class="dropdown-menu" id="dropdown1">
+            <li class="links">
+              <p><a href="http://au.linkedin.com/in/johnbrunskill" title="let's keep it professional"><img src="http://personaltrainerwall.com/newsletters/images/linkedin_16.png" width="16" height="16" border="0" /></a><a href="http://www.facebook.com/apps/application.php?id=130355453666011" title="Be friendly"><img src="http://personaltrainerwall.com/newsletters/images/facebook_16.png" width="16" height="16" border="0"  /></a><a href="https://twitter.com/ptwallguy" title="let's tweet together"><img src="http://personaltrainerwall.com/newsletters/images/twitter_16.png" width="16" height="16" border="0" /></a><a href="mailto:admin@personaltrainerwall.com?subject=Message from the PT Wall Newsletter" title="Any questions?"><img src="http://personaltrainerwall.com/newsletters/images/email_16.png" width="16" height="16" border="0"/></a></p>
+            </li>
+            <li> <a href="<?php echo base_url(); ?>info/iphone.php" rel="facebox">iphone app too?</a> </li>
+          </ul>-->
+        </li>
+        <li> <a href="<?php echo base_url(); ?>blog">Blog</a> </li>
         <li><a title="My Account" id="dd2" class="myAccountTrigger dropdown" href="#" rel="dropdown2">My Account</a>
           <ul class="dropdown-menu" id="dropdown2">
             <li><img src="<?php echo get_user_thumb($user->user_id); ?>" alt="Personal Trainer - <?php echo $user->first_name." ".$user->last_name ?> " width="48" border="0"/>
@@ -403,70 +473,68 @@ window.addEvent('domready',function(){
               <hr class="divider"/>
             </li>
             <li class="clearfix" id="edit"><a title="Edit My Profile" class="" href="<?php echo base_url(); ?>index.php?c=add&m=profile"><span></span>Edit My Profile </a></li>
-			 <li class="clearfix" id="edit"><a title="Remove Profile" class="" href="<?php echo base_url(); ?>index.php?c=add&m=remove_profile"><span></span>Remove Profile</a></li>
             <?php if ($user->active) { ?>
             <li class="clearfix" id="edit"><a title="Change Email" class="" href="<?php echo base_url(); ?>index.php?c=add&m=change_email"><span></span>Change Email</a></li>
-			
             <li class="clearfix" id="upload"><a title="Upload Profile Picture" class="" href="<?php echo base_url(); ?>index.php?c=add&m=image"><span></span>Upload Profile Picture</a></li>
             <?php } ?>
             <li class="clearfix" id="logout"><a title="Logout" class="" href="<?php echo base_url(); ?>index.php?c=welcome&m=logoff"><span></span>Logout </a>
               <hr class="divider"/>
             </li>
             <?php if ($user->active) { ?>
-            <li class="clearfix" id="subscription"><a title="My Subscription" id="" class="" href="http://personaltrainerwall.com/index.php?c=welcome&m=amember"><span></span>My Subscription </a></li>
+            <li class="clearfix" id="subscription"><a title="My Subscription" id="" class="" href="<?php echo base_url(); ?>index.php?c=welcome&m=amember"><span></span>My Subscription </a></li>
             <?php } ?>
             <li class="clearfix" id="subscriptionInfo"><a title="Subscription Stuff" rel="facebox" class="" href="<?php echo base_url(); ?>info/upgrade.php"><span></span>Subscription Stuff </a></li>
           </ul>
         </li>
-        
-      </ul>
-	  <?php if (strlen($user->first_name)>0 && $user->guest==0 ) { ?>
-        <div class="myPageLink"><a title="Check out my page here" id="" href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><span>&raquo; Check out my page here</span></a></div>
-        <?php } else if (strlen($user->first_name)>0 && ($user->guest==1 && $user->sponsor==1)  ) { ?>
-        <div class="myPageLink"><a title="Check out my page here" id="" href="<?php echo base_url(); ?>guests/<?php echo $user->user_id; ?>"><span>&raquo; Check out my page here</span></a></div>
+        <?php if (strlen($user->first_name)>0) { ?>
+		
+        <li><a title="My Page" id="" href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><span>My Page</span></a></li>
+		
         <?php } ?>
-	  
-	  
+      </ul>
       <?php } else { ?>
-      <div id="joinUp" class="pad clearfix">
-        <div class="clearfix">
-          <!--fb login start-->
-          <a class="btnFacebook fade format" original-title="Join or login here fast" href="<?php echo base_url(); ?>index.php?c=auth&m=fb_login">Join with Facebook</a>
-          <!--fb login end-->
-          <!--twitter login start-->
-        </div>
-        <p class="twitterLink"><small> <a href="<?php echo $header_data['twitter_request_url']; ?>" class="fade format" original-title="Join or login here fast" >ok, join or login with Twitter too!</a></small> </p>
-        <!--twitter login end-->
+      
+      <div id="joinUp" class="clearfix">
+        <?php if (!isset($me)):?>
+        <a href="<?php echo $header_data['twitter_request_url']; ?>" class="btnTwitter fade format" original-title="Join or login here fast" >Join with Twitter</a>
+        <?php endif ?>
+        <!--fb login start-->
+        <?php if ($me): ?>
+        <a href="<?php echo $logoutUrl; ?>"> <img src="http://static.ak.fbcdn.net/rsrc.php/z2Y31/hash/cxrz4k7j.gif"> </a>
+        <?php else: ?>
+        <a class="btnFacebook fade format" original-title="Join or login here fast" href="<?php echo base_url(); ?>index.php?c=auth&m=fb_login">Join with Facebook</a><br />
+		<!--is it safe link-->
+		<span class="moreInfo">
+		<a href="<?php echo base_url(); ?>info/site-safety.php" rel="facebox" style="display:block;">Is it safe to join?</a></span>
+		<!--END is it safe link-->
+		
+		
+        <?php endif ?>
+        <!--fb login end-->
       </div>
-      <ul id="navAccount">
+	    <ul id="navAccount">
         <!-- <li> <a href="http://personaltrainerwall.com/sitemap.php">Sitemap</a></li>
         <li> <a href="<?php echo base_url(); ?>newsletters/2010/october/newsletter-2.html">Newsletter</a> </li>-->
         <!-- <li> <a href="<?php echo base_url(); ?>index.php">Home</a> </li>-->
-        <!-- <?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == FALSE) { ?>
+		<!-- <?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == FALSE) { ?>
 		  <li> <a href="<?php echo base_url(); ?>info/join.php" rel="facebox">How to join?</a> </li>
 		 <? } ?>-->
-        <!-- <li><a title="About Personal Trainer Wall" href="<?php echo base_url(); ?>about.html">About</a>-->
+        <li><a title="About Personal Trainer Wall" href="<?php echo base_url(); ?>about.html">About</a>
+          
         </li>
-        <!-- <li> <a href="<?php echo base_url(); ?>blog">Blog</a> </li>-->
+        <li> <a href="<?php echo base_url(); ?>blog">Blog</a> </li>
       </ul>
       <?php } ?>
-    </div>
-    <h1 id="production"><a href="/" title="Home">
-      <?php 
+	   <h1 id="production"><a href="/" title="Home">
+        <?php 
 if ($controller=="trainers"){ ?>
-      Personal Trainer <?php echo $title; ?>
-      <? } else { ?>
-      Find a Personal Trainer &mdash; Personal Trainer Directory
-      <? } ?>
-      </a> </h1>
-	 
-   
-  </div>
-  <!-- end header -->
-</div>
-<!-- end header container -->
-<div id="pageWrapper">
- 
+        Personal Trainer <?php echo $title; ?>
+        <? } else { ?>
+        Find a Personal Trainer &mdash; Personal Trainer Directory
+        <? } ?>
+        </a> </h1>
+    </div>
+    <!--login end-->
 <!-- user alert -->
 <script type="text/javascript"> 
 		<!-- we run in the footer so no need to use onload -->

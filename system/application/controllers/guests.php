@@ -88,9 +88,7 @@ class Guests extends Controller {
 		
 		$header_data['controller'] = $this->router->fetch_class();
 		$header_data['geo'] = $this->County_model->get_name_by_id($user->county_id).",".$this->State_model->get_name_by_id($user->state_id).",".$this->Country_model->get_name_by_id($user->country_id);
-		
 		$header_data['title'] = $user->first_name." ".$user->last_name." from ".$header_data['geo']." on Personal Trainer Wall";
-		
 		$header_data['keywords'] = ",".$user->first_name." ".$user->last_name.",".$header_data['geo'];
 		
 		$city = $this->City_model->get_name_by_id($user->city_id);

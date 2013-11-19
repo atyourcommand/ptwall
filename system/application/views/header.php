@@ -72,17 +72,22 @@
 <!-- start header content -->
 <div id="header-wrapper" class="navbar-fixed-top">
 
- <?php if ($user_logged_in && $auth_mode!=-1) { ?>
+ <?php if ( $user->active==1 && $user_logged_in && $auth_mode!=-1 ) { ?>
  <div class="member-links-panel center">
                 <ul class="no-style">
                   <!--<span class="loggedIn">Hi <?php echo $user->first_name ?></span>-->
+                  
                   <li class="dropdown">
-                    <?php if (strlen($user->first_name)>0 && $user->guest==0 ) { ?>
+                    <?php if (strlen($user->first_name)> 0 && $user->guest==0 ) { ?>
                     <span class="myPageLink"><a title="Check your page" id="" href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><span>My Page</span></a> | </span>
-                    <?php } else if (strlen($user->first_name)>0 && ($user->guest==1 && $user->sponsor==1)  ) { ?>
+                   
+                    <?php } else if (strlen($user->first_name)>0 && ($user->guest==1 && $user->sponsor==1) ) { ?>
                     <span class="myPageLink"><a title="Check your page" id="" href="<?php echo base_url(); ?>guests/<?php echo $user->user_id; ?>"><span>My Sponsors Page</span></a> | </span>
+                    <?php } else { ?>
+                    <!--nada-->
                     <?php } ?>
-                    <a title="My Account" data-toggle="dropdown"role="button" href="#">My Account</a> You are logged in  <strong><?php echo $user->first_name ?></strong>
+                    <a title="My Account" data-toggle="dropdown" role="button" href="#">My Account</a> You are logged in  <strong><?php echo $user->first_name ?></strong>
+                    
                     <ul id="menu-1" class="dropdown-menu" aria-labelledby="drop1" role="menu">
                       <li><img src="<?php echo get_user_thumb($user->user_id); ?>" alt="Personal Trainer - <?php echo $user->first_name." ".$user->last_name ?> " width="48" border="0"/>
                         <p style="font-weight: bold;">Hi <?php echo $user->first_name." ".$user->last_name ?></p>
@@ -171,13 +176,22 @@
     <!--  </div>-->
     <? } ?>
   <?php } else { ?>
- 
+ <!--NADA-->
   <? } ?>
+
   <!--End message--> 
 
 <?php 
 if (isset($controller) && $controller=="trainers"){ ?>
-<div class="alertTop"><a href="http://personaltrainerwall.com/">View more Personal Trainers in your area?</a></div>
+<div class="alertTop"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PT wall top strip -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:125px;height:125px"
+     data-ad-client="ca-pub-9333805017415789"
+     data-ad-slot="7151900337"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
 <? } ?>
 <!-- user alert--> 
 <script type="text/javascript"> 

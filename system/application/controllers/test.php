@@ -9,7 +9,8 @@ class Test extends Controller {
 
 	function index()
 	{
-            echo "Hello World";
+            $this->load->view('header');
+			echo "Hello World";
             $this->load->library('log');
             $this->log->ptwall_log("Testing");
             echo "xxxxx".$_SERVER['REMOTE_ADDR'];

@@ -240,7 +240,7 @@ Following: <strong><?php echo $user->friends_count ?></strong> </p>
 			 <div id="vcardWrap" style="display:none;">
 		<div id="hcard" class="vcard">
 		
- 		<a class="url fn" href="http://personaltrainerwall.com/index.php/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><?php echo $user->first_name." ".$user->last_name ?></a>
+ 		<a class="url fn" href="http://personaltrainerwall.com/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><?php echo $user->first_name." ".$user->last_name ?></a>
 		 		 
 		 <? if($user->hide_email ==0) { ?>
  		<a class="email" href="mailto:<?php echo $user->email ?>"><?php echo $user->email ?></a>

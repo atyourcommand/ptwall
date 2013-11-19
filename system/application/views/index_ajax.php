@@ -3,6 +3,9 @@
 if(!(isset($is_ajax) && $is_ajax=="yes"))
 {?>
 <?php }?>
+<?php
+	$auth_mode = header_get_auth_mode();
+?>
 <div id="wrapper" class="home">
   <section class="theme-one">
     <div class="container">
@@ -18,7 +21,6 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
         </div>
         <div class="col-xs-12 col-sm-4">
           <form name="test_form" id="additional_search_form" action="<?php echo base_url(); ?>index.php?c=welcome&m=index" method="post">
-            
             <!--start smartSearchWrap-->
             <div id="smartSearchWrap" class="clearfix smartSearchWrap tab-content" style="display:block;">
               <div class="tab-pane smartSearch active" id="theLocation" >
@@ -110,7 +112,7 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
                 <div class="heading-profile-location"><?php echo $this->County_model->get_name_by_id($user->county_id)."" ?></div>
                 <div class="user-social-icon">
                   <?php if ($user->auth=="facebook") { ?>
-                  <a class="tips format" original-title="Follow <?php echo $user->facebook_name ?> on Facebook" href="http://www.facebook.com/profile.php?id=<?php echo $user->user_id ?>" ><img src="<?php echo base_url();?>images/social-icons-24/picons46.png" style="float:none;margin-right:5px;"/></a>
+                  <a class="tips format" original-title="Follow <?php echo $user->first_name.' '.$user->last_name ?>> on Facebook" href="http://www.facebook.com/profile.php?id=<?php echo $user->user_id ?>" ><img src="<?php echo base_url();?>images/social-icons-24/picons46.png" style="float:none;margin-right:5px;"/></a>
                   <? } else {					
 					?>
                   <a class="tips format" original-title="Follow <?php echo $user->twitter_name ?> on Twitter" href="http://twitter.com/<?php echo $user->twitter_name ?>"><img src="<?php echo base_url();?>images/social-icons-24/picons45.png" style="margin-right:5px;"/></a>
@@ -123,20 +125,20 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
             </div>
             <div class="row">
             <div id="pagingSection">
-              <div class="wp-navi clearfix pad" id="ajax_paging" > <span class="paging-heading"><?php echo "more".$current_." profiles ".$total_s; ?></span> <?php echo $pagination ?> </div>
+              <div class="wp-navi clearfix pad" id="ajax_paging" >
+               <span class="paging-heading">
+			   <?php echo "total ".$total_pages." pages "; ?>
+               
+               </span> <?php echo $pagination ?> </div>
             </div>
              </div>
           </div>
       </div>    
-     
-
     </div>
-
   </section>
-
       <div class="section-divider"></div>
   <!--Join up Section-->
-  <?php if ($user_logged_in && $auth_mode!=-1) { ?>
+  <?php if ( $user_logged_in && $auth_mode!=-1 ) { ?>
   <!--Do not show this section if logged in-->
   <?php } else { ?>
   <section class="theme theme-two">
@@ -335,7 +337,7 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
 						$("#wrapper").html(msg);
 						//$('.tips').tipsy({fade: true});  
 						//$('.format').tipsy({html: true });
-						$('#fade').cycle();
+						//$('#fade').cycle();
 						applyPagination();
 						breadCrumb3Ajax();
 						//tabbedContent('tabs');
@@ -365,7 +367,7 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
 				$("#wrapper").html(msg);
 				//$('.tips').tipsy({fade: true});  
 				//$('.format').tipsy({html: true });
-				$('#fade').cycle();
+				//$('#fade').cycle();
 				applyPagination();
 				breadCrumb3Ajax();
 				//tabbedContent('tabs');
@@ -396,7 +398,7 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
 						$("#wrapper").html(msg);
 						//$('.tips').tipsy({fade: true});  
 						//$('.format').tipsy({html: true });
-						$('#fade').cycle();
+						//$('#fade').cycle();
 						applyPagination();
 						breadCrumb3Ajax();
 						//tabbedContent('tabs');
@@ -461,8 +463,4 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
 		var as_xml_tag = new AutoSuggest('tag', options_search_tag_xml);
 	}
 	</script>
-<!--Ad Rotator--> 
-<!--http://jquery.malsup.com/cycle/--> 
-<script type="text/javascript" src="<?php echo base_url(); ?>scripts-extra/jquery.cycle.all.js"></script>
-<script>$('#fade').cycle();</script> 
 

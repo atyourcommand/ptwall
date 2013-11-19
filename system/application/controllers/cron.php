@@ -12,6 +12,8 @@
 class Cron extends Controller {
     //put your code here
 	
+
+	
 	function __construct()
 	 {
 		parent::Controller();
@@ -24,6 +26,7 @@ class Cron extends Controller {
     function check_cert_expiry() {
 
        	$query = $this->db->query("SELECT first_name, last_name from users where cert_expiry<=CURDATE()");
+
 
         foreach ($query->result() as $row)
 	{  
@@ -48,6 +51,7 @@ class Cron extends Controller {
 		
 		if($cron_key!=$_GET['cron_key']) show_404('page');
 		
+		
 		$query = $this->db_amem->query("SELECT max(expire_date) a, m.login  FROM payments p, members m where product_id in ($products) and m.member_id = p.member_id group by m.login having a<curdate()");
         foreach ($query->result() as $row)
 		{  
@@ -60,7 +64,7 @@ class Cron extends Controller {
 		echo $content;
 		$this->load->library('email');
 		$this->email->from('do-not-reply@personaltrainerwall.com', 'do-not-reply@personaltrainerwall.com');
-		$this->email->to('jbrunskill1962@gmail.com');
+		$this->email->to('atyourcommand@mac.com,upake.de.silva@gmail.com');
 		//$this->email->to('upake.de.silva@gmail.com'); 		
 		$this->email->subject('Cron: List of unsubscribed users');
 		$this->email->message($content);	

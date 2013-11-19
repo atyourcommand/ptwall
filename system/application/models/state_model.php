@@ -1,12 +1,12 @@
 <?php
-class State_model extends CI_Model
+class State_model extends Model
 {
   
   var $db;
   
   function State_model()
   {
-    parent::__construct();
+    parent::Model();
   }
 
   function get($country_id)

@@ -401,7 +401,7 @@ if ($controller=="trainers"){ ?>
           </ul>
         </li>
         <?php if (strlen($user->first_name)>0) { ?>
-        <li><a title="My Page" id="" href="<?php echo base_url(); ?>index.php/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><span>My Page</span></a></li>
+        <li><a title="My Page" id="" href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><span>My Page</span></a></li>
         <?php } ?>
       </ul>
       <?php } else { ?>

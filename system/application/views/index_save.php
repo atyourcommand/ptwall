@@ -27,7 +27,7 @@
 			  $profile_image = get_user_thumb($user->user_id);
     ?>
               <li class="clearfix corners">
-                <div class="pad" style="padding:5px;"> <img src="<?php echo $profile_image  ?>" alt="<?php echo $user->first_name." ".$user->last_name ?>" width="48" height="48" /><a href="http://personaltrainerwall.com/index.php/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><?php echo $user->first_name." ".$user->last_name ?> <span class="poi"><?php echo $this->County_model->get_name_by_id($user->county_id) ?></span></a> <br />
+                <div class="pad" style="padding:5px;"> <img src="<?php echo $profile_image  ?>" alt="<?php echo $user->first_name." ".$user->last_name ?>" width="48" height="48" /><a href="http://personaltrainerwall.com/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><?php echo $user->first_name." ".$user->last_name ?> <span class="poi"><?php echo $this->County_model->get_name_by_id($user->county_id) ?></span></a> <br />
                   <p style="margin:0 0 0 61px;line-height:15px;font-size:11px">
                     <?php if (strlen($user->description)>0) echo $user->description; else echo $user->first_name." ".$user->last_name." has not yet to updated this brief personal bio."; ?>
                   </p>
@@ -56,7 +56,7 @@
             <!--IPHONE content-->
             <!--add if approved conditional to records-->
             <?php if($user->approved==1) { ?>
-            <li class="mobile clearfix"> <a href="<?php echo base_url(); ?>index.php/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>" class="" title="<?php echo $user->first_name.' '.$user->last_name ?> - <?php echo $this->County_model->get_name_by_id($user->county_id)."" ?><?php echo $this->State_model->get_name_by_id($user->state_id)."" ?></span>">
+            <li class="mobile clearfix"> <a href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>" class="" title="<?php echo $user->first_name.' '.$user->last_name ?> - <?php echo $this->County_model->get_name_by_id($user->county_id)."" ?><?php echo $this->State_model->get_name_by_id($user->state_id)."" ?></span>">
               <div class="sponsor clearfix">
                 <!--start image-->
                 <div class="imageWrapper <?php if($user->approved==1) { ?>approved<?php } ?>">
@@ -89,13 +89,13 @@
               <div class="sponsor">
                 <div class="imageWrapper <?php if($user->approved==1) { ?>approved<?php } ?>">
                   <?php if ($user_image[$user->user_id]['exist']) { ?>
-                  <a href="<?php echo base_url(); ?>index.php/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>" class="fade format" original-title="<img src='<?php echo get_user_thumb($user->user_id); ?>' width='35' height='35' /><?php echo $user->first_name.'<br />'.$user->last_name ?><br /><span class='location'><?php echo $this->County_model->get_name_by_id($user->county_id)."" ?> <?php echo $this->State_model->get_name_by_id($user->state_id)."" ?></span>"> <img src="<?php echo base_url(); ?>scripts/timthumb.php?src=<?php echo $user_image[$user->user_id]['image_file']?>&a=t&w=122&h=122" alt="<?php echo $user->first_name." ".$user->last_name ?>" width="122" height="122" border="0" class="main">
+                  <a href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>" class="fade format" original-title="<img src='<?php echo get_user_thumb($user->user_id); ?>' width='35' height='35' /><?php echo $user->first_name.'<br />'.$user->last_name ?><br /><span class='location'><?php echo $this->County_model->get_name_by_id($user->county_id)."" ?> <?php echo $this->State_model->get_name_by_id($user->state_id)."" ?></span>"> <img src="<?php echo base_url(); ?>scripts/timthumb.php?src=<?php echo $user_image[$user->user_id]['image_file']?>&a=t&w=122&h=122" alt="<?php echo $user->first_name." ".$user->last_name ?>" width="122" height="122" border="0" class="main">
                   <!--Add overlay image for hover-->
                   <div class="overlay">&nbsp;</div>
                   </a>
                   <? } else {					
 					?>
-                  <a href="<?php echo base_url(); ?>index.php/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>" class="fade format" original-title="<?php echo $user->first_name." ".$user->last_name ?><br />"> <img src="<?php echo base_url();?>scripts/timthumb.php?src=images/default-profile-image.jpg&w=122&h=122" alt="<?php echo $user->first_name." ".$user->last_name ?>" width="122" height="122" border="0" class="main"/> </a>
+                  <a href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>" class="fade format" original-title="<?php echo $user->first_name." ".$user->last_name ?><br />"> <img src="<?php echo base_url();?>scripts/timthumb.php?src=images/default-profile-image.jpg&w=122&h=122" alt="<?php echo $user->first_name." ".$user->last_name ?>" width="122" height="122" border="0" class="main"/> </a>
                   <? } ?>
                   <!--end-->
                   <?php if($user->subscribed==1) { ?>

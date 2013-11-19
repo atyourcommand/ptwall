@@ -43,7 +43,7 @@ if ( ! function_exists('amember_get_member_id'))
 {
     function amember_get_member_id($user_id)
     {	  
-	 $result = _xmlrpc_query_row("select member_id from members where login='$user_id'"); 
+	 	$result = _xmlrpc_query_row("select member_id from members where login='$user_id'"); 
 	 if ($result)
 		return $result[0];
 	 else
@@ -71,25 +71,33 @@ if ( ! function_exists('amember_remove_profile'))
 {
     function amember_remove_profile($user_id)
     {	
-		$ci=& get_instance();
+		
+		$result = _xmlrpc_query_Delete("delete from members where member_id='$user_id'"); 
+	 /*if ($result)
+		return $result[0];
+	 else
+		return false;*/
+		
+		/*$ci=& get_instance();
 		$ci->load->database();
-
 		$ci->load->library('xmlrpc');	
-
+		echo "hhhh";
 		$ci->xmlrpc->server(_get_xmlrpc_url(), 80);
 		$ci->xmlrpc->method('delete_user');
 		$request[0] = $user_id;
 		
 		$ci->xmlrpc->request($request);
-			
+		echo $user_id;	
 			if ( ! $ci->xmlrpc->send_request())
 			{
+				echo "heeee";
 				echo $ci->xmlrpc->display_error();
 				return false;
 			} else {
+				echo "tesss";
 				print_r($ci->xmlrpc->display_response());
 				return $ci->xmlrpc->display_response();
-			}
+			}*/
 
     }   
 }
@@ -109,6 +117,27 @@ if ( ! function_exists('get_expired_users'))
     }   
 }
 
+
+function _xmlrpc_query_Delete ($query) {
+
+		$ci=& get_instance();
+		$ci->load->database();
+
+		$ci->load->library('xmlrpc');	
+
+		$ci->xmlrpc->server(_get_xmlrpc_url(), 80);
+		$ci->xmlrpc->method('query_row');
+		$request[0] = $query;
+		$ci->xmlrpc->request($request);
+		if ( ! $ci->xmlrpc->send_request())
+		{
+			//echo $ci->xmlrpc->display_error();
+			//return false;
+		} else {
+			//print_r($ci->xmlrpc->display_response());
+			//return $ci->xmlrpc->display_response();
+		}
+}
 
 
 function _xmlrpc_query_row ($query) {

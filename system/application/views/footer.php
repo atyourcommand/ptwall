@@ -39,8 +39,7 @@
   <div class="row">
     <div class="col-xs-12">
       <p class="copy center">
-        <?php 
-if ($controller=="trainers"){ ?>
+        <?php if (isset($controller) && $controller=="trainers"){ ?>
         <?php echo $title; ?>
         <? } else { ?>
         Find a Personal Trainer in your city |
@@ -55,44 +54,9 @@ if ($controller=="trainers"){ ?>
 <!--All minified scripts here-->
 <script type="text/javascript" src="<?php echo base_url(); ?>main.min.js"></script>
 <!--//All extra scripts here-->
-
-
-<script>
-jQuery(document).ready(function($) {
-  $('a[rel*=facebox]').facebox();
-})
-</script> 
-
-<?php if($show_update_modal) { ?>
-<? } ?>
-<script type="text/javascript">
-//http://davidwalsh.name/persistent-header-opacity
-$(document).ready(function() {
-	(function() {
-		//settings
-		var fadeSpeed = 200, fadeTo = 0.5, topDistance = 30;
-		var topbarME = function() { $('#header-wrapper').fadeTo(fadeSpeed,1); }, topbarML = function() { $('#header-wrapper').fadeTo(fadeSpeed,fadeTo); };
-		var inside = false;
-		//do
-		$(window).scroll(function() {
-			position = $(window).scrollTop();
-			if(position > topDistance && !inside) {
-				//add events
-				topbarML();
-				$('#header-wrapper').bind('mouseenter',topbarME);
-				$('#header-wrapper').bind('mouseleave',topbarML);
-				inside = true;
-			}
-			else if (position < topDistance){
-				topbarME();
-				$('#header-wrapper').unbind('mouseenter',topbarME);
-				$('#header-wrapper').unbind('mouseleave',topbarML);
-				inside = false;
-			}
-		});
-	})();
-});
-</script> 
+<!--Ad Rotator--> 
+<!--http://jquery.malsup.com/cycle/--> 
+<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts-extra/jquery.cycle.all.js"></script>-->
 <script>
 window.fbAsyncInit = function() {
 	FB.init({

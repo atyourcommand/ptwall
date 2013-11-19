@@ -1,5 +1,4 @@
-<!--<script type="text/javascript" src="<?php echo base_url(); ?>scripts/js-core/mootools1.2.js" ></script>-->
-<script src="<?php echo base_url(); ?>scripts/ajaxupload.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>scripts-extra/ajaxupload.js" type="text/javascript"></script>
 
 <div id="wrapper">
   <!-- start headerWrapper -->
@@ -54,7 +53,7 @@
             <h3>Upload your Profile image easily</h3>
             <fieldset>
             <a href="index.php?c=add&m=image&delete=true">Reset to Default</a>
-            <form action="scripts/ajaxupload.php" method="post" name="sleeker" id="sleeker" enctype="multipart/form-data">
+            <form action="scripts-extra/ajaxupload.php" method="post" name="sleeker" id="sleeker" enctype="multipart/form-data">
               <!--<input type="hidden" name="maxSize" value="512000" />-->
               <input type="hidden" name="maxSize" value="2000000" />
               <input type="hidden" name="maxW" value="250" />
@@ -66,7 +65,7 @@
               <input type="hidden" name="maxH" value="325" />
               <input type="hidden" name="filename" value="filename" />
               <p>
-                <input type="file" name="filename" onChange="ajaxUpload(this.form,'scripts/ajaxupload.php?filename=name&amp;userId=<?php echo $user->user_id; ?>&amp;maxSize=2000000&amp;maxW=250&amp;fullPath=<?php echo base_url(); ?>uploads/&amp;relPath=<?php echo ".".$upload_path ?>&amp;colorR=255&amp;colorG=255&amp;colorB=255&amp;maxH=325','upload_area','File Uploading Please Wait...&lt;br /&gt;&lt;img src=\'images/loader.gif\' width=\'31\' height=\'31\' border=\'0\' /&gt;','&lt;img src=\'images/cross.png\' width=\'16\' height=\'16\' border=\'0\' /&gt; Error in Upload, check settings and path info in source code.'); return false;" />
+                <input type="file" name="filename" onChange="ajaxUpload(this.form,'scripts-extra/ajaxupload.php?filename=name&amp;userId=<?php echo $user->user_id; ?>&amp;maxSize=2000000&amp;maxW=250&amp;fullPath=<?php echo base_url(); ?>uploads/&amp;relPath=<?php echo ".".$upload_path ?>&amp;colorR=255&amp;colorG=255&amp;colorB=255&amp;maxH=325','upload_area','File Uploading Please Wait...&lt;br /&gt;&lt;img src=\'images/loader.gif\' width=\'31\' height=\'31\' border=\'0\' /&gt;','&lt;img src=\'images/cross.png\' width=\'16\' height=\'16\' border=\'0\' /&gt; Error in Upload, check settings and path info in source code.'); return false;" />
               </p>
             </form>
             </fieldset>

@@ -4,6 +4,17 @@
     <div class="span12 wrap"> 
  
 <div class="content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-9333805017415789";
+/* PT Wall Image Banner */
+google_ad_slot = "7271211494";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
  <!--start iphone condition-->
       <?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == TRUE) { ?>
       <!--IPHONE content-->

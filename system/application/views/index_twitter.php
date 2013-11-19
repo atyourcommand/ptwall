@@ -10,7 +10,7 @@
 <?php echo $this->City_model->get_name_by_id($user->city_id)."" ?>
 <? } ?>
 
-&nbsp;Personal Training&nbsp;&mdash;&nbsp;<?php echo $user->first_name.'&nbsp;'.$user->last_name ?>&nbsp;<?php echo base_url(); ?>index.php/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?> ,
+&nbsp;Personal Training&nbsp;&mdash;&nbsp;<?php echo $user->first_name.'&nbsp;'.$user->last_name ?>&nbsp;<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?> ,
 <? } ?>
 
 <?php endforeach;?>

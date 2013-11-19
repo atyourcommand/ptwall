@@ -20,4 +20,6 @@
 
 </head>
 <body>
+<!--<div id="links" style="position:absolute;width:16px;height:16px;right:5px;top:5px;"><a href="http://www.facebook.com/#/group.php?gid=178234701500"><img src="icon-facebook.ico" alt="Facebook Icon" border="0" title="Join our new Facebook Group" /></a></div>-->
+<!-- start header content -->
 <div id="top">

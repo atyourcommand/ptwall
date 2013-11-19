@@ -6,7 +6,7 @@ class Country_model extends Model
   
   function Country_model()
   {
-    parent::__construct();
+    parent::Model();
   }
 
   function get()

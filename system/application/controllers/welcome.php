@@ -16,9 +16,9 @@ class Welcome extends Controller {
 	function __construct()
 	{
 		parent::Controller();
-			//$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
+		$this->load->model('User_model');
 		$this->load->model('State_model');
-		$this->load->model('User_model');	
 		$this->load->model('City_model');			
 		$this->load->model('County_model');	
 		$this->load->model('Country_model');	
@@ -37,10 +37,14 @@ class Welcome extends Controller {
 	{		
 		//$time = microtime(true); // time in Microseconds
 
-		$show_search = $_REQUEST['show_search'];
-		$show_guests = $_REQUEST['show_guests'];
-		$show_sponsors = $_REQUEST['show_sponsors'];
-		$show_twitter_data = $_REQUEST['show_twitter_data'];
+		//$show_search = $_REQUEST['show_search']; //DO NOT DO THIS
+		$show_search = $this->input->post("show_search");
+		//$show_guests = $_REQUEST['show_guests']; //DO NOT DO THIS
+		$show_guests = $this->input->post("show_guests");
+		//$show_sponsors = $_REQUEST['show_sponsors']; //DO NOT DO THIS
+		$show_sponsors = $this->input->post("show_sponsors");
+		//$show_twitter_data = $_REQUEST['show_twitter_data']; //DO NOT DO THIS
+		$show_twitter_data = $this->input->post("show_twitter_data");
 		
 		
 		if ($this->input->post('search_by_name_id')) {
@@ -181,15 +185,24 @@ class Welcome extends Controller {
 
 			$recs_per_page = 6;
 
-		$country=$_REQUEST['country']; //$this->input->post("country");	
-		$state = $_REQUEST['state']; //$this->input->post('state');	
-		$county = $_REQUEST['county']; //$this->input->post('county');	
-		$sort_by = $_REQUEST['sort_menu']; //$this->input->post('sort_menu');	
-		$tag_id = $_REQUEST['sort_options']; //$this->input->post('sort_options');						
-		$search = $_REQUEST['search'];
-		$tag_list = $_REQUEST['tag_list'];
-		$error = $_REQUEST['error'];
-		$show_guests = $_REQUEST['show_guests'];
+		//$country = $_REQUEST['country']; //Do not do it this way 
+		$country = $this->input->post("country");	
+		//$state = $_REQUEST['state']; //Do not do it this way 
+		$state = $this->input->post('state');	
+		//$county = $_REQUEST['county']; //Do not do it this way 
+		$county = $this->input->post('county');	
+		//$sort_by = $_REQUEST['sort_menu'];//Do not do it this way 
+		$sort_menu = $this->input->post('sort_menu');	 
+		//$tag_id = $_REQUEST['sort_options']; //Do not do it this way 
+		$sort_options = $this->input->post('sort_options');						
+		//$search = $_REQUEST['search']; //Do not do it this way 
+		$search = $this->input->post('search');	
+		//$tag_list = $_REQUEST['tag_list']; //Do not do it this way 
+		$tag_list = $this->input->post('tag_list');	
+		//$error = $_REQUEST['error']; //Do not do it this way 
+		$error = $this->input->post('error');	
+		//$show_guests = $_REQUEST['show_guests']; //Do not do it this way 
+		$show_guests = $this->input->post('show_guests');	
 		
 		if ($this->input->post('search_by_location_id')) {
 			$loc_array = split(",", $this->input->post('search_by_location_id'), 4);
@@ -462,7 +475,7 @@ if ($sort_by!='tags')
 		$data['state_selected'] = $state;				
 		$data['county_selected'] = $county;			
 		$data['latest_users'] = $latest_users;
-		$data['latest_guests'] = $latest_guests;
+		//$data['latest_guests'] = $latest_guests; //This is not defined or used I guess
 		$data['most_followers_users'] = $most_followers_users;
 		$data['most_recent_users'] = $most_recent_users;
 		$data['random_users'] = $random_users;
@@ -489,15 +502,26 @@ if ($sort_by!='tags')
 		
 		$recs_per_page = 6;
 
-		$country=$_REQUEST['country']; //$this->input->post("country");	
-		$state = $_REQUEST['state']; //$this->input->post('state');	
-		$county = $_REQUEST['county']; //$this->input->post('county');	
-		$sort_by = $_REQUEST['sort_menu']; //$this->input->post('sort_menu');	
-		$tag_id = $_REQUEST['sort_options']; //$this->input->post('sort_options');						
-		$search = $_REQUEST['search'];
-		$tag_list = $_REQUEST['tag_list'];
-		$error = $_REQUEST['error'];
-		$show_guests = $_REQUEST['show_guests'];
+		//$country = $_REQUEST['country']; //Do not do it this way 
+		$country = $this->input->post("country");	
+		//$state = $_REQUEST['state']; //Do not do it this way 
+		$state = $this->input->post('state');	
+		//$county = $_REQUEST['county']; //Do not do it this way 
+		$county = $this->input->post('county');	
+		//$sort_by = $_REQUEST['sort_menu'];//Do not do it this way 
+		$sort_menu = $this->input->post('sort_menu');	 
+		//$tag_id = $_REQUEST['sort_options']; //Do not do it this way 
+		$sort_options = $this->input->post('sort_options');						
+		//$search = $_REQUEST['search']; //Do not do it this way 
+		$search = $this->input->post('search');	
+		//$tag_list = $_REQUEST['tag_list']; //Do not do it this way 
+		$tag_list = $this->input->post('tag_list');	
+		//$error = $_REQUEST['error']; //Do not do it this way 
+		$error = $this->input->post('error');	
+		//$show_guests = $_REQUEST['show_guests']; //Do not do it this way 
+		$show_guests = $this->input->post('show_guests');
+		
+		$tag_id = $this->input->post('sort_options'); // **NEW TEST THIS created variable for php errors JB 		
 		
 		if ($this->input->post('search_by_location_id')) {
 			$loc_array = split(",", $this->input->post('search_by_location_id'), 4);
@@ -536,15 +560,15 @@ if ($sort_by!='tags')
 			if (in_array($country_from_ip, $country_list )) {
 				$country = $country_from_ip; // default united states :)
 				//echo 'found a country';				
-$state_from_ip = $res=$this->State_model->get_id_by_name($country, $ip_data['region_name']);	
-$state = $state_from_ip;
+				$state_from_ip = $res=$this->State_model->get_id_by_name($country, $ip_data['region_name']);	
+				$state = $state_from_ip;
 				//echo $country;					
-}	
-else {
-	$country = 223;
-				//echo $country;
-}
-}
+			}	
+			else {
+				$country = 223;
+							//echo $country;
+			}
+		}
 
 		// end country radios
 
@@ -578,7 +602,7 @@ foreach ($res as $tablerow) {
 		$county_menu[$result['county_id']] = $result['name'].'('.$res_count.")";
 }	
 
-$microtime = (microtime(true) - $time) . ' # line 570 - 580 DISCOVERY time elapsed';
+$microtime = (microtime(true) - $time) . ' # line 590 - 603 DISCOVER SLOW QUERY time elapsed';
 echo "<script language='javascript'>console.log('$microtime');</script>";
 // end time in Microseconds
 
@@ -659,7 +683,10 @@ if ($sort_by!='tags')
 	}
 
 	$tag_list_temp = trim($tag_list,",");
-	$tag_array = split(",", $tag_list_temp);
+	
+	//$tag_array = split(",", $tag_list_temp); 
+	$tag_array = preg_split('/,/', $tag_list_temp); //May need to do this in other spots 
+	
 	for($i=0;$i<count($tag_array);$i++)
 		$tag_array_name[] = $this->Tag_model->get_tag_by_id($tag_array[$i]);		
 		//print_r($tag_array_name);
@@ -715,7 +742,7 @@ if ($sort_by!='tags')
 	$hidden_data = array(
 		'country'  => $country,
 		'tag_list' => $tag_list
-		); 
+	); 
 
 
 	/****************** Bread Crumb ***************/
@@ -737,10 +764,15 @@ if ($sort_by!='tags')
 
 
 	/*************  Pagination ******************/
-		if (!$state) $state = $_REQUEST['state']; //$this->input->post('state');	
-		$county = $_REQUEST['county']; //$this->input->post('county');	
-		$sort_by = $_REQUEST['sort_menu']; //$this->input->post('sort_menu');	
-		$tag_id = $_REQUEST['sort_options']; //$this->input->post('sort_options');	
+		//if (!$state) $state = $_REQUEST['state']; //DO NOT DO THIS FOR CI	
+		if (!$state) $state = $this->input->post('state'); 	
+		//$county = $_REQUEST['county']; //DO NOT DO THIS FOR CI	
+		$county = $this->input->post('county');	
+		//$sort_by = $_REQUEST['sort_menu']; //DO NOT DO THIS FOR CI	
+		$sort_by = $this->input->post('sort_menu'); 	
+		//$tag_id = $_REQUEST['sort_options']; //DO NOT DO THIS FOR CI	
+		$tag_id = $this->input->post('sort_options');
+			
 		$total_pages = ceil($count_latest_users / $recs_per_page);
 		$current_page = ceil($offset / $recs_per_page)+1;			
 		$config['base_url'] = "index.php?c=welcome&country=$country&state=$state&sort_menu=$sort_by&sort_options=$tag_id";
@@ -760,6 +792,7 @@ if ($sort_by!='tags')
 		$config['cur_tag_open'] = "<span class=\"current\">";
 		$config['cur_tag_close'] = '</span>';
 		$config['num_links'] = $total_pages;
+		
 		$this->pagination->initialize($config); 		
 		$pagination = $this->pagination->create_links();	
 		
@@ -777,7 +810,7 @@ if ($sort_by!='tags')
 		$data['state_selected'] = $state;				
 		$data['county_selected'] = $county;			
 		$data['latest_users'] = $latest_users;
-		$data['latest_guests'] = $latest_guests;
+		//$data['latest_guests'] = $latest_guests; //This is not defined or used I guess
 		$data['most_followers_users'] = $most_followers_users;
 		$data['most_recent_users'] = $most_recent_users;
 		$data['random_users'] = $random_users;
@@ -797,8 +830,6 @@ if ($sort_by!='tags')
 		return $data;
 	
 	}
-
-
 
 	function _get_map_data() {
 
@@ -835,8 +866,6 @@ foreach ($res as $tablerow) {
 	if ($res_count>0)	
 		$state_ddmenu[$result['id']] = $result['name'].'('.$res_count.")";
 }	
-
-
 
 $res=$this->County_model->get($country,$state);		
 $county_menu = array();
@@ -1145,7 +1174,6 @@ return array('ip' => $ip, 'country_code' => $country_code, 'country_name' => $co
 
 }	
 
-
 function logoff() {
 	setcookie('oauth_token', '',1);
 	setcookie('oauth_token_secret','',1);
@@ -1161,7 +1189,6 @@ function test() {
 
 }
 
-
 function clear() {
 	session_start();
 	session_destroy();
@@ -1169,5 +1196,4 @@ function clear() {
 }
 
 	//Memory usage script
-
 }

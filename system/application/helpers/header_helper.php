@@ -27,22 +27,20 @@ if ( ! function_exists('get_header_data'))
 {
     function get_header_data()
     {
-      $user_logged_in = false;
+    
+		$user_logged_in = false;
 	  $ci=& get_instance();	  
 	  //echo _get_twitter_consumer_key();
 	  //echo _get_twitter_consumer_secret();
 	  $twitterObj = new EpiTwitter(_get_twitter_consumer_key(), _get_twitter_consumer_secret());
-	  
-	 //print_r($twitterObj);
-	  
+	  /*$creds = $twitterObj->get('/account/verify_credentials.json');  
+		var_dump($creds->response);*/
 	  if (isset($_COOKIE['user_id'])) {
 		$user_data = _get_user($_COOKIE['user_id']);	
 		$user_logged_in = true;
 	  }	  
-	 
 	  try {
 	  $header_data['twitter_request_url'] =  $twitterObj->getAuthenticateUrl();	
-	  //print_r($header_data);
 	  } catch (Exception $e) {
 		//echo 'Caught exception: ',  $e->getMessage(), "\n";
 	 }
@@ -106,18 +104,14 @@ if ( ! function_exists('get_twitter_request_url'))
 			$user_logged_in = false;
 			$CI=& get_instance();	  
 			//echo _get_twitter_consumer_key().'===='._get_twitter_consumer_secret();
-			
-			$CI->twitterObj = new EpiTwitter(_get_twitter_consumer_key(), _get_twitter_consumer_secret());
+			$twitterObj = new EpiTwitter(_get_twitter_consumer_key(), _get_twitter_consumer_secret());
 	  	//print_r($twitterObj);
 			if (isset($_COOKIE['user_id'])) {
 				$user_data = _get_user($_COOKIE['user_id']);	
 				$user_logged_in = true;
-			}	  
-	 
+			}
 	  try {
-	  $data['twitter_request_url'] =  $CI->twitterObj->getAuthenticateUrl();	
-	  echo "here";
-		print_r($data['twitter_request_url']);
+	 	 $data['twitter_request_url'] =  $twitterObj->getAuthenticateUrl();	
 	  } catch (Exception $e) {
 			//echo "erre";
 			//echo 'Caught exception: '. $e->getMessage(). "\n";

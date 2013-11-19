@@ -12,6 +12,7 @@ class User_model extends Model
   {
   	$user_id = $this->input->post('id');
     $twitter_name = $this->input->post('twitter_name');
+	$facebook_name = $this->input->post('facebook_name');
     $country_id = $this->input->post('country');
 	$county_id = $this->input->post('county');
     $state_id = $this->input->post('state');
@@ -51,6 +52,7 @@ class User_model extends Model
 
 	$array = array('user_id' => $user_id, 
 				   'twitter_name' => $twitter_name, 
+				   //'facebook_name' => $facebook_name, 
 				    'country_id' => $country_id,
 					'state_id' =>$state_id,
 					'county_id' =>$county_id,
@@ -118,6 +120,7 @@ class User_model extends Model
 
   	$user_id = $this->input->post('id');
     $twitter_name = $this->input->post('twitter_name');
+	//$facebook_name = $this->input->post('facebook_name');
     $country_id = $this->input->post('country');
 	$county_id = $this->input->post('county');
     $state_id = $this->input->post('state');
@@ -159,6 +162,7 @@ class User_model extends Model
         
 	$array = array('user_id' => $user_id, 
 				   'twitter_name' => $twitter_name, 
+				   //'facebook_name' => $facebook_name,
 				    'country_id' => $country_id,
 					'state_id' =>$state_id,
 					'county_id' =>$county_id,
@@ -234,16 +238,16 @@ class User_model extends Model
   //active & approved - good to be used for members
   
   
-  function get_latest_users($country_id, $state_id, $county_id, $all=TRUE, $offset, $num_recs, $order_by, $show_guests) {
+  function get_latest_users($country_id, $state_id, $county_id, $all=TRUE, $offset, $num_recs, $order_by) {
   	
 	$this->db->where('country_id', $country_id);
 	$this->db->where('active', 1);
 	$this->db->where('approved', 1);
         
-	if ($show_guests == true)
-		$this->db->where('guest', 1);
-	else
-		$this->db->where('guest', 0);
+	//if ($show_guests == true)
+	//	$this->db->where('guest', 1);
+	//else
+	//	$this->db->where('guest', 0);
 	
 	if (!$all) {
      //$query = $this->db->get_where('users', array('country_id'=>'233', 'state_id'=>$state_id, 'county_id'=>$county_id));
@@ -400,16 +404,16 @@ class User_model extends Model
 	 return $result;
   }	
   
-  function count_latest_users($country_id, $state_id, $county_id, $all=TRUE, $show_guests) {
+  function count_latest_users($country_id, $state_id, $county_id, $all=TRUE) {
   
   	$this->db->where('active', 1);	
 	$this->db->where('approved', 1);
 
         
-	if ($show_guests == true)
-		$this->db->where('guest', 1);
-	else
-		$this->db->where('guest', 0);
+	//if ($show_guests == true)
+	//	$this->db->where('guest', 1);
+	//else
+	//	$this->db->where('guest', 0);
 	
 	if (!$all) {
 
@@ -426,7 +430,8 @@ class User_model extends Model
   }  
   
   function get_users_per_county($county_id) {
-  	$this->db->where('active', 1);
+  	$this->db->cache_on();
+	$this->db->where('active', 1);
   	$this->db->where('approved', 1);
 	if ($county_id!=0)
 		$this->db->where('county_id', $county_id);  
