@@ -235,14 +235,14 @@ class Welcome extends Controller {
 			$country_list = array(223,13,38,240,241,242,243);
 			if (in_array($country_from_ip, $country_list )) {
 				$country = $country_from_ip; // default united states :)
-$state_from_ip = $res=$this->State_model->get_id_by_name($country, $ip_data['region_name']);	
-$state = $state_from_ip;
-
-}	
-else
-	$country = 223;
-
-}
+			$state_from_ip = $res=$this->State_model->get_id_by_name($country, $ip_data['region_name']);	
+			$state = $state_from_ip;
+			
+			}	
+			else
+				$country = 223;
+			
+			}
 
 		// end country radios
 

@@ -82,7 +82,7 @@
                     <span class="myPageLink"><a title="Check your page" id="" href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><span>My Page</span></a> | </span>
                    
                     <?php } else if (strlen($user->first_name)>0 && ($user->guest==1 && $user->sponsor==1) ) { ?>
-                    <span class="myPageLink"><a title="Check your page" id="" href="<?php echo base_url(); ?>guests/<?php echo $user->user_id; ?>"><span>My Sponsors Page</span></a> | </span>
+                    <span class="myPageLink"><a title="Check your page" id="" href="<?php echo base_url(); ?>guests/<?php echo $user->user_id; ?>"><span>My Classified</span></a> | </span>
                     <?php } else { ?>
                     <!--nada-->
                     <?php } ?>
@@ -93,19 +93,20 @@
                         <p style="font-weight: bold;">Hi <?php echo $user->first_name." ".$user->last_name ?></p>
                         <hr class="divider"/>
                       </li>
-                      <li class="clearfix" id="edit"><a title="Edit My Profile" class="" href="<?php echo base_url(); ?>index.php?c=add&m=profile"><span></span>Edit My Profile </a></li>
-                      <li class="clearfix" id="edit"><a title="Remove Profile" class="" href="<?php echo base_url(); ?>index.php?c=add&m=remove_profile"><span></span>Remove Profile</a></li>
+                      <li class="clearfix" id="edit"><a title="Edit My Profile" class="" href="<?php echo base_url(); ?>index.php?c=add&m=profile"><span></span>Account Editor</a></li>
+                      
                       <?php if ($user->active) { ?>
                       <li class="clearfix" id="edit"><a title="Change Email" class="" href="<?php echo base_url(); ?>index.php?c=add&m=change_email"><span></span>Change Email</a></li>
-                      <li class="clearfix" id="upload"><a title="Upload Profile Picture" class="" href="<?php echo base_url(); ?>index.php?c=add&m=image"><span></span>Upload Profile Picture</a></li>
+                      <li class="clearfix" id="upload"><a title="Upload Profile Picture" class="" href="<?php echo base_url(); ?>index.php?c=add&m=image"><span></span>Upload Picture</a></li>
                       <?php } ?>
                       <li class="clearfix" id="logout"><a title="Logout" class="" href="<?php echo base_url(); ?>index.php?c=welcome&m=logoff"><span></span>Logout </a>
                         <hr class="divider"/>
                       </li>
                       <?php if ($user->active) { ?>
-                      <li class="clearfix" id="subscription"><a title="My Subscription" id="" class="" href="http://personaltrainerwall.com/index.php?c=welcome&m=amember"><span></span>My Subscription </a></li>
+                      <li class="clearfix" id="subscription"><a title="My Subscription" id="" class="" href="http://personaltrainerwall.com/index.php?c=welcome&m=amember"><span></span>My Subscriptions </a></li>
                       <?php } ?>
-                      <li class="clearfix" id="subscriptionInfo"><a title="Subscription Stuff" rel="facebox" class="" href="<?php echo base_url(); ?>info/upgrade.php"><span></span>Subscription Stuff </a></li>
+                      <li class="clearfix" id="subscriptionInfo"><a title="Subscription Stuff" rel="facebox" class="" href="<?php echo base_url(); ?>info/upgrade.php"><span></span>Subscription Info </a></li>
+                      <li class="clearfix" id="edit"><a title="Remove Profile" class="" href="<?php echo base_url(); ?>index.php?c=add&m=remove_profile"><span></span>Remove my Account</a></li>
                     </ul>
                   </li>
                                 
@@ -124,7 +125,7 @@
     </div>
     <div class="row">
     	<div class="col-sm-4 hidden-xs">
-         <div class="strapline hidden-xs">Free Personal Trainer Directory</div>
+         <div class="strapline hidden-xs">Free PT Directory & Marketplace</div>
         </div>
         <div class="col-xs-6 col-sm-4">
          <div id="logo"><a href="/" title="Home"> </a> </div>
@@ -132,7 +133,9 @@
         <div class="col-xs-6 col-sm-4"> 
          <div class="social-connect">
          <?php if ($user_logged_in && $auth_mode!=-1) { ?>
-         <!--No Login button--> 
+             <span class="connect-with">Hello <strong><?php echo $user->first_name ?></strong>  &nbsp;&nbsp;</span>
+             <div class="member-avatar-wrapper">
+         <img src="<?php echo get_user_thumb($user->user_id); ?>" alt="<?php echo $user->first_name." ".$user->last_name ?> " width="64" border="0"/> </div>
          <?php } else { ?>
          <span class="connect-with">Connect with &nbsp;&nbsp;</span>
                <a class="btnFacebook" original-title="Join or login with Facebook" href="<?php echo base_url(); ?>index.php?c=auth&m=fb_login" >&nbsp;</a>
@@ -168,7 +171,7 @@
     <!--</div>-->
     <?php } else if($user->subscribed==0 && $user->guest==1 && $user->sponsor==1)  { ?>
     <!--<div class="generic_dialog fb-modal default noBg">-->
-    <div class="alertTop"><strong><?php echo $user->first_name ?></strong> complete your <a title="Check out my page here" id="" href="<?php echo base_url(); ?>guests/<?php echo $user->user_id; ?>">advert</a>, grab a <a href="<?php echo base_url(); ?>index.php?c=welcome&m=amember">advertisement subscription</a> then <a href="mailto:admin@personaltrainerwall.com?subject=My advertisement is 100% completed & good to go">email</a> to get published</div>
+    <div class="alertTop"><strong><?php echo $user->first_name ?></strong> complete your <a title="Check out my page here" id="" href="<?php echo base_url(); ?>guests/<?php echo $user->user_id; ?>">classified</a>, grab a <a href="<?php echo base_url(); ?>index.php?c=welcome&m=amember">classified subscription</a> then <a href="mailto:admin@personaltrainerwall.com?subject=My advertisement is 100% completed & good to go">email</a> to get published</div>
     <!--  </div>-->
     <?php } else if($user->subscribed==0 && $user->guest==1 && $user->sponsor==0)  { ?>
     <!--  <div class="generic_dialog fb-modal default noBg">-->
@@ -182,7 +185,7 @@
   <!--End message--> 
 
 <?php 
-if (isset($controller) && $controller=="trainers"){ ?>
+if (isset($controller) && $controller=="blah"){ ?>
 <div class="alertTop"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- PT wall top strip -->
 <ins class="adsbygoogle"

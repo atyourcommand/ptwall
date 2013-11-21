@@ -289,19 +289,13 @@ google_ad_height = 90;
 </div>
 </section>
 <div class="section-divider"></div>
-
-<!--start code for overlay--> 
-<!--add below back later-->
+<!--start code for the modalbox-->
 <?php if($user->approved==0) { ?>
-<div class="generic_dialog default">
-<div class="alertTop">
+<div class="generic_dialog fb-modal default">
+</div>
 <?php if($user->approved==0) { ?>
-This Profile is either incomplete or being reviewed. <a href="/">Go back</a> to the Wall
+<table style="position:absolute; z-index:100; top:0; width:100%; height:100%; width:100%; color:white; font-size:16px; text-align:center; ">
+<tr><td vlaign="center"> This PT Profile is being reviewed. <a href="#" ONCLICK="history.go(-1)">Go back</a></td></tr></table>
 <?php } ?>
-<!--<div class="button clearfix"><span class="btn-std">
-<input type="button" ONCLICK="history.go(-1)" value="Go back to the wall" name="close" class="btn-std fb-close closer" />
-</span> </div>--> 
-</div>
-</div>
 <?php } ?>
-<!--end code for the overlay--> 
+<!--end code for the modalbox-->

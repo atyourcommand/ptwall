@@ -1,57 +1,11 @@
-<!--http://www.personaltrainerwall.com-->
 <?php
 	$profile_image = $profile_image_path.md5($user->profile_image_url).".".substr(strrchr($user->profile_image_url, '.'), 1);
-	
 ?>
-<script src="<?php echo base_url(); ?>scripts/switcher.js" type="text/javascript"></script>
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA7mqEJzNb06x41VPkO08VqBQAcbgRolCsYOGbJiP6rHcEKxVvLhTK0A_xZUulycRnnNzTTojWzv0oWA"
-      type="text/javascript"></script>
-<script type="text/javascript">
- 
-    var map = null;
-    var geocoder = null;
- 
-    function initialize() {
-      if (GBrowserIsCompatible()) {
-        map = new GMap2(document.getElementById("map_canvas"));
-        //map.setCenter(new GLatLng(37.4419, -122.1419), 13);
-		map.setUIToDefault();
-        geocoder = new GClientGeocoder();
-      }
-    }
- 
-    function showAddress(address) {
-      if (geocoder) {
-        geocoder.getLatLng(
-          address,
-          function(point) {
-            if (!point) {
-              alert(address + " not found");
-            } else {
-              map.setCenter(point, 13);
-              var marker = new GMarker(point);
-              map.addOverlay(marker);
-              //marker.openInfoWindowHtml(address);
-            }
-          }
-        );
-      }
-    }
-	
-	jQuery(document).ready(function() {
 
-	  initialize();
-	  showAddress('<?php echo $geo; ?>');
-		  initialize2();
-		  showAddress2('<?php echo $geo; ?>');	  
-	  
-	}) 	
-    </script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyBNyazdnCgKZOXH30nrbXPJKH7_MNUZrTg&sensor=true"></script>
 <script type="text/javascript">
- 
     var map2 = null;
     var geocoder2 = null;
- 
     function initialize2() {
       if (GBrowserIsCompatible()) {
         map2 = new GMap2(document.getElementById("large_map_canvas"),{size:new GSize(700,500)});
@@ -80,25 +34,18 @@
       }
     }
 	
-
-	
-    jQuery(document).ready(function($) {
-      
-      $(document).bind('afterReveal.facebox', function() {
-
-		  map2.checkResize();
-		  initialize2();
-		  showAddress2('<?php echo $geo; ?>');	
-      })
-	  
-      $(document).bind('reveal.facebox', function() {
-
-		  map2.checkResize();
-		  initialize2();
-		  showAddress2('<?php echo $geo; ?>');	
-      })	  
-      
-    })
+    //jQuery(document).ready(function($) {
+//      $(document).bind('afterReveal.facebox', function() {
+//		  map2.checkResize();
+//		  initialize2();
+//		  showAddress2('<?php echo $geo; ?>');	
+//      })
+//      $(document).bind('reveal.facebox', function() {
+//		  map2.checkResize();
+//		  initialize2();
+//		  showAddress2('<?php echo $geo; ?>');	
+//      })	  
+//    })
 	
 	function openMap() {
 		window.open( "<?php echo base_url() ?>index.php?c=welcome&m=view_map&&user_id=<?php echo $user->user_id; ?>", "zoomMap","status = 1, height = 500, width = 700, resizable = 0" )
@@ -111,143 +58,182 @@
 </script>
 
 <div id="large_map_canvas" class="" style="width: 700px; height: 500px; display:none"> </div>
-<div id="page">
-  <!--v card data -->
-  <div id="vcardWrap" style="display:none;">
-    <div id="hcard" class="vcard"> <a class="url fn" href="<?php echo base_url() ?>guests/<?php echo $user->user_id; ?>"><?php echo $user->first_name." ".$user->last_name ?></a>
-      <? if($user->hide_email ==0) { ?>
-      <a class="email" href="mailto:<?php echo $user->email ?>"><?php echo $user->email ?></a>
-      <?php } ?>
-      <? if ($user->phone_no && $user->hide_phone==0) { ?>
-      <div class="tel"><?php echo $user->phone_no ?></div>
-      <?php } ?>
-    </div>
-  </div>
-  <!--v card data -->
-  <div class="smallHeading"><a href="/">Home</a> ~Personal Trainer Jobs and classifieds - Post a free job advertisement & reach our large network~</div>
-  <div class="content profile corners">
-    <div class="wrap clearfix">
-	
-      <!--Left section-->
-      <div class="profileMain clearfix">
-        <div class="pic" style="padding:0;">
-          <?php if ($image_exist) { ?>
-          <img class="hero" src="<?php echo base_url(); ?>scripts/timthumb.php?src=<?php echo base_url().$image_file ?>&a=t&w=250&h=313" alt="<?php echo $user->first_name." ".$user->last_name ?> " width="250" height="313">
-          <? } else {					
-					?>
-          <img class="hero" src="<?php echo base_url(); ?>scripts/timthumb.php?src=<?php echo base_url();?>images/default-profile-image.jpg&a=t&w=250&h=313" alt="<?php echo $user->first_name." ".$user->last_name ?> " width="250" height="313"/>
-          <? } ?>
-          <div id="contacts" class="">
-            <div class="inner" style="text-align:left;display:block;">
-              <?php if ($user->auth=="facebook") { ?>
-              <a class="fade format" original-title="Follow <?php echo $user->facebook_name ?> on Facebook" href="http://www.facebook.com/profile.php?id=<?php echo $user->user_id ?>" ><img src="<?php echo base_url();?>images/facebook_32.png" style="float:none;margin-right:10px;"/></a>
-              <? } else {					
-					?>
-              <a class="fade format" original-title="Follow <?php echo $user->twitter_name ?> on Twitter" href="http://twitter.com/<?php echo $user->twitter_name ?>"><img src="<?php echo base_url();?>images/twitter_32.png" style="margin-right:10px;"/></a>
-              <? } ?>
-              <!--email section-->
-              <?php if($user->subscribed==1) { ?>
+<section class="theme theme-three">
+  <div class="container">
+    <section style="display:none;">
+      <div class="row">
+        <div class="col-xs-12"> <!--v card data -->
+          <div id="vcardWrap">
+            <div id="hcard" class="vcard"> <a class="url fn" href=<?php echo base_url() ?>guests/<?php echo $user->user_id; ?>"><?php echo $user->business_name ?></a>
               <? if($user->hide_email ==0) { ?>
-              <a class="fade format" original-title="Email <?php echo $user->first_name." ".$user->last_name ?>" href="mailto:<?php echo $user->email ?>?subject=A message from your PT Wall profile"><img src="<?php echo base_url();?>images/email_32.png" style="margin-right:10px;"/></a>
+              <a class="email" href="mailto:<?php echo $user->email ?>"><?php echo $user->email ?></a>
               <?php } ?>
-              <? if($user->hide_email ==1) { ?>
-              <a class="fade format" original-title="Email contact turned off"><img src="<?php echo base_url();?>images/email_32.png" style="margin-right:10px;"/></a>
+              <? if ($user->phone_no && $user->hide_phone==0) { ?>
+              <div class="tel"><?php echo $user->phone_no ?></div>
               <?php } ?>
-              <!--linked in-->
-              <? if($user->linkedin_url) { ?>
-              <a class="fade format" original-title="linkedIn" href="<?php echo $user->linkedin_url ?>"><img src="<?php echo base_url();?>images/linkedin_32.png" style="margin-right:10px;"/></a>
-              <?php } ?>
-              <!--end linked in-->
-              <?php } ?>
-              <!--Links-->
-              <!--end links-->
-              <!--VCARD-->
-              <?php if($user->subscribed==1) { ?>
-              <div id="vcardWrap" style="display:none;">
-                <div id="hcard" class="vcard"> <a class="url fn" href="http://personaltrainerwall.com/personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"><?php echo $user->first_name." ".$user->last_name ?></a>
-                  <? if($user->hide_email ==0) { ?>
-                  <a class="email" href="mailto:<?php echo $user->email ?>"><?php echo $user->email ?></a>
-                  <?php } ?>
-                  <? if ($user->phone_no && $user->hide_phone==0) { ?>
-                  <div class="tel"><?php echo $user->phone_no ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <a href="javascript:void(location.href='http://h2vx.com/vcf/'+escape(location.href))" class="fade format" id="copyhcards" original-title="Download my vCard to your address book"> <img src="<?php echo base_url();?>images/vcard_32.png" style="margin-right:10px;"/></a>
-              <?php } ?>
-              <!--end VCARD-->
-              <!--extra facebook icon-->
-              <?php if ($user->facebook_url) {?>
-              <a href="<?php echo $user->facebook_url ?>" class="fade format" original-title="Extra Facebook link"><img src="<?php echo base_url();?>images/facebook_32.png" style="margin-right:10px;"/></a>
-              <?php } ?>
-              <!--end extra facebook icon-->
-              <!--map Icon-->
-              <a href="#"  onClick="openMap()" class="fade format" original-title="Find us on a Map" ><img src="<?php echo base_url();?>images/map_48.png" width="32" height="32" style="margin-right:10px;"/></a>
-              <!--end Icon-->
             </div>
           </div>
-        </div>
-        <div class="certs">
-          <div class="tweetmeme_button">
-            <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
-            <script type="text/javascript">
-				<!--tweetmeme_url = '';-->
-			tweetmeme_source = 'castingwall';
-			</script>
-          </div>
-          <h1><?php echo $user->business_name ?> </h1>
+          <!--v card data --></div>
+      </div>
+    </section>
+    <div class="row"> 
+      
+      <div class="col-xs-4 recordWrap">
+        <div class="imageWrapper">
           <p>
-            <!-- dynamic web and phone-->
-            <?php if ($user->url) {?>
-            <!--web from twitter ?-->
-            <a href="<?php echo $user->url ?>"><?php echo $user->url ?></a>
-            <? } 
-		  	if ($user->workplace_url) {
-		  ?>
-            <a href="<?php echo $user->workplace_url ?>"><?php echo $user->workplace_url ?></a>
-            <? } 
-		  	if ($user->phone_no && $user->hide_phone==0) {
-		  ?>
-            <?php echo $user->phone_no ?>
-            <?php } ?>
-            <!--end dynamic web and phone-->
+            <?php if ($image_exist) { ?>
+            <img itemprop="image" class="hero" src="<?php echo base_url(); ?>scripts/timthumb.php?src=<?php echo base_url().$image_file ?>&a=t&w=370&h=370" alt="<?php echo $user->first_name." ".$user->last_name ?> " width="100%">
+            <? } else {					
+					?>
+            <img class="hero" src="<?php echo base_url(); ?>scripts/timthumb.php?src=<?php echo base_url();?>images/default-profile-image.jpg&a=t&w=370&h=370" alt="<?php echo $user->first_name." ".$user->last_name ?> " width="100%"/>
+            <? } ?>
           </p>
-		  <div class="bio">
-          <blockquote>
-            <?php if (strlen($user->description)>0) echo $user->description; else echo $user->first_name." ".$user->last_name." has not yet updated this brief personal bio."; ?>
-          </blockquote>
         </div>
+        <!--counter-->
+        <div class="counter center">Viewed
+          <?php include("private/counter.php"); ?>
+          <br />
+          <!--<a href="/info/disclaimer.php" rel="facebox">Important disclaimer message</a>-->
+          
+        Joined Personal Trainer Wall on <?php echo $user->
+          joined ?></div>
+        <!--counter--> 
+      </div>
+      <div class="col-xs-8">
+        <div class="tweetmeme_button">
+          <g:plusone></g:plusone>
+          <script type="text/javascript">
+      window.___gcfg = {
+        lang: 'en-US'
+      };
+
+      (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script> 
+        </div>
+         <h1><?php echo $user->business_name ?></h1>
+       
+        <div id="contacts" class="">
+          <div class="inner clearfix">
+            <?php if ($user->auth=="facebook") { ?>
+            <a class="tips format" original-title="Follow <?php echo $user->facebook_name ?> on Facebook" href="http://www.facebook.com/profile.php?id=<?php echo $user->user_id ?>" ><img src="<?php echo base_url();?>images/facebook_32.png" style="float:none;margin-right:5px;"/></a>
+            <? } else {					
+					?>
+            <a class="tips format" original-title="Follow <?php echo $user->twitter_name ?> on Twitter" href="http://twitter.com/<?php echo $user->twitter_name ?>"><img src="<?php echo base_url();?>images/twitter_32.png" style="margin-right:5px;"/></a>
+            <? } ?>
+            <!--email section-->
+            
+            <? if($user->hide_email ==0) { ?>
+            <a class="tips format" original-title="Email <?php echo $user->first_name." ".$user->last_name ?>" href="mailto:<?php echo $user->email ?>?subject=A message from your Personal Trainer Wall profile"><img src="<?php echo base_url();?>images/email_32.png" style="margin-right:5px;"/></a>
+            <?php } ?>
+            <? if($user->hide_email ==1) { ?>
+            <a class="tips format" original-title="Email contact turned off"><img src="<?php echo base_url();?>images/email_32.png" style="margin-right:5px;"/></a>
+            <?php } ?>
+            <!--linked in-->
+            <? if($user->linkedin_url) { ?>
+            <a class="tips format" original-title="linkedIn" href="<?php echo $user->linkedin_url ?>"><img src="<?php echo base_url();?>images/linkedin_32.png" style="margin-right:5px;"/></a>
+            <?php } ?>
+            <!--end linked in--> 
+            
+            <!--Links--> 
+            <!--end links--> 
+            <!--VCARD--> 
+            
+            <a href="javascript:void(location.href='http://h2vx.com/vcf/'+escape(location.href))" class="tips format" id="copyhcards" original-title="Download my vCard to your address book"> <img src="<?php echo base_url();?>images/vcard_32.png" style="margin-right:10px;"/></a> 
+            
+            <!--end VCARD--> 
+            <!--extra facebook icon-->
+            
+            <?php if ($user->facebook_url) {?>
+            <a href="<?php echo $user->facebook_url ?>" class="tips format" original-title="Extra Facebook link"><img src="<?php echo base_url();?>images/facebook_32.png" style="margin-right:10px;"/></a>
+            <?php } ?>
+            
+            <!--end extra facebook icon--> 
+            <!--map Icon--> 
+            
+            <a href="#"  onClick="openMap()" class="tips format" original-title="Find us on a Map" ><img src="<?php echo base_url();?>images/map_48.png" width="32" height="32" style="margin-right:10px;"/></a> 
+            
+            <!--end map Icon-->
+            
+            <?php if ($user_logged_in) { ?>
+            <?php if($user->subscribed==1) { ?>
+            <!--<p class="validation upgradeInfo"><small><?php echo $user->first_name ?> is an upgrade subscriber.</small></p>-->
+            <?php } ?>
+            <?php } ?>
+            <!--Not using at the moment--> 
+            <!--Wrap and hide all icons and show message if not subscribed and logged in-->
+            <?php if ((isset($_COOKIE['user_id']) && $logged_user->guest!=1) || ($logged_user->guest==1 && $logged_user->subscribed==1) ) { ?>
+            <?php } else { ?>
+            <!--<p class="validation upgradeInfo">Add yourself free as a guest with the facebook or twitter buttons   to view the contact details and links for <br />
+                <?php echo $user->
+            first_name." ".$user->last_name ?>.
+            </p>
+            -->
+            <?php } ?>
+            <!--end message--> 
+          </div>
+        </div>
+        <!--phone number and web address-->
+        
+        <p class="tel">
+          <?php if ($user->workplace_url) {?>
+          Website: <a href="http://<?php echo $user->workplace_url ?>" target="_blank" class="tips format" original-title="My Website"><?php echo $user->workplace_url ?></a> <br />
+          <?php } ?>
+          <? if ($user->phone_no && $user->hide_phone==0) { ?>
+          Phone: <strong><?php echo $user->phone_no ?></strong>
+          <?php } ?><br />
+          Contact:<strong> <?php echo $user->first_name." ".$user->last_name ?></strong>
+        </p>
+        
+        <!--end phone number and web address-->
+      
+            <div class="marketing-byline" itemprop="description">
+              <?php if (strlen($user->description)>0) echo $user->description; else echo $user->first_name." ".$user->last_name." has not yet added any text for this classified."; ?>
+       
         </div>
         
       </div>
-      <!--counter-->
-      <div class="counter"><img src="..//images/icon-eye.png" width="24" height="24"/>
-        <?php include("private/counter.php"); ?>
-        <!--<br />
-        Joined Personal Trainer Wall on <?php echo $user->
-        joined ?> --></div>
-      <!--counter-->
+      
+
     </div>
-    <!--end Left section-->
-    <!--Facebook Like Button-->
-    <!--End Facebook Like Button-->
-    <!--<p style="text-align:center;"><small><a href="/info/disclaimer.php" rel="facebox">Very important disclaimer message</a></small></p>-->
-    </li>
-    </ul>
-  </div>
+    <div class="row">
+      <div class="col-xs-12"> 
+        <!--<div class="ad-rotator hidden-phone">
+            <div class="pics" id="fade" style="position: relative;"> <a href="http://www.atyourcommand.com.au/personal-trainer-websites/?media=web&campaign=ptwall&page=trainers" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 3; opacity: 1; width: 724px; height: 100px;"><img width="724" height="100" src="<?php echo base_url(); ?>images/ads/ayc-2-a.jpg"></a> <a href="http://www.atyourcommand.com.au/personal-trainer-websites/?media=web&campaign=ptwall&page=trainers" style="position: absolute; top: 0px; left: 0px; display: none; z-index: 3; opacity: 0; width: 724px; height: 100px;"><img width="724" height="100" src="<?php echo base_url(); ?>images/ads/ayc-2-b.jpg"></a> <a href="http://www.atyourcommand.com.au/personal-trainer-websites/?media=web&campaign=ptwall&page=trainers" style="position: absolute; top: 0px; left: 0px; display: block; z-index: 4; opacity: 0; width: 724px; height: 100px;"><img width="724" height="100" src="<?php echo base_url(); ?>images/ads/ayc-2-c.jpg"></a> </div>
+            <div class="ad-banner-message" style="text-align:center; font-size:11px; color:#cccccc; ">Advertise to our Fitness network here - </div>
+          </div>-->
+        
+<div class="google-banner hidden-phone hide">
+<div class="pics" style="position: relative;"> 
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-9333805017415789";
+/* PT Wall Profile page */
+google_ad_slot = "1283302737";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script> 
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script> 
 </div>
+</div>
+        
+</div>
+</div>
+</div>
+</section>
+<div class="section-divider"></div>
+
 <!--start code for the modalbox-->
-<!--add below back later-->
 <?php if($user->approved==0) { ?>
 <div class="generic_dialog fb-modal default">
-  <div class="alertTop">
-    <?php if($user->approved==0) { ?>
-    This Sponsor Page is under review. <a href="/">Go back</a> to the Wall
-    <?php } ?>
-    <!--<div class="button clearfix"><span class="btn-std">
-          <input type="button" ONCLICK="history.go(-1)" value="Go back to the wall" name="close" class="btn-std fb-close closer" />
-          </span> </div>-->
-  </div>
 </div>
+<?php if($user->approved==0) { ?>
+<table style="position:absolute; z-index:100; top:0; width:100%; height:100%; width:100%; color:white; font-size:16px; text-align:center; ">
+<tr><td vlaign="center"> This classified is being reviewed. <a href="#" ONCLICK="history.go(-1)">Go back</a></td></tr></table>
+<?php } ?>
 <?php } ?>
 <!--end code for the modalbox-->

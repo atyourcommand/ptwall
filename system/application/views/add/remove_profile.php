@@ -13,6 +13,7 @@ if(isset($removeMsg) && $removeMsg=="yes")
 <section class="theme theme-three">
   <div class="container">
     <div class="row">
+    
       <h1 class="regular center">Remove Profile</h1>
       <div class="panel panel-warning filter-guest filter-sponsor filter-trainer selected">
         <div class="panel-heading">

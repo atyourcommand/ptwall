@@ -59,7 +59,7 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
 							
 							?>
                   <label for="country" class="col-xs-6 col-sm-6 col-md-3" ><span style="display:none;">Choose country</span>
-                    <?php  echo form_dropdown('country', $country_list,$country,'id=country class=col-xs-12   onChange="clearSearch(); onChangeAjax();" '); ?>
+                    <?php  echo form_dropdown('country', $country_list,$country,'id=country class=col-xs-12   onChange="clearSearch(); ClearSearchElements(); onChangeAjax();" '); ?>
                   </label>
                   <label for="state" class="col-xs-6 col-sm-6 col-md-3"><span style="display:none;">Choose state</span> <?php echo form_dropdown('state', $state_list,$state_selected,'id=state class=col-xs-12 onChange="clearSearch(); onChangeAjax();" class='); ?> </label>
                   <label for="region" class="col-xs-6 col-sm-6 col-md-3"><span style="display:none;">Choose County</span> <?php echo form_dropdown('county', $county_list, $county_selected,'id=county  class=col-xs-12 onChange="clearSearch(); onChangeAjax();" '); ?> </label>
@@ -98,17 +98,21 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
                 <div class="sponsor nonMobileVersion"">
                   <div class="imageWrapper <?php if($user->approved==1) { ?>approved<?php } ?>">
                     <?php if ($user_image[$user->user_id]['exist']) { ?>
-                    <a href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"> <img src="<?php echo base_url(); ?>scripts/timthumb.php?src=<?php echo $user_image[$user->user_id]['image_file']?>&q=60&a=t&w=142&h=142" alt="Personal Trainer <?php echo $user->first_name." ".$user->last_name ?>" border="0" width="100%"> 
+                    <a href="<?php if($user->sponsor==0) { ?><?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?><? } else {					
+					?><?php echo base_url() ?>guests/<?php echo $user->user_id; ?><? } ?>"> <img src="<?php echo base_url(); ?>scripts/timthumb.php?src=<?php echo $user_image[$user->user_id]['image_file']?>&q=60&a=t&w=142&h=142" alt="Personal Trainer <?php echo $user->first_name." ".$user->last_name ?>" border="0" width="100%"> 
                     <!--Add overlay image for hover-->
                     <div class="overlay">&nbsp;</div>
                     </a>
                     <? } else {					
 					?>
-                    <a href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>"> <img src="<?php echo base_url();?>scripts/timthumb.php?src=images/default-profile-image.jpg&q=60&a=t&w=142&h=142" alt="Personal Trainer <?php echo $user->first_name." ".$user->last_name ?>" border="0" width="100%"/> </a>
+                    <a href="<?php if($user->sponsor==0) { ?><?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?><? } else {					
+					?><?php echo base_url() ?>guests/<?php echo $user->user_id; ?><? } ?>"> <img src="<?php echo base_url();?>scripts/timthumb.php?src=images/default-profile-image.jpg&q=60&a=t&w=142&h=142" alt="Personal Trainer <?php echo $user->first_name." ".$user->last_name ?>" border="0" width="100%"/> </a>
                     <? } ?>
                     <span class="show_upgrade">&nbsp;</span> </div>
                 </div>
-                <h3 class="heading-profile-name"> <a href="<?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?>" class="tips format" original-title="<img src='<?php echo get_user_thumb($user->user_id); ?>' width='80' height='80' style='float:none; margin-bottom:10px;'/><br /><?php echo $user->first_name.' '.$user->last_name ?><br /><span class='location'><?php echo $this->City_model->get_name_by_id($user->city_id)."" ?> <span class='location'><?php echo $this->County_model->get_name_by_id($user->county_id)."" ?> <?php echo $this->State_model->get_name_by_id($user->state_id)."" ?></span>"><?php echo $user->first_name.'<br />'.$user->last_name ?> </a></h3>
+                <h3 class="heading-profile-name"> <a href="<?php if($user->sponsor==0) { ?><?php echo base_url(); ?>personal-trainer/<?php echo str_replace(" ","_",trim($user->first_name)."_".trim($user->last_name)); ?><? } else {					
+					?><?php echo base_url() ?>guests/<?php echo $user->user_id; ?><? } ?>" class="tips format" original-title="<img src='<?php echo get_user_thumb($user->user_id); ?>' width='80' height='80' style='float:none; margin-bottom:10px;'/><br /><?php echo $user->first_name.' '.$user->last_name ?><br /><span class='location'><?php echo $this->City_model->get_name_by_id($user->city_id)."" ?> <span class='location'><?php echo $this->County_model->get_name_by_id($user->county_id)."" ?> <?php echo $this->State_model->get_name_by_id($user->state_id)."" ?></span>"><?php if($user->sponsor==0) { ?><?php echo $user->first_name.'<br />'.$user->last_name ?><? } else {					
+					?><?php echo $user->business_name ?><? } ?></a></h3>
                 <div class="heading-profile-location"><?php echo $this->County_model->get_name_by_id($user->county_id)."" ?></div>
                 <div class="user-social-icon">
                   <?php if ($user->auth=="facebook") { ?>
@@ -415,6 +419,13 @@ if(!(isset($is_ajax) && $is_ajax=="yes"))
 		$("#search_by_name_id").val('');
 		$("#search_by_location_id").val('');
 		$("#search_by_tag_id").val('');
+	}
+	
+	function ClearSearchElements()
+	{
+		$("#state").val(0);
+		$("#county").val(0);
+		$("#sort_options").val(0);
 	}
 	
 	$(document).ready(function(){

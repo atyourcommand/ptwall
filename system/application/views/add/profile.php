@@ -1,4 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>scripts-extra/calendar_eu.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>scripts-extra/profile.js"></script>
+
 <body <?php if ($email_verified==0 && $user_exist) { ?> onLoad="setDisabled('extended_info', true)" <?php } ?>>
 <div id="wrapper" class="<?php if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') == TRUE) { ?>handheld<? } else {	?>screen<? } ?>">
 <section class="theme theme-three">
@@ -40,7 +42,7 @@
                 <span>Personal Trainer</span> </label>
               <label class="inline checkbox">
                 <input name="guestOption" type="radio" id="sponsorSelection" class="check" value="sponsor" <?php if ($user_exist) { ?><?php if ($user->sponsor==1 && $user->guest==1) { ?>checked<? } ?><? } ?> />
-                <span>Sponsor</span> </label>
+                <span>Classified Advertisement</span><small> - GRAB A FREE SUBSCRIPTION</small> </label>
             </p>
             <p><?php echo form_checkbox($show_retweets_chkbox); ?> <span>Yes add my data to the next Auto Tweets weekly list.</span> <!--<a href="/retweets/" target="_blank">More info.</a>--></p>
           </div>
@@ -127,7 +129,7 @@
           <!----services--->
           <div class="panel panel-default noPad filter-trainer" id="services1">
             <div class="panel-heading">
-              <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Services</a></h3>
+              <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Personal Training Services</a></h3>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse">
               <div class="panel-body">
@@ -182,7 +184,7 @@
           </div>
           <div class="panel panel-default noPad filter-sponsor filter-trainer" id="more1" >
             <div class="panel-heading">
-              <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">More</a></h3>
+              <h3> <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Your photo, links and contact details</a></h3>
             </div>
             <div id="collapseThree" class="panel-collapse collapse">
               <div class="panel-body">
@@ -196,7 +198,7 @@
                       <? } ?>
                     </div>
                     <?php if($user->active==0) { ?>
-                    <span class="help-block">First finish this page then return here to upload your new image! It's a must for the quick approval.</span>
+                    <span class="help-block">First finish this page then return here to upload an new image! It's a must for the quick approval.</span>
                     <? } ?>
                     <?php if($user->active==1) { ?>
                     <!--<a rel="width:800,height:600" class="mb" href=index.php?c=add&m=manage_user_pic&user_id=<?php echo $user_id ?>>Add/Edit Pic</a>--> 
